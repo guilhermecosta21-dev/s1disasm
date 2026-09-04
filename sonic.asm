@@ -11,7 +11,7 @@
 ; ===========================================================================
 ; ASSEMBLY OPTIONS:
 
-DebugPathSwappers: = 1
+DebugPathSwappers: = 0
 ;	| If 1, show path swappers in debug mode and play SFX when passing one (ProjectSonic1TwoEight only)
 
 Revision = 1
@@ -20,7 +20,7 @@ Revision = 1
 ; 	| If 2, build the hacked version from Sonic Mega Collection, dubbed REVXB,
 ;	|       which (sloppily) fixes the infamous "spike bug" -- not recommended
 
-FixBugs = 0
+FixBugs = 1
 ;	| If 1, enables various bugfixes across the game and sound driver
 ;	|       (see also the "_Fixed Binary Files" folder, and FixMusicAndSFXDataBugs)
 
@@ -28,13 +28,13 @@ CheatsEnabled = 0
 ;	| If 1, all in-game cheats (Level Select, Debug Mode, Slow-Motion, Japanese Credits)
 ;	|       will be enabled by default, without requiring any title screen button inputs
 
-AllOptimizations = 0
+AllOptimizations = 1
 ;	| If 1, enables all optimizations
-SkipChecksumCheck = 0|AllOptimizations
+SkipChecksumCheck = 1|AllOptimizations
 ;	| If 1, disables the slow bootup checksum calculation
-ZeroOffsetOptimization = 0|AllOptimizations
+ZeroOffsetOptimization = 1|AllOptimizations
 ;	| If 1, makes a handful of zero-offset instructions smaller
-PaddingOptimization = 0|AllOptimizations
+PaddingOptimization = 1|AllOptimizations
 ;	| If 1, removes about 3 KB of various superfluous padding
 
 EnableSRAM = 0
