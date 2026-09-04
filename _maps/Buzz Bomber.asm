@@ -61,9 +61,8 @@ Map_Buzz_internal:	mappingsTable
 	spritePiece	-$14, 4, 4, 1, 8, 0, 0, 0, 0
 	spritePiece	$C, 4, 1, 1, $C, 0, 0, 0, 0
 	spritePiece	-$C, $C, 2, 1, $D, 0, 0, 0, 0
-.Fire2_End
-	; Unused; these should be before '.Fire2_End', not after it.
 	spritePiece	-$14, -$C, 3, 1, $1F, 0, 0, 0, 0
 	spritePiece	4, -$C, 2, 1, $22, 0, 0, 0, 0
+.Fire2_End
 
 	even

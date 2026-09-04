@@ -139,7 +139,7 @@ MS_Walk12_End
 
 MS_Walk13:	spriteHeader
 	spritePiece	-$D, -$13, 3, 2, 0, 0, 0, 0, 0	; walking 1-3
-	spritePiece	-$D, -3, 3, 3, 6, 0, 0, 0, 0
+	spritePiece	-$C, -3, 3, 3, 6, 0, 0, 0, 0
 MS_Walk13_End
 
 MS_Walk14:	spriteHeader
@@ -151,7 +151,7 @@ MS_Walk14_End
 
 MS_Walk15:	spriteHeader
 	spritePiece	-$D, -$14, 3, 2, 0, 0, 0, 0, 0	; walking 1-5
-	spritePiece	-$15, -4, 4, 3, 6, 0, 0, 0, 0
+	spritePiece	-$14, -4, 4, 3, 6, 0, 0, 0, 0
 MS_Walk15_End
 
 MS_Walk16:	spriteHeader
@@ -431,10 +431,10 @@ MS_Stop2:	spriteHeader
 MS_Stop2_End
 
 MS_Duck:	spriteHeader
-	spritePiece	-4, -$C, 2, 1, 0, 0, 0, 0, 0	; ducking
-	spritePiece	-$C, -4, 4, 2, 2, 0, 0, 0, 0
-	spritePiece	-$C, $C, 3, 1, $A, 0, 0, 0, 0
-	spritePiece	-$14, 4, 1, 1, $D, 0, 0, 0, 0
+	spritePiece	0, -$C, 2, 1, 0, 0, 0, 0, 0	; ducking
+	spritePiece	-8, -4, 4, 2, 2, 0, 0, 0, 0
+	spritePiece	-8, $C, 3, 1, $A, 0, 0, 0, 0
+	spritePiece	-$10, 4, 1, 1, $D, 0, 0, 0, 0
 MS_Duck_End
 
 MS_Balance1:	spriteHeader
