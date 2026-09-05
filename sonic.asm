@@ -415,6 +415,7 @@ GameInit:
 .clearRAM:	move.l	d7,(a6)+				; clear RAM
 		dbf	d6,.clearRAM				; loop until done
 
+		jsr	(InitDMAQueue).l
 		bsr.w	VDPSetupGame				; initialize (proper) VDP registers
 		bsr.w	DACDriverLoad				; initialize Z80 DAC driver
 		bsr.w	JoypadInit				; initialize controller ports
@@ -831,13 +832,8 @@ VBlank_Levels:
 
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
-
-		tst.b	(f_sonframechg).w			; has Sonic's sprite changed?
-		beq.s	.nochg					; if not, branch
-		writeVRAM	v_sgfx_buffer,ArtTile_Sonic*tile_size ; load new Sonic gfx
-		move.b	#0,(f_sonframechg).w			; clear Sonic gfx update flag
-	.nochg:
-
+        jsr	ProcessDMAQueue(pc)
+		
 		startZ80					; restart Z80
 
 		movem.l	(v_screenposx).w,d0-d7			; copy everything from v_screenposx to v_bg3screenposy...
@@ -889,15 +885,10 @@ VBlank_SpecialStage:
 		writeCRAM	v_palette,0			; write regular palette buffer to CRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
+		jsr	ProcessDMAQueue(pc)
 		startZ80					; restart Z80
 
 		bsr.w	PalCycle_SS				; advance special stage palette cycle and animate bird/fish graphics
-
-		tst.b	(f_sonframechg).w			; has Sonic's sprite changed?
-		beq.s	.nochg					; if not, branch
-		writeVRAM	v_sgfx_buffer,ArtTile_Sonic*tile_size ; load new Sonic gfx
-		move.b	#0,(f_sonframechg).w			; clear Sonic gfx update flag
-	.nochg:
 
 		tst.w	(v_generictimer).w			; is generic timer set?
 		beq.w	.end					; if not, branch
@@ -929,13 +920,8 @@ VBlank_Ending:
 
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
-
-		tst.b	(f_sonframechg).w			; has Sonic's sprite changed?
-		beq.s	.nochg					; if not, branch
-		writeVRAM	v_sgfx_buffer,ArtTile_Sonic*tile_size ; load new Sonic gfx
-		move.b	#0,(f_sonframechg).w			; clear Sonic gfx update flag
-	.nochg:
-
+        jsr	ProcessDMAQueue(pc)
+		
 		startZ80					; restart Z80
 
 		movem.l	(v_screenposx).w,d0-d7			; copy everything from v_screenposx to v_bg3screenposy...
@@ -986,13 +972,8 @@ VBlank_Continue:
 		writeCRAM	v_palette,0			; write regular palette buffer to CRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
+		jsr	ProcessDMAQueue(pc)
 		startZ80					; restart Z80
-
-		tst.b	(f_sonframechg).w			; has Sonic's sprite changed?
-		beq.s	.nochg					; if not, branch
-		writeVRAM	v_sgfx_buffer,ArtTile_Sonic*tile_size ; load new Sonic gfx
-		move.b	#0,(f_sonframechg).w			; clear Sonic gfx update flag
-	.nochg:
 
 		tst.w	(v_generictimer).w			; is generic timer set?
 		beq.w	.end					; if not, branch
@@ -1021,7 +1002,8 @@ VBlank_StandardTransfers:
 
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
-
+        jsr	ProcessDMAQueue(pc)
+		
 		startZ80					; restart Z80
 		rts						; return
 ; End of function VBlank_StandardTransfers
@@ -1185,7 +1167,49 @@ VDPSetupArray:
 		dc.w vreg_planesize|%000001			; 64-cell H-scroll size
 		dc.w vreg_winxpos|0				; window horizontal position
 		dc.w vreg_winypos|0				; window vertical position
-VDPSetupArray_End:
+VDPSetupArray_End: include	"_inc/DMA-Queue.asm"
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Load a Dynamic Pattern Load Cues request into the DMA queue.
+; ---------------------------------------------------------------------------
+; Input:
+;	d0.b = frame number
+;	d4.w = starting target VRAM tile address
+;	d6.l = pointer to uncompressed art
+;	a2   = pointer to DPLC table
+; ---------------------------------------------------------------------------
+
+LoadDynPLC:
+		andi.w	#$FF,d0					; mask out anything except the input frame
+		add.w	d0,d0					; double ID (for word-based indexing)
+		adda.w	(a2,d0.w),a2				; find current DPLC entry
+		moveq	#0,d5					; clear d5
+		move.b	(a2)+,d5				; get number of tasks in this DPLC entry
+		subq.w	#1,d5					; subtract 1 from number of tasks (will be the loop count)
+		bmi.w	.end					; if it underflowed, this is an empty entry, nothing to do
+		
+	.loop:
+		move.b	(a2)+,d3				; get first byte of DPLC task
+		move.b	d3,-(sp)				; move it to stack (bytes shift sp by 2)
+		moveq	#0,d1					; clear d1
+		move.w	(sp)+,d1				; move it from stack to upper byte of d1
+		move.b	(a2)+,d1				; get second byte of DPLC task
+		andi.w	#$F0,d3					; only look at upper nybble of first byte
+		addi.w	#$10,d3					; add 1 to that nybble
+		andi.w	#$FFF,d1				; mask out that nybble in the other part
+		lsl.l	#5,d1					; multiply by $20 (tile_size)
+		add.l	d6,d1					; add art location
+		move.w	d4,d2					; set target VRAM location
+		add.w	d3,d4					; advance VRAM pointer
+		add.w	d3,d4					; (twice, for word-based tiles)
+		bsr.w	QueueDMATransfer			; load DMA request into queue (also known as "DMA_68KtoVRAM")
+		dbf	d5,.loop				; repeat for number of entries
+		
+	.end:
+		rts						; return
+; End of function LoadDynPLC
 
 
 ; ===========================================================================
@@ -1216,6 +1240,7 @@ ClearScreen:
 		clearRAM v_hscrolltablebuffer,v_hscrolltablebuffer_end_padded+4 ; clear H-Scroll table buffer
 	endif
 
+        ResetDMAQueue
 		rts						; return
 ; End of function ClearScreen
 

@@ -2344,50 +2344,20 @@ Sonic_Animate:
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Sonic graphics loading subroutine (DPLC - Dynamic Pattern Load Cues)
+; Sonic DPLC loading subroutine
 ; ---------------------------------------------------------------------------
 
 ; LoadSonicDynPLC:
 Sonic_LoadGfx:
-		moveq	#0,d0
-		move.b	obFrame(a0),d0				; load frame number
-		cmp.b	(v_sonframenum).w,d0			; has frame changed?
-		beq.s	.nochange				; if not, branch (nothing to do)
-
-		move.b	d0,(v_sonframenum).w			; remember new frame ID
-		lea	(SonicDynPLC).l,a2			; load PLC script
-		add.w	d0,d0					; double current frame for word-based indexing
-		adda.w	(a2,d0.w),a2				; find relevant DPLC definition for new frame
-		moveq	#0,d1					; clear d1
-		move.b	(a2)+,d1				; read "number of entries" value
-		subq.b	#1,d1					; subtract by 1 for first iteration
-		bmi.s	.nochange				; if this was an empty entry, nothing to do, branch
-
-		lea	(v_sgfx_buffer).w,a3			; load Sonic's graphics transfer buffer
-		move.b	#1,(f_sonframechg).w			; set flag for VBlank to update Sonic graphics via DMA
-
-; SPLC_ReadEntry:
-.readentry:
-		moveq	#0,d2					; clear d2
-		move.b	(a2)+,d2				; read next byte of DPLC entry
-		move.w	d2,d0					; copy to d0
-		lsr.b	#4,d0					; shift out lower nybble, upper nybble is number of tiles
-		lsl.w	#8,d2					; shift value into upper byte of word
-		move.b	(a2)+,d2				; read next byte of DPLC entry
-		lsl.w	#5,d2					; multiply by $20 (tile_size)
-		lea	(Art_Sonic).l,a1			; load Sonic's uncompressed graphics
-		adda.l	d2,a1					; add offset for current DPLC entry
-
-; SPLC_LoadTile:
-.loadtile:
-		movem.l	(a1)+,d2-d6/a4-a6			; copy a full tile's worth of data to 8 different registers
-		movem.l	d2-d6/a4-a6,(a3)			; write them to Sonic's graphics transfer buffer
-		lea	tile_size(a3),a3			; go to next tile
-		dbf	d0,.loadtile				; repeat for number of tiles
-		dbf	d1,.readentry				; repeat for number of entries
-
-; locret_13C96:
-.nochange:
+		move.b	obFrame(a0),d0				; get Sonic's current frame
+		cmp.b	(v_sonframenum).w,d0			; has the frame changed?
+		beq.s	.end					; if not, nothing to do
+		move.b	d0,(v_sonframenum).w			; update cached frame number
+		lea	(SonicDynPLC).l,a2			; load Sonic DPLC table
+		move.w	#ArtTile_Sonic*tile_size,d4		; starting VRAM tile
+		move.l	#Art_Sonic,d6				; base Sonic art pointer
+		jmp	(LoadDynPLC).l				; load DPLC
+.end:
 		rts						; return
 ; End of function Sonic_LoadGfx
 ; ===========================================================================
