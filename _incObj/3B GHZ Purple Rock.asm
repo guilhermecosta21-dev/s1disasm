@@ -24,7 +24,7 @@ Rock_Main:	; Routine 0
 	else
 		move.b	#38/2,obActWid(a0)			; set sprite display width (too small)
 	endif
-		move.b	#4,obPriority(a0)			; set sprite priority
+		move.w	#$200,obPriority(a0)			; set sprite priority
 ; ---------------------------------------------------------------------------
 
 Rock_Solid:	; Routine 2

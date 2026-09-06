@@ -246,11 +246,11 @@ obY:			equ $C					; y-axis position (2-4 bytes)
 obSubpixelY:		equ $E					; y-axis subpixel position for playfield items (2 bytes)
 obVelX:			equ $10					; x-axis velocity (2 bytes)
 obVelY:			equ $12					; y-axis velocity (2 bytes)
-obInertia:		equ $14					; potential speed (2 bytes)
+obInertia:		equ $20					; potential speed (2 bytes) ; Changed from 14
 obHeight:		equ $16					; height/2
 obWidth:		equ $17					; width/2
 obPriority:		equ $18					; sprite stack priority -- 0 is front
-obActWid:		equ $19					; action width
+obActWid:		equ $14					; action width ; from 19
 obFrame:		equ $1A					; current frame displayed
 obAniFrame:		equ $1B					; current frame in animation script
 obAnim:			equ $1C					; current animation

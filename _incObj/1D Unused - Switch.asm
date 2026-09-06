@@ -24,7 +24,7 @@ Swi_Main:	; Routine 0
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
 		move.w	obY(a0),swi_origY(a0)			; remember initial Y-position
 		move.b	#32/2,obActWid(a0)			; set sprite display width
-		move.b	#5,obPriority(a0)			; set sprite priority
+		move.w	#$280,obPriority(a0)			; set sprite priority
 ; ---------------------------------------------------------------------------
 
 Swi_Action:	; Routine 2

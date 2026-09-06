@@ -36,7 +36,7 @@ Drown_Main:	; Routine 0
 		move.w	#ArtTile_LZ_Bubbles|Tile_Prio,obGfx(a0)	; set art tile and priority flag
 		move.b	#sprite_rendered|sprite_cam_field,obRender(a0) ; rendered flag to prevent immediate deletion and playfield-positioned mode
 		move.b	#32/2,obActWid(a0)			; set sprite display width
-		move.b	#1,obPriority(a0)			; set sprite priority (above Sonic)
+		move.w	#$80,obPriority(a0)			; set sprite priority (above Sonic)
 
 		move.b	obSubtype(a0),d0			; get bubble type
 		bpl.s	.numberBubble				; is this the special countdown object (set from Obj01_InWater)? if not, branch

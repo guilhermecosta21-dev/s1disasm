@@ -26,7 +26,7 @@ TSon_Main:	; Routine 0
 		move.w	#$80+$5E,obScreenY(a0)			; set initial Y-position
 		move.l	#Map_TSon,obMap(a0)			; set mappings
 		move.w	#ArtTile_Title_Sonic|Tile_Pal2,obGfx(a0) ; set art tile and palette line
-		move.b	#1,obPriority(a0)			; set sprite priority
+		move.w	#$80,obPriority(a0)			; set sprite priority
 		move.b	#30-1,obDelayAni(a0)			; set time delay before Sonic moves in to 0.5 seconds
 		lea	(Ani_TSon).l,a1				; load animation script
 		bsr.w	AnimateSprite				; advance animation once

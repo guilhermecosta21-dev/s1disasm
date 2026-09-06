@@ -110,7 +110,7 @@ Ring_SpawnRing:
 		move.l	#Map_Ring,obMap(a1)			; set mappings
 		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a1)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
-		move.b	#2,obPriority(a1)			; set sprite priority
+		move.w	#$100,obPriority(a1)			; set sprite priority
 		move.b	#col_12x12|col_item,obColType(a1)	; set to power-up collision type and hitbox 12x12 (=$47)
 		move.b	#16/2,obActWid(a1)			; set sprite display width
 		move.b	obRespawnNo(a0),obRespawnNo(a1)		; remember respawn index of ring group
@@ -148,7 +148,7 @@ Ring_Animate:	; Routine 2
 Ring_Collect:	; Routine 4 (set from ReactToItem)
 		addq.b	#2,obRoutine(a0)			; advance to Ring_Sparkle
 		move.b	#col_none,obColType(a0)			; prevent ring from being collected again
-		move.b	#1,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
+		move.w	#$80,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
 		bsr.w	CollectRing				; add 1 ring
 
 		lea	(v_objstate).w,a2			; load object respawn table
@@ -260,7 +260,7 @@ RLoss_Count:	; Routine 0
 		move.l	#Map_Ring,obMap(a1)			; set mappings
 		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a1)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
-		move.b	#3,obPriority(a1)			; set sprite priority (1 lower than normal rings)
+		move.w	#$180,obPriority(a1)			; set sprite priority (1 lower than normal rings)
 		move.b	#col_12x12|col_item,obColType(a1)	; set to power-up collision type and hitbox 12x12 (=$47)
 		move.b	#16/2,obActWid(a1)			; set sprite display width
 	if FixBugs=0
@@ -359,7 +359,7 @@ RLoss_Bounce:	; Routine 2
 RLoss_Collect:	; Routine 4
 		addq.b	#2,obRoutine(a0)			; advance to RLoss_Sparkle
 		move.b	#col_none,obColType(a0)			; prevent ring from being collected again
-		move.b	#1,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
+		move.w	#$80,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
 		bsr.w	CollectRing				; add 1 ring
 ; ---------------------------------------------------------------------------
 

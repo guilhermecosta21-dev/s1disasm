@@ -69,7 +69,7 @@ SStom_Main:	; Routine 0
 		move.b	obSubtype(a0),obSubtype(a1)		; copy subtype from parent
 		move.b	#64/2,obActWid(a1)			; set sprite display width
 		move.w	d2,sstom_length(a1)			; set stomper length
-		move.b	#4,obPriority(a1)			; set sprite priority
+		move.w	#$200,obPriority(a1)			; set sprite priority
 
 		cmpi.b	#1,(a2)					; is this child object the spikes? (frame ID 1)
 		bne.s	.notspikes				; if not, branch
@@ -80,7 +80,7 @@ SStom_Main:	; Routine 0
 		move.l	a0,sstom_parent(a1)			; remember parent address
 		dbf	d1,.loop				; repeat 3 times
 
-		move.b	#3,obPriority(a1)			; make wall bracket a higher priority
+		move.w	#$180,obPriority(a1)			; make wall bracket a higher priority
 
 	.adjustParentSize:
 		move.b	#32/2,obActWid(a0)			; use a smaller sprite display width for main block

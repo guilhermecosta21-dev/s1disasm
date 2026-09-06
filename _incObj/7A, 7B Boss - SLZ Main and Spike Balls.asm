@@ -61,6 +61,10 @@ BossStarLight_LoadBoss:
 		move.b	(a2)+,obRoutine(a1) 			; load first objData byte and increment
 		move.b	(a2)+,obAnim(a1)
 		move.b	(a2)+,obPriority(a1)
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 		move.l	#Map_Eggman,obMap(a1) 			; load mappings and graphics for the object
 		move.w	#ArtTile_Eggman,obGfx(a1)
 		move.b	#sprite_cam_field,obRender(a1) 		; set the object to position based on where it is in the level and not a static position on screen
@@ -535,7 +539,7 @@ BossSpikeball_Main:	; Routine 0
 		move.w	#ArtTile_Eggman_Spikeball,obGfx(a0)
 		move.b	#1,obFrame(a0)				; set frame
 		ori.b	#sprite_cam_field,obRender(a0)		; keep all other bits, set render mode to playfield coordinate mode
-		move.b	#4,obPriority(a0)			; set render priority (on the lower side)
+		move.w	#$200,obPriority(a0)			; set render priority (on the lower side)
 		move.b	#col_16x16|col_hurt,obColType(a0)	; set collision type
 		move.b	#24/2,obActWid(a0)			; set radius of object in pixels (used for hiding sprites when off-screen)
 		movea.l	BossSpikeball_SeesawPtr(a0),a1		; copy offset address, a1 now contains the seesaw that this ball is tied to
@@ -896,7 +900,7 @@ BossSpikeball_Loop:
 		move.b	#id_BossSpikeball,obID(a1) 	; load shrapnel object
 		move.b	#$A,obRoutine(a1)		; set routine to routine 10 (below)
 		move.l	#Map_BSBall,obMap(a1)		; set mappings
-		move.b	#3,obPriority(a1)		; set priority (to appear in front of background)
+		move.w	#$180,obPriority(a1)		; set priority (to appear in front of background)
 		move.w	#ArtTile_Eggman_Spikeball,obGfx(a1) ; set art
 		move.w	obX(a0),obX(a1)			; copy position of fragment to ball
 		move.w	obY(a0),obY(a1)

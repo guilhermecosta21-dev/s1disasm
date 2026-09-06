@@ -42,6 +42,10 @@ SEgg_Main:	; Routine 0
 		move.b	(a2)+,obRoutine(a0)			; copy routine number, animation, priority
 		move.b	(a2)+,obAnim(a0)
 		move.b	(a2)+,obPriority(a0)
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 		move.l	#Map_SEgg,obMap(a0)			; load mappings, art, and set priority
 		move.w	#ArtTile_Eggman,obGfx(a0)
 		move.b	#sprite_cam_field,obRender(a0)
@@ -61,6 +65,10 @@ SEgg_Main:	; Routine 0
 		move.b	(a2)+,obRoutine(a1)			; copy routine number, animation, priority
 		move.b	(a2)+,obAnim(a1)
 		move.b	(a2)+,obPriority(a1)
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 		move.l	#Map_But,obMap(a1)			; load mappings, art, and set priority
 		move.w	#ArtTile_Eggman_Button,obGfx(a1)
 		move.b	#sprite_cam_field,obRender(a1)
@@ -239,7 +247,7 @@ FFloor_MakeBlock:
 		move.b	#sprite_cam_field,obRender(a1)		; set rendering flags, width and height
 		move.b	#32/2,obActWid(a1)
 		move.b	#32/2,obHeight(a1)
-		move.b	#3,obPriority(a1)			; set priority (higher side)
+		move.w	#$180,obPriority(a1)			; set priority (higher side)
 		move.w	d5,obX(a1)				; set X position
 		move.w	#boss_sbz2_y+$C0,obY(a1)		; set Y position
 		addi.w	#$20,d5					; add $20 for next X position

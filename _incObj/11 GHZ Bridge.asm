@@ -28,7 +28,7 @@ Bri_Main:	; Routine 0
 		move.l	#Map_Bri,obMap(a0)			; set mappings
 		move.w	#ArtTile_GHZ_Bridge|Tile_Pal3,obGfx(a0)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
-		move.b	#3,obPriority(a0)			; set sprite priority
+		move.w	#$180,obPriority(a0)			; set sprite priority
 	if FixBugs
 		move.b	#16/2,obActWid(a0)			; set sprite display width (one log)
 	else
@@ -90,7 +90,7 @@ Bri_Main:	; Routine 0
 		move.l	#Map_Bri,obMap(a1)			; set mappings
 		move.w	#ArtTile_GHZ_Bridge|Tile_Pal3,obGfx(a1)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
-		move.b	#3,obPriority(a1)			; set sprite priority
+		move.w	#$180,obPriority(a1)			; set sprite priority
 		move.b	#16/2,obActWid(a1)			; set sprite display width for individual log
 		addi.w	#16,d3					; position next log 16px further to the right
 

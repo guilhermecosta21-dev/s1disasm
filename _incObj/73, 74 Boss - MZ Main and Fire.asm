@@ -56,6 +56,10 @@ BossMarble_LoadBoss:
 		move.b	(a2)+,obRoutine(a1)			; load first objData byte and increment
 		move.b	(a2)+,obAnim(a1)
 		move.b	(a2)+,obPriority(a1)
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 		move.l	#Map_Eggman,obMap(a1)			; load mappings and graphics for the object
 		move.w	#ArtTile_Eggman,obGfx(a1)
 		move.b	#sprite_cam_field,obRender(a1)		; set the object to position based on where it is in the level and not a static position on screen
@@ -546,7 +550,7 @@ BossFire_Main:		; Routine 0
 		move.l	#Map_Fire,obMap(a0)			; load mappings, graphics, and set render style
 		move.w	#ArtTile_MZ_Fireball,obGfx(a0)
 		move.b	#sprite_cam_field,obRender(a0)
-		move.b	#5,obPriority(a0)			; set render priority (to allow to hide behind lava)
+		move.w	#$280,obPriority(a0)			; set render priority (to allow to hide behind lava)
 		move.w	obY(a0),obBossY(a0)			; copy Y
 		move.b	#16/2,obActWid(a0)			; set object width
 		addq.b	#2,obRoutine(a0)			; increment the object routine

@@ -26,7 +26,7 @@ SBall_Main:	; Routine 0
 		move.l	#Map_SBall,obMap(a0)			; set mappings
 		move.w	#ArtTile_SYZ_Spikeball_Chain,obGfx(a0)	; set art tile
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
-		move.b	#4,obPriority(a0)			; set sprite priority
+		move.w	#$200,obPriority(a0)			; set sprite priority
 		move.b	#16/2,obActWid(a0)			; set sprite display width
 		move.w	obX(a0),sball_origX(a0)			; remember initial X-position
 		move.w	obY(a0),sball_origY(a0)			; remember initial Y-position
@@ -88,7 +88,7 @@ SBall_Main:	; Routine 0
 		move.l	obMap(a0),obMap(a1)			; copy mappings from parent
 		move.w	obGfx(a0),obGfx(a1)			; copy art tile from parent
 		move.b	obRender(a0),obRender(a1)		; copy render flags from parent
-		move.b	obPriority(a0),obPriority(a1)		; copy sprite priority from parent
+		move.w	obPriority(a0),obPriority(a1)		; copy sprite priority from parent
 		move.b	obActWid(a0),obActWid(a1)		; copy sprite display width from parent
 		move.b	obColType(a0),obColType(a1)		; copy collision type from parent (damaging or not damaging)
 

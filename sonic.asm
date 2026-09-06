@@ -3383,7 +3383,7 @@ GM_Continue:
 		move.b	#id_ContSonic,(v_player).w		; load continue screen Sonic object
 		move.b	#id_ContScrItem,(v_continuetext).w	; load continue screen objects (text and misc elements)
 		move.b	#id_ContScrItem,(v_continuelight).w	; load floor light object Sonic is laying on
-		move.b	#3,(v_continuelight+obPriority).w	; set priority to be behind Sonic
+		move.w	#$180,(v_continuelight+obPriority).w	; set priority to be behind Sonic
 		move.b	#4,(v_continuelight+obFrame).w		; set correct frame for the light
 		move.b	#id_ContScrItem,(v_continueicon).w	; load continue icons object
 		move.b	#4,(v_continueicon+obRoutine).w		; set to continue icons routine

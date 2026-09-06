@@ -26,7 +26,7 @@ Van_Main:
 		addq.b	#2,obRoutine(a0)			; advance to Van_DeleteSonic
 		move.l	#Map_Vanish,obMap(a0)			; set mappings
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
-		move.b	#1,obPriority(a0)			; set sprite priority (above Sonic)
+		move.w	#$80,obPriority(a0)			; set sprite priority (above Sonic)
 		move.b	#112/2,obActWid(a0)			; set large sprite display width
 		move.w	#ArtTile_Warp,obGfx(a0)			; set art tile
 		move.w	#2*60,van_time(a0)			; set time for Sonic's disappearance to 2 seconds

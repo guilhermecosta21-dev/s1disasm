@@ -61,7 +61,7 @@ Cat_Main:	; Routine 0
 		andi.b	#sprite_xflip|sprite_yflip,obRender(a0)	; clear render flags except X/Y-flip
 		ori.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
 		move.b	obRender(a0),obStatus(a0)		; copy render flags to status flags
-		move.b	#4,obPriority(a0)			; set to sprite priority
+		move.w	#$200,obPriority(a0)			; set to sprite priority
 		move.b	#16/2,obActWid(a0)			; set sprite display width
 		move.b	#col_16x16|col_badnik,obColType(a0)	; set ReactToItem type for head to be destroyable ($B)
 
@@ -90,7 +90,7 @@ Cat_Main:	; Routine 0
 		addq.b	#2,d6					; alternate between the two
 		move.l	obMap(a0),obMap(a1)			; copy mappings
 		move.w	obGfx(a0),obGfx(a1)			; copy art tile and palette line
-		move.b	#5,obPriority(a1)			; set sprite priority (behind head)
+		move.w	#$280,obPriority(a1)			; set sprite priority (behind head)
 		move.b	#16/2,obActWid(a1)			; set sprite display width
 		move.b	#col_16x16|col_special,obColType(a1)	; special ReactToItem handler for body parts ($CB)
 		add.w	d5,d2					; increase body part gap distance
@@ -173,11 +173,11 @@ Cat_Undulate:
 		addq.b	#2,ob2ndRout(a0)			; advance to Cat_Floor
 		move.b	#17-1,cat_waittime(a0)			; set timer for movement
 		move.w	#-$C0,obVelX(a0)			; move head to the left
-		move.w	#$40,obInertia(a0)
+		move.w	#$40,obAnim(a0)
 		bchg	#4,cat_mode(a0)				; change between mouth open/moving up, and mouth closed/moving down
 		bne.s	.updateHeadSprite			; if going up now (mouth open), branch
 		clr.w	obVelX(a0)				; don't move left
-		neg.w	obInertia(a0)
+		neg.w	obAnim(a0)
 
 	.updateHeadSprite:
 		bset	#7,cat_mode(a0)				; set flag to update head sprite
@@ -245,7 +245,7 @@ Cat_Floor:
 		move.w	#0,obVelX(a0)				; stop moving
 	else
 		clr.w	obVelX(a0)				; stop moving
-		clr.w	obInertia(a0)
+		clr.w	obAnim(a0)
 	endif
 		rts						; return
 ; ---------------------------------------------------------------------------
@@ -308,12 +308,12 @@ Cat_BodySeg1:	; Routine 4, 8
 		move.b	ob2ndRout(a1),ob2ndRout(a0)
 		beq.w	.chkBroken
 
-		move.w	obInertia(a1),obInertia(a0)
+		move.w	obAnim(a1),obAnim(a0)
 		move.w	obVelX(a1),d0
 	if Revision=0
-		add.w	obInertia(a1),d0
+		add.w	obAnim(a1),d0
 	else
-		add.w	obInertia(a0),d0
+		add.w	obAnim(a0),d0
 	endif
 		move.w	d0,obVelX(a0)				; update x speed
 		move.l	obX(a0),d2

@@ -94,6 +94,10 @@ BossFinal_LoadBoss:
 		move.b	(a3)+,obRoutine(a1)
 		move.b	(a3)+,obAnim(a1)
 		move.b	(a3)+,obPriority(a1)
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 	if Revision=0
 		move.b	(a3)+,obWidth(a1)
 	else
@@ -651,7 +655,7 @@ BossFinal_Cockpit: ; Routine 8
 		bpl.w	BossFinal_Delete			; if so, branch
 	endif
 		bsr.w	BossDefeated				; spawn explosions
-		move.b	#2,obPriority(a0)			; set priority to 2 in order to overwrite old cockpit, but re-use a few un-damaged cockpit tiles in the middle of the ship
+		move.w	#$100,obPriority(a0)			; set priority to 2 in order to overwrite old cockpit, but re-use a few un-damaged cockpit tiles in the middle of the ship
 		move.b	#0,obAnim(a0)				; set object animation to 0
 		move.l	#Map_FZDamaged,obMap(a0)		; copy damaged mappings and art
 		move.w	#ArtTile_FZ_Eggman_Fleeing,obGfx(a0)
@@ -780,7 +784,7 @@ EggmanCylinder_Main:	; Routine 0
 	endif
 		move.b	#64/2,obActWid(a0)
 		move.b	#192/2,obHeight(a0)
-		move.b	#3,obPriority(a0)			; set priority
+		move.w	#$180,obPriority(a0)			; set priority
 		addq.b	#2,obRoutine(a0)			; increment routine
 
 ; loc_1A4CE:
@@ -993,7 +997,7 @@ BossPlasma_Main:	; Routine 0
 		move.w	#ArtTile_FZ_Boss,obGfx(a0)		; load art and mappings
 		move.l	#Map_PLaunch,obMap(a0)
 		move.b	#0,obAnim(a0)				; set initial animation frame
-		move.b	#3,obPriority(a0)			; set priority, width, and height
+		move.w	#$180,obPriority(a0)			; set priority, width, and height
 		move.b	#16/2,obWidth(a0)
 		move.b	#16/2,obHeight(a0)
 		move.b	#sprite_cam_field,obRender(a0)		; set render bits
@@ -1067,7 +1071,7 @@ BossPlasma_MakeBalls:; Routine 4
 		move.b	#24/2,obHeight(a1)			; copy height and collisions
 		move.b	#24/2,obWidth(a1)
 		move.b	#col_none,obColType(a1)
-		move.b	#3,obPriority(a1)			; set priority
+		move.w	#$180,obPriority(a1)			; set priority
 		move.w	#62,obSubtype(a1)			; set timer and also zero out ChildCmd
 		move.b	#sprite_cam_field,obRender(a1)		; set render bits
 		bset	#sprite_rendered_bit,obRender(a1)

@@ -55,7 +55,7 @@ PSwapper_Init:	; Routine 0
 		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a0)	; use ring graphics for debug display
 		ori.b	#4,obRender(a0)				; set to playfield positioning mode
 		move.b	#32/2,obActWid(a0)			; set sprite display width
-		move.b	#5,obPriority(a0)			; set sprite priority
+		move.w	#$280,obPriority(a0)			; set sprite priority
 
 		move.b	obSubtype(a0),d0			; get subtype of path swapper
 		btst	#pswap_bit_horizontal,d0		; is horizontal orientation bit set?

@@ -34,7 +34,7 @@ GRing_Main:	; Routine 0
 
 GRing_Okay:
 		addq.b	#2,obRoutine(a0)			; set to GRing_Animate
-		move.b	#2,obPriority(a0)			; set sprite priority
+		move.w	#$100,obPriority(a0)			; set sprite priority
 		move.b	#col_16x32|col_item,obColType(a0)	; set col type (ReactToItem will advance obRoutine on collection)
 		move.w	#Art_BigRing_size,(v_gfxbigring).w	; trigger AniArt_GiantRing to load graphics (Art_BigRing_size = $C40)
 ; ---------------------------------------------------------------------------
@@ -91,7 +91,7 @@ Flash_Main:	; Routine 0
 		move.l	#Map_Flash,obMap(a0)			; set mappings
 		move.w	#ArtTile_Giant_Ring_Flash|Tile_Pal2,obGfx(a0) ; set art tile and palette line
 		ori.b	#sprite_cam_field,obRender(a0)		; set to playfield positioned mode
-		move.b	#0,obPriority(a0)			; set to maximum sprite priority
+		move.w	#0,obPriority(a0)			; set to maximum sprite priority
 		move.b	#64/2,obActWid(a0)			; set sprite display width
 		move.b	#-1,obFrame(a0)				; set to frame -1 so first run of Flash_Collect will set it to 0
 ; ---------------------------------------------------------------------------

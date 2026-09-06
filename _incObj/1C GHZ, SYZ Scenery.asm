@@ -26,6 +26,10 @@ Scen_Main:	; Routine 0
 		move.b	(a1)+,obFrame(a0)			; set frame ID
 		move.b	(a1)+,obActWid(a0)			; set sprite display width
 		move.b	(a1)+,obPriority(a0)			; set sprite priority
+		move.w	obPriority(a0),d0 
+        lsr.w 	#1,d0
+        andi.w 	#$380,d0 
+        move.w 	d0,obPriority(a0)
 		move.b	(a1)+,obColType(a0)			; set collision type (always 0)
 ; ---------------------------------------------------------------------------
 

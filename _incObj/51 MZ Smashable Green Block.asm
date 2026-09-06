@@ -24,7 +24,7 @@ Smab_Main:	; Routine 0
 		move.w	#ArtTile_MZ_Block|Tile_Pal3,obGfx(a0)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
 		move.b	#32/2,obActWid(a0)			; set sprite display width
-		move.b	#4,obPriority(a0)			; set sprite priority
+		move.w	#$200,obPriority(a0)			; set sprite priority
 	if FixBugs=0
 		; This is very likely an unused leftover from a copy-paste job from Object 3C (GHZ smashable wall),
 		; where this line was used to set the correct frame out of three. However, here it makes no sense,
