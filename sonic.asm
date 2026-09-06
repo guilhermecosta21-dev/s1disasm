@@ -2675,6 +2675,9 @@ Level_WaterPal:
 		move.b	(v_lamp_wtrstat).w,(f_wtr_state).w	; restore water state from checkpoint
 
 Level_GetBgm:
+        move.b	#id_VBlank_TitleCards,(v_vblank_routine).w ; set VBlank routine to $0C
+		bsr.w	WaitForVBlank				; transfer data up to this point
+		bsr.w	LoadZoneTiles				; load main zone art (S2 Art Loader)
 		tst.w	(f_demo).w				; is this a credits demo?
 		bmi.s	Level_SkipTtlCard			; if yes, don't load title cards or change music
 
@@ -3488,6 +3491,9 @@ GM_Ending:
 		move.w	#id_EndZ_bad,(v_zone_act).w		; otherwise, set to bad ending (level number 601, no extra flowers)
 
 End_LoadData:
+        move.b	#id_VBlank_TitleCards,(v_vblank_routine).w ; set VBlank routine to $0C
+		bsr.w	WaitForVBlank				; transfer data up to this point
+		bsr.w	LoadZoneTiles				; load main zone art (S2 Art Loader)
 		moveq	#plcid_Ending,d0			; load ending sequence patterns (GHZ art, animals, etc.)
 		bsr.w	QuickPLC				; execute PLCs immediately (no queue)
 		jsr	(Hud_Base).l				; load basic HUD graphics (only in levels, not in the ending demos)
@@ -4643,28 +4649,28 @@ Blk128_Title:	binclude	"map128/Title.kos"
 
 Blk16_GHZ:	binclude	"map16/GHZ.eni"
 		even
-Nem_GHZ:	binclude	"artnem/8x8 - GHZ.nem"	; GHZ patterns
+Kos_GHZ:	binclude	"artkos/8x8 - GHZ.kos"	; GHZ patterns
 		even
 Blk128_GHZ:	binclude	"map128/GHZ.kos"
 		even
 
 Blk16_Ending:	binclude	"map16/Ending.eni"
 		even
-Nem_Ending:	binclude	"artnem/8x8 - Ending.nem" ; Ending sequence patterns
+Kos_Ending:	binclude	"artkos/8x8 - Ending.kos" ; Ending sequence patterns
 		even
 Blk128_Ending:	binclude	"map128/Ending.kos"
 		even
 
 Blk16_LZ:	binclude	"map16/LZ.eni"
 		even
-Nem_LZ:		binclude	"artnem/8x8 - LZ.nem" ; LZ primary patterns
+Kos_LZ:		binclude	"artkos/8x8 - LZ.kos" ; LZ primary patterns
 		even
 Blk128_LZ:	binclude	"map128/LZ.kos"
 		even
 
 Blk16_MZ:	binclude	"map16/MZ.eni"
 		even
-Nem_MZ:		binclude	"artnem/8x8 - MZ.nem" ; MZ primary patterns
+Kos_MZ:		binclude	"artkos/8x8 - MZ.kos" ; MZ primary patterns
 		even
 Blk128_MZ:
 	if Revision=0
@@ -4677,21 +4683,21 @@ Blk128_MZ:
 
 Blk16_SLZ:	binclude	"map16/SLZ.eni"
 		even
-Nem_SLZ:	binclude	"artnem/8x8 - SLZ.nem" ; SLZ primary patterns
+Kos_SLZ:	binclude	"artkos/8x8 - SLZ.kos" ; SLZ primary patterns
 		even
 Blk128_SLZ:	binclude	"map128/SLZ.kos"
 		even
 
 Blk16_SYZ:	binclude	"map16/SYZ.eni"
 		even
-Nem_SYZ:	binclude	"artnem/8x8 - SYZ.nem" ; SYZ primary patterns
+Kos_SYZ:	binclude	"artkos/8x8 - SYZ.kos" ; SYZ primary patterns
 		even
 Blk128_SYZ:	binclude	"map128/SYZ.kos"
 		even
 
 Blk16_SBZ:	binclude	"map16/SBZ.eni"
 		even
-Nem_SBZ:	binclude	"artnem/8x8 - SBZ.nem" ; SBZ primary patterns
+Kos_SBZ:	binclude	"artkos/8x8 - SBZ.kos" ; SBZ primary patterns
 		even
 Blk128_SBZ:
 	if Revision=0

@@ -105,7 +105,6 @@ PLC_GameOver_end:
 ; Pattern load cues - Green Hill
 ; ---------------------------------------------------------------------------
 PLC_GHZ:	plcheader
-		plcm	Nem_GHZ,       ArtTile_Level                  ; GHZ patterns
 		plcm	Nem_Stalk,	ArtTile_GHZ_Flower_Stalk	; flower stalk
 		plcm	Nem_PplRock,	ArtTile_GHZ_Purple_Rock		; purple rock
 		plcm	Nem_Crabmeat,	ArtTile_Crabmeat		; crabmeat enemy
@@ -131,7 +130,6 @@ PLC_GHZ2_end:
 ; Pattern load cues - Labyrinth
 ; ---------------------------------------------------------------------------
 PLC_LZ:		plcheader
-		plcm	Nem_LZ,		ArtTile_Level			; LZ main patterns
 		plcm	Nem_LzBlock1,	ArtTile_LZ_Block_1		; block
 		plcm	Nem_LzBlock2,	ArtTile_LZ_Block_2		; blocks
 		plcm	Nem_Splash,	ArtTile_LZ_Splash		; waterfalls and splash
@@ -167,7 +165,6 @@ PLC_LZ2_end:
 ; Pattern load cues - Marble
 ; ---------------------------------------------------------------------------
 PLC_MZ:		plcheader
-		plcm	Nem_MZ,	ArtTile_Level				; MZ main patterns
 		plcm	Nem_MzMetal,	ArtTile_MZ_Spike_Stomper	; metal blocks
 		plcm	Nem_MzFire,	ArtTile_MZ_Fireball		; fireballs
 		plcm	Nem_Swing,	ArtTile_GHZ_MZ_Swing		; swinging platform
@@ -191,7 +188,6 @@ PLC_MZ2_end:
 ; Pattern load cues - Star Light
 ; ---------------------------------------------------------------------------
 PLC_SLZ:	plcheader
-		plcm	Nem_SLZ,	ArtTile_Level			; SLZ main patterns
 		plcm	Nem_Bomb,	ArtTile_Bomb			; bomb enemy
 		plcm	Nem_Orbinaut,	ArtTile_SLZ_Orbinaut		; orbinaut enemy
 		plcm	Nem_MzFire,	ArtTile_SLZ_Fireball		; fireballs
@@ -215,7 +211,6 @@ PLC_SLZ2_end:
 ; Pattern load cues - Spring Yard
 ; ---------------------------------------------------------------------------
 PLC_SYZ:	plcheader
-		plcm	Nem_SYZ,	ArtTile_Level			; SYZ main patterns
 		plcm	Nem_Crabmeat,	ArtTile_Crabmeat		; crabmeat enemy
 		plcm	Nem_Buzz,	ArtTile_Buzz_Bomber		; buzz bomber enemy
 		plcm	Nem_Yadrin,	ArtTile_Yadrin			; yadrin enemy
@@ -240,7 +235,6 @@ PLC_SYZ2_end:
 ; Pattern load cues - Scrap Brain
 ; ---------------------------------------------------------------------------
 PLC_SBZ:	plcheader
-		plcm	Nem_SBZ,	ArtTile_Level			; SBZ main patterns
 		plcm	Nem_Stomper,	ArtTile_SBZ_Moving_Block_Short	; moving platform and stomper
 		plcm	Nem_SbzDoor1,	ArtTile_SBZ_Door		; door
 		plcm	Nem_Girder,	ArtTile_SBZ_Girder		; girder
@@ -396,7 +390,6 @@ PLC_SSResult_end:
 ; Pattern load cues - ending sequence
 ; ---------------------------------------------------------------------------
 PLC_Ending:	plcheader
-		plcm	Nem_Ending,       ArtTile_Level                  ; Ending patterns
 		plcm	Nem_Stalk,	ArtTile_GHZ_Flower_Stalk	; flower stalk
 		plcm	Nem_EndFlower,	ArtTile_Ending_Flowers		; flowers
 		plcm	Nem_EndEm,	ArtTile_Ending_Emeralds		; emeralds
