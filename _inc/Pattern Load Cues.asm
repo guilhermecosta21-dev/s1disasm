@@ -105,8 +105,7 @@ PLC_GameOver_end:
 ; Pattern load cues - Green Hill
 ; ---------------------------------------------------------------------------
 PLC_GHZ:	plcheader
-		plcm	Nem_GHZ_1st,	ArtTile_Level			; GHZ main patterns
-		plcm	Nem_GHZ_2nd,	ArtTile_Level+$1CD		; GHZ secondary patterns
+		plcm	Nem_GHZ,       ArtTile_Level                  ; GHZ patterns
 		plcm	Nem_Stalk,	ArtTile_GHZ_Flower_Stalk	; flower stalk
 		plcm	Nem_PplRock,	ArtTile_GHZ_Purple_Rock		; purple rock
 		plcm	Nem_Crabmeat,	ArtTile_Crabmeat		; crabmeat enemy
@@ -397,8 +396,7 @@ PLC_SSResult_end:
 ; Pattern load cues - ending sequence
 ; ---------------------------------------------------------------------------
 PLC_Ending:	plcheader
-		plcm	Nem_GHZ_1st,	ArtTile_Level			; GHZ main patterns
-		plcm	Nem_GHZ_2nd,	ArtTile_Level+$1CD		; GHZ secondary patterns
+		plcm	Nem_Ending,       ArtTile_Level                  ; Ending patterns
 		plcm	Nem_Stalk,	ArtTile_GHZ_Flower_Stalk	; flower stalk
 		plcm	Nem_EndFlower,	ArtTile_Ending_Flowers		; flowers
 		plcm	Nem_EndEm,	ArtTile_Ending_Emeralds		; emeralds

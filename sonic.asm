@@ -1860,11 +1860,11 @@ Tit_LoadText:
 		bsr.w	DeformLayers				; initialize background deformation before fade-in (redundant here)
 
 		lea	(v_16x16).w,a1				; set target buffer for blocks mappings
-		lea	(Blk16_GHZ).l,a0			; load GHZ 16x16 blocks mappings
+		lea	(Blk16_Title).l,a0		; load Title 16x16 blocks mappings
 		move.w	#ArtTile_Level,d0			; set to target VRAM address $0000
 		bsr.w	EniDec					; decompress Enigma-compressed blocks mappings to buffer
 
-		lea	(Blk128_GHZ).l,a0			; load GHZ 128x128 mappings
+		lea	(Blk128_Title).l,a0		    ; load Title 128x128 mappings
 		lea	(v_128x128).l,a1			; set target buffer for chunks mappings
 		bsr.w	KosDec					; decompress Kosinski-compressed chunks mappings to buffer
 
@@ -1896,7 +1896,7 @@ Tit_LoadText:
 	endif
 
 		locVRAM	ArtTile_Level*tile_size			; set target VRAM location for level patterns
-		lea	(Nem_GHZ_1st).l,a0			; load first half of GHZ patterns
+		lea	(Nem_Title).l,a0		; load Title patterns
 		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
 
 		moveq	#palid_Title,d0				; load title screen palette...
@@ -3018,8 +3018,8 @@ ColPointers:	dc.l Col_GHZ_1	; MJ: each zone now has two entries
 		dc.l Col_SBZ_1
 		dc.l Col_SBZ_2
 		zonewarning ColPointers,8
-		;dc.l Col_GHZ_1 ; The ending doesn't get an entry, as it's hardcoded to use Col_GHZ
-		;dc.l Col_GHZ_2
+		dc.l Col_Ending_1 ; Pointer for Ending
+		dc.l Col_Ending_2
 ; ===========================================================================
 ; >>> Routines to set and update values that change on a fixed timer
 	include	"_inc/Oscillatory Routines.asm"
@@ -3496,10 +3496,10 @@ End_LoadData:
 		bset	#2,(v_fg_scroll_flags).w		; draw an extra column at the left side of the screen during level start
 		bsr.w	LevelDataLoad				; load block mappings and palettes
 		bsr.w	LoadTilesFromStart			; fully draw the foreground and background once before fade-in
-		lea	(Col_GHZ_1).l,a0			; MJ: Set first collision for ending
+		lea	(Col_Ending_1).l,a0			; MJ: Set first collision for ending
 		lea	(v_collision1).w,a1
 		bsr.w	KosDec
-		lea	(Col_GHZ_2).l,a0			; MJ: Set second collision for ending
+		lea	(Col_Ending_2).l,a0			; MJ: Set second collision for ending
 		lea	(v_collision2).w,a1
 		bsr.w	KosDec
 		enable_ints					; enable interrupts
@@ -4634,13 +4634,25 @@ Nem_Squirrel:	binclude	"artnem/Animal Squirrel.nem"
 ; ---------------------------------------------------------------------------
 ; Compressed graphics - primary patterns and block mappings
 ; ---------------------------------------------------------------------------
+Blk16_Title:	binclude	"map16/Title.eni"
+		even
+Nem_Title:	binclude	"artnem/8x8 - Title.nem"	; Title screen patterns
+		even
+Blk128_Title:	binclude	"map128/Title.kos"
+		even
+
 Blk16_GHZ:	binclude	"map16/GHZ.eni"
 		even
-Nem_GHZ_1st:	binclude	"artnem/8x8 - GHZ1.nem" ; GHZ primary patterns
-		even
-Nem_GHZ_2nd:	binclude	"artnem/8x8 - GHZ2.nem" ; GHZ secondary patterns
+Nem_GHZ:	binclude	"artnem/8x8 - GHZ.nem"	; GHZ patterns
 		even
 Blk128_GHZ:	binclude	"map128/GHZ.kos"
+		even
+
+Blk16_Ending:	binclude	"map16/Ending.eni"
+		even
+Nem_Ending:	binclude	"artnem/8x8 - Ending.nem" ; Ending sequence patterns
+		even
+Blk128_Ending:	binclude	"map128/Ending.kos"
 		even
 
 Blk16_LZ:	binclude	"map16/LZ.eni"
@@ -4781,6 +4793,11 @@ Col_SYZ_2:	binclude	"collide/SYZ2.kos"	; SYZ index 2
 Col_SBZ_1:	binclude	"collide/SBZ1.kos"	; SBZ index 1
 		even
 Col_SBZ_2:	binclude	"collide/SBZ2.kos"	; SBZ index 2
+		even
+
+Col_Ending_1:	binclude	"collide/Ending1.kos"	; Ending index 1
+		even
+Col_Ending_2:	binclude	"collide/Ending2.kos"	; Ending index 2
 		even
 
 ; ---------------------------------------------------------------------------
