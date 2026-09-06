@@ -1489,22 +1489,24 @@ Sonic_Floor:
 		move.w	#v_collision2,(v_collindex).w	; MJ: load second collision data location
 .first:		move.b	(v_lrb_solid_bit).w,d5		; MJ: load L/R/B soldity bit
 
-		move.w	obVelX(a0),d1				; get current horizontal speed
-		move.w	obVelY(a0),d2				; get current vertical speed
-		jsr	(CalcAngle).l				; calculate arctan based on Sonic's current fall direction
-		move.b	d0,(v_unused3).w			; (unused) store basic angle
-		subi.b	#$20,d0					; rotate 45 degrees counterclockwise
-		move.b	d0,(v_unused4).w			; (unused) store -45 degrees angle
-		andi.b	#$C0,d0					; snap to nearest multiple of 90 degrees
-		move.b	d0,(v_unused5).w			; (unused) store snapped angle
+		move.w	obVelX(a0),d0				; get X speed
+		move.w	obVelY(a0),d1				; get Y speed
+		bpl.s	SonAirCol_PosY				; if it's positive, branch
+		cmp.w	d0,d1					; are we moving towards the left?
+		bgt.w	Sonic_FloorLeft				; if so, branch
+		neg.w	d0					; negate for right cheeck
+		cmp.w	d0,d1					; are we moving towards the right?
+		bge.w	Sonic_FloorRight			; if so, branch
+		bra.w	Sonic_FloorUp				; we are moving upwards
+; ===========================================================================
 
-		cmpi.b	#$40,d0					; is main movement direction to the left?
-		beq.w	Sonic_FloorLeft				; if yes, branch
-		cmpi.b	#$80,d0					; is main movement direction upward?
-		beq.w	Sonic_FloorUp				; if yes, branch
-		cmpi.b	#$C0,d0					; is main movement direction to the right?
-		beq.w	Sonic_FloorRight			; if yes, branch
-		; otherwise, d0 is $00 (fall-through...)
+SonAirCol_PosY:
+		cmp.w	d0,d1					; are we moving towards the right?
+		blt.w	Sonic_FloorRight			; if so, branch
+		neg.w	d0					; negate for left check
+		cmp.w	d0,d1					; are we moving towards the left?
+		ble.w	Sonic_FloorLeft				; if so, branch
+		; otherwise, we know we're falling down (fall-through...)
 
 ; ---------------------------------------------------------------------------
 ; When Sonic is in-air with his main momentum being downward
@@ -1534,7 +1536,6 @@ Sonic_FloorDown:
 ; loc_13602:
 .norightgraze:
 		bsr.w	Sonic_FindFloor				; find distance between Sonic and floor
-		move.b	d1,(v_unused6).w			; (unused) store distance to floor
 		tst.w	d1					; has Sonic touched the floor again?
 	if FixBugs=0
 		bpl.s	.return					; if not, branch
