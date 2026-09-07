@@ -1859,14 +1859,9 @@ Tit_LoadText:
 		bsr.w	LevelSizeLoad				; load level size (will use GHZ1's sizes)
 		bsr.w	DeformLayers				; initialize background deformation before fade-in (redundant here)
 
-		lea	(v_16x16).w,a1				; set target buffer for blocks mappings
-		lea	(Blk16_Title).l,a0		; load Title 16x16 blocks mappings
-		move.w	#ArtTile_Level,d0			; set to target VRAM address $0000
-		bsr.w	EniDec					; decompress Enigma-compressed blocks mappings to buffer
+		move.l	#Blk16_Title,(v_rom_blocks).w		; set Blk16 pointer to use Title blocks
 
-		lea	(Blk128_Title).l,a0		    ; load Title 128x128 mappings
-		lea	(v_128x128).l,a1			; set target buffer for chunks mappings
-		bsr.w	KosDec					; decompress Kosinski-compressed chunks mappings to buffer
+		move.l	#Blk128_Title,(v_rom_chunks).w		; set Blk128 pointer to use Title blocks
 
 		bsr.w	LevelLayoutLoad				; load level layout for the background
 		bsr.w	PaletteFadeOut				; fade-out "SONIC TEAM PRESENTS" screen
@@ -3510,7 +3505,7 @@ End_LoadData:
 		bsr.w	KosDec
 		enable_ints					; enable interrupts
 		lea	(Kos_EndFlowers).l,a0			; load extra flower patterns
-		lea	(v_128x128+$20*chunk_size_128).l,a1	; RAM address to buffer the patterns (overwriting unused chunk RAM)
+		lea	(v_ram_start+$20*chunk_size_128).l,a1	; RAM address to buffer the patterns (overwriting unused chunk RAM)
 		bsr.w	KosDec					; decompress Kosinski-compressed chunks mappings to buffer
 		moveq	#palid_Sonic,d0				; load Sonic's palette...
 		bsr.w	PalLoad_Fade				; ...to fade-in buffer
@@ -4640,71 +4635,71 @@ Nem_Squirrel:	binclude	"artnem/Animal Squirrel.nem"
 ; ---------------------------------------------------------------------------
 ; Compressed graphics - primary patterns and block mappings
 ; ---------------------------------------------------------------------------
-Blk16_Title:	binclude	"map16/Title.eni"
+Blk16_Title:	binclude	"map16/Title.unc"
 		even
 Nem_Title:	binclude	"artnem/8x8 - Title.nem"	; Title screen patterns
 		even
-Blk128_Title:	binclude	"map128/Title.kos"
+Blk128_Title:	binclude	"map128/Title.unc"
 		even
 
-Blk16_GHZ:	binclude	"map16/GHZ.eni"
+Blk16_GHZ:	binclude	"map16/GHZ.unc"
 		even
 Kos_GHZ:	binclude	"artkos/8x8 - GHZ.kos"	; GHZ patterns
 		even
-Blk128_GHZ:	binclude	"map128/GHZ.kos"
+Blk128_GHZ:	binclude	"map128/GHZ.unc"
 		even
 
-Blk16_Ending:	binclude	"map16/Ending.eni"
+Blk16_Ending:	binclude	"map16/Ending.unc"
 		even
 Kos_Ending:	binclude	"artkos/8x8 - Ending.kos" ; Ending sequence patterns
 		even
-Blk128_Ending:	binclude	"map128/Ending.kos"
+Blk128_Ending:	binclude	"map128/Ending.unc"
 		even
 
-Blk16_LZ:	binclude	"map16/LZ.eni"
+Blk16_LZ:	binclude	"map16/LZ.unc"
 		even
 Kos_LZ:		binclude	"artkos/8x8 - LZ.kos" ; LZ primary patterns
 		even
-Blk128_LZ:	binclude	"map128/LZ.kos"
+Blk128_LZ:	binclude	"map128/LZ.unc"
 		even
 
-Blk16_MZ:	binclude	"map16/MZ.eni"
+Blk16_MZ:	binclude	"map16/MZ.unc"
 		even
 Kos_MZ:		binclude	"artkos/8x8 - MZ.kos" ; MZ primary patterns
 		even
 Blk128_MZ:
 	if Revision=0
-		binclude	"map128/MZ (REV00).kos"
+		binclude	"map128/MZ (REV00).unc"
 		even
 	else
-		binclude	"map128/MZ (REV01).kos"
+		binclude	"map128/MZ (REV01).unc"
 		even
 	endif
 
-Blk16_SLZ:	binclude	"map16/SLZ.eni"
+Blk16_SLZ:	binclude	"map16/SLZ.unc"
 		even
 Kos_SLZ:	binclude	"artkos/8x8 - SLZ.kos" ; SLZ primary patterns
 		even
-Blk128_SLZ:	binclude	"map128/SLZ.kos"
+Blk128_SLZ:	binclude	"map128/SLZ.unc"
 		even
 
-Blk16_SYZ:	binclude	"map16/SYZ.eni"
+Blk16_SYZ:	binclude	"map16/SYZ.unc"
 		even
 Kos_SYZ:	binclude	"artkos/8x8 - SYZ.kos" ; SYZ primary patterns
 		even
-Blk128_SYZ:	binclude	"map128/SYZ.kos"
+Blk128_SYZ:	binclude	"map128/SYZ.unc"
 		even
 
-Blk16_SBZ:	binclude	"map16/SBZ.eni"
+Blk16_SBZ:	binclude	"map16/SBZ.unc"
 		even
 Kos_SBZ:	binclude	"artkos/8x8 - SBZ.kos" ; SBZ primary patterns
 		even
 Blk128_SBZ:
 	if Revision=0
-		binclude	"map128/SBZ (REV00).kos"
+		binclude	"map128/SBZ (REV00).unc"
 		even
 	else
-		binclude	"map128/SBZ (REV01).kos"
+		binclude	"map128/SBZ (REV01).unc"
 		even
 	endif
 

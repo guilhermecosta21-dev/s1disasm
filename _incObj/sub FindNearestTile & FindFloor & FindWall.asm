@@ -19,7 +19,7 @@ FindNearestTile:
 		lsr.w	#7,d1			; MJ: shift to right side
 		andi.w	#$7F,d1					; read only high byte of X-position
 		add.w	d1,d0					; combine for position within layout
-		moveq	#$FFFFFFFF,d1				; d1 = $FFFFFFFF (used to make a RAM address)
+		moveq	#0,d1			; changed from -1 to 0
 		lea	(v_lvllayout_fg).w,a1
 		move.b	(a1,d0.w),d1				; get 128x128 chunk number
 
@@ -32,7 +32,7 @@ FindNearestTile:
 		lsr.w	#3,d0
 		andi.w	#$E,d0			; MJ: keep X within 10 pixels
 		add.w	d0,d1					; add to base address
-
+        add.l	(v_rom_chunks).w,d1			; add ROM chunks pointer
 		movea.l	d1,a1			; MJ: set address (Chunk to read)
 		rts
 ; End of function FindNearestTile

@@ -301,7 +301,7 @@ AniArt_Ending_BigFlower:
 
 		move.b	#8-1,(v_lani1_time).w			; time to display each frame
 		lea	(Art_GhzFlower1).l,a1			; load big flower patterns
-		lea	(v_128x128+$20*chunk_size_128).l,a2 ; load 2nd big flower from RAM (overwriting unused chunk RAM)
+		lea	(v_ram_start+$20*chunk_size_128).l,a2 ; load 2nd big flower from RAM (overwriting unused chunk RAM)
 		move.b	(v_lani1_frame).w,d0			; get current frame ID
 		addq.b	#1,(v_lani1_frame).w			; increment frame counter
 		andi.w	#1,d0					; there are only 2 frames
@@ -358,7 +358,7 @@ AniArt_Ending_Flower3:
 		lsl.w	#8,d0					; multiply by $100
 		add.w	d0,d0					; multiply by 2
 		locVRAM	ArtTile_GHZ_Flower_3*tile_size		; VRAM address
-		lea	(v_128x128+$28*chunk_size_128).l,a1 ; load special flower patterns from RAM (overwriting unused chunk RAM)
+		lea	(v_ram_start+$28*chunk_size_128).l,a1 ; load special flower patterns from RAM (overwriting unused chunk RAM)
 		lea	(a1,d0.w),a1				; jump to appropriate tile
 		move.w	#.size-1,d1				; number of 8x8 tiles
 		bra.w	LoadTiles				; transfer tiles to VRAM
@@ -382,7 +382,7 @@ AniArt_Ending_Flower4:
 		lsl.w	#8,d0					; multiply by $100
 		add.w	d0,d0					; multiply by 2
 		locVRAM	ArtTile_GHZ_Flower_4*tile_size		; VRAM address
-		lea	(v_128x128+$34*chunk_size_128).l,a1	; load special flower patterns from RAM (overwriting unused chunk RAM)
+		lea	(v_ram_start+$34*chunk_size_128).l,a1	; load special flower patterns from RAM (overwriting unused chunk RAM)
 		lea	(a1,d0.w),a1				; jump to appropriate tile
 		move.w	#.size-1,d1				; number of 8x8 tiles
 		bra.w	LoadTiles				; transfer tiles to VRAM

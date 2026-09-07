@@ -739,7 +739,7 @@ GetBlockData:
 
 GetBlockData_2:
 		add.w	4(a3),d4				; add Screen Y position
-		lea	(v_16x16).w,a1				; load block RAM
+		movea.l	(v_rom_blocks).w,a1			; load ROM Blk16 pointer
 
 		; Turn Y coordinate into index into level layout
 		move.w	d4,d3					; copy X position to d3
@@ -754,7 +754,7 @@ GetBlockData_2:
 		; Get chunk from level layout
 		lsl.w	#1,d3					; MJ: multiply by 2 (So it skips the BG)
 		add.w	d3,d0					; fuse Y and X together (d0 = layout position of chunk)
-		moveq	#$FFFFFFFF,d3				; prepare RAM address ($FFFF???? for layout)
+		moveq	#0,d3			; changed from -1 to 0
 		move.b	(a4,d0.w),d3				; load correct chunk ID from layout
 
 		; Turn chunk ID into index into chunk table
@@ -771,6 +771,7 @@ GetBlockData_2:
 		; Get block metadata from chunk
 		add.w	d4,d3					; add block's Y position to the chunk address in d3
 		add.w	d5,d3					; add block's X position to the chunk address in d3
+		add.l	(v_rom_chunks).w,d3			; add ROM Blk128 pointer to offset
 		movea.l	d3,a0					; copy chunk/block address to a0
 		move.w	(a0),d3					; load block ID from chunk
 

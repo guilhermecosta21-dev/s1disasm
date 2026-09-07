@@ -14,9 +14,7 @@ ramaddr function x,(-(x&$80000000)<<1)|x
 v_ram_start_def:
 v_ram_start:		equ	v_ram_start_def&$FFFFFF		; 24-bit addressing
 
-v_128x128_def:		ds.b	chunk_size_128*$100		; 128x128 tile mappings ($100 chunks)
-v_128x128:		equ	v_128x128_def&$FFFFFF		; 24-bit addressing
-v_128x128_end:
+			ds.b	$100*$80			; unused (previously 128x128 chunk mappings)
 
 v_lvllayout:		ds.b	layout_row*$10			; level layouts (FG/BG rows interlaced, 8 rows and $400 total)
 v_lvllayout_fg:		equ	v_lvllayout			; start address of foreground's first row
@@ -33,7 +31,7 @@ v_ngfx_buffer_end:
 
 v_spritequeue:		ds.b	spritelayer_num*spritelayer_size ; sprite display queue, in order of priority (8*$80=$400 bytes)
 
-v_16x16:		ds.b	$1800				; 16x16 tile mappings
+			ds.b	$1800				; unused (previously v_16x16 block mappings)
 
 VDP_Command_Buffer:	ds.w	7*$12				; stores 18 ($12) VDP commands to issue the next time ProcessDMAQueue is called
 VDP_Command_Buffer_Slot:ds.l	1				; stores the address of the next open slot for a queued VDP command
@@ -298,7 +296,8 @@ v_scroll_block_1_size:	ds.w	1
 v_scroll_block_2_size:	ds.w	1				; unused
 v_scroll_block_3_size:	ds.w	1				; unused
 v_scroll_block_4_size:	ds.w	1				; unused
-			ds.b	8				; unused
+v_rom_blocks:		ds.l	1				; pointer for 16x16 blocks in ROM
+v_rom_chunks:		ds.l	1				; pointer for 128x128 chunks in ROM
 v_levelvariables_end:
 
 v_spritetablebuffer:	ds.b	spritetable_entrysize*sprites_max ; sprite table (8*80=$280 bytes) (last $80 bytes are overwritten by v_palette_water_fading)
