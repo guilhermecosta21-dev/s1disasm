@@ -166,11 +166,10 @@ SS_AnimateBlocks:
 		lea	(v_ss_spritesettings+5).l,a1		; load sprite settings array, target frame ID (byte, +5)
 		subq.b	#1,(v_ani1_time).w			; decrement delay until ring animation needs to update
 		bpl.s	.updateRingFrame			; if time remains, branch
-		move.b	#8-1,(v_ani1_time).w			; reset delay
+		move.b	#4-1,(v_ani1_time).w			; reset delay
 		addq.b	#1,(v_ani1_frame).w			; advance frame ID
-		andi.b	#3,(v_ani1_frame).w			; wrap around every 8 frames
+		andi.b	#7,(v_ani1_frame).w			; wrap around every 4 frames
 	.updateRingFrame:
-		move.b	(v_ani1_frame).w,8*id_SS_Ring(a1)	; set new ring frame ID
 
 	; --- Animate various other blocks (2 frames) ---
 		subq.b	#1,(v_ani2_time).w			; decrement delay until frames need to update

@@ -2740,6 +2740,7 @@ Level_CheckTtlCard:
 		jsr	(Hud_Base).l				; load basic HUD graphics (only in levels, not in the ending demos)
 
 Level_SkipTtlCard:
+        bsr.w	InitRingFrame
 		moveq	#palid_Sonic,d0				; load Sonic's palette to fade-in buffer
 		bsr.w	PalLoad_Fade				; (doesn't actually do anything, the PalFadeIn_Alt call below skips the first palette line)
 		bsr.w	LevelSizeLoad				; load level size and set default level boundaries
@@ -3025,10 +3026,80 @@ ColPointers:	dc.l Col_GHZ_1	; MJ: each zone now has two entries
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
+; Queue ring frame graphics loading
+; ---------------------------------------------------------------------------
+
+InitRingFrame:
+		st.b	(v_ani1_prev).w			; Make sure initial frame art loads
+		st.b	(v_ani2_prev).w
+		st.b	(v_ani3_prev).w
+
+LoadRingFrame:
+		cmpi.b	#6,(v_player+obRoutine).w	; Is Sonic dead?
+		bhs.w	.end				; If so, branch
+
+		moveq	#0,d1				; Get ring frame offset for regular rings
+		move.b	(v_ani1_frame).w,d1
+		cmp.b	(v_ani1_prev).w,d1		; Has it changed?
+		beq.s	.noring				; If not, branch
+		move.b	d1,(v_ani1_prev).w		; Mark frame's art as loaded
+
+		lsl.l	#7,d1				; Each ring frame takes $80 bytes, so multiply by $80
+		addi.l	#Art_Ring,d1			; Queue a DMA transfer for this ring frame
+		move.w	#ArtTile_Ring*tile_size,d2
+		move.w	#$80/2,d3
+		jsr	(QueueDMATransfer).l		; (or DMA_68KtoVRAM)
+
+.noring:
+		cmpi.b	#id_Special,(v_gamemode).w	; Are we in a special stage?
+		beq.s	.end				; If so, branch
+
+		tst.b	(v_gfxbigring).w		; Is a there a special stage ring?
+		beq.s	.nossring			; If not, branch
+
+		move.l	#Art_BigRing,d2			; Use normal special stage ring graphics
+		cmpi.b	#1,(v_gfxbigring).w		; Should we be using them?
+		beq.s	.loadssring			; If so, branch
+		move.l	#Art_BigFlash,d2		; Use special stage ring flash graphics
+
+.loadssring:
+		moveq	#0,d1				; Get ring frame offset for special stage rings
+		move.b	(v_ani2_frame).w,d1
+		cmp.b	(v_ani2_prev).w,d1		; Has it changed?
+		beq.s	.nossring			; If not, branch
+		move.b	d1,(v_ani2_prev).w		; Mark frame's art as loaded
+
+		lsl.l	#8,d1				; Each giant ring frame takes $800 bytes, so multiply by $800
+		lsl.l	#3,d1
+		add.l	d2,d1				; Queue a DMA transfer for this ring frame
+		move.w	#ArtTile_Giant_Ring*tile_size,d2
+		move.w	#$800/2,d3
+		jsr	(QueueDMATransfer).l		; (or DMA_68KtoVRAM)
+
+.nossring:
+		moveq	#0,d1				; Get ring frame offset for lost rings
+		move.b	(v_ani3_frame).w,d1
+		cmp.b	(v_ani3_prev).w,d1		; Has it changed?
+		beq.s	.end				; If not, branch
+		move.b	d1,(v_ani3_prev).w		; Mark frame's art as loaded
+
+		lsl.l	#7,d1				; Each ring frame takes $80 bytes, so multiply by $80
+		add.l	#Art_Ring,d1			; Queue a DMA transfer for this ring frame
+		move.w	#ArtTile_Ring_Loss*tile_size,d2
+		move.w	#$80/2,d3
+		jmp	(QueueDMATransfer).l		; (or DMA_68KtoVRAM)
+
+.end:
+		rts
+; End of function LoadRingFrame
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
 ; Subroutine to change synchronised animation variables (rings, giant rings)
 ; ---------------------------------------------------------------------------
 
-SynchroAnimate:
+SynchroAnimate: bsr.w	LoadRingFrame
 
 ; Used for GHZ spiked log
 Sync1:
@@ -3042,19 +3113,19 @@ Sync1:
 Sync2:
 		subq.b	#1,(v_ani1_time).w			; has second timer reached 0?
 		bpl.s	Sync3					; if not, branch
-		move.b	#8-1,(v_ani1_time).w			; reset second timer to 8 frames
+		move.b	#4-1,(v_ani1_time).w			; reset second timer to 4 frames
 		addq.b	#1,(v_ani1_frame).w			; go to next frame
-		andi.b	#3,(v_ani1_frame).w			; limit to frames 0-3
+		andi.b	#7,(v_ani1_frame).w			; limit to frames 0-7
 
-; Used for nothing
+; Used for giant rings
 Sync3:
-		subq.b	#1,(v_ani2_time).w			; has third timer reached 0?
-		bpl.s	Sync4					; if not, branch
-		move.b	#8-1,(v_ani2_time).w			; reset third timer to 8 frames
-		addq.b	#1,(v_ani2_frame).w			; go to next frame
-		cmpi.b	#6,(v_ani2_frame).w			; limit to frames 0-5
-		blo.s	Sync4					; if still frame 0-5, branch
-		move.b	#0,(v_ani2_frame).w			; set to frame 0 when it reached frame 6
+		cmpi.b	#1,(v_gfxbigring).w	; Is there a special stage ring and is its animation not being overridden?
+		bne.s	Sync4			; If not, branch
+		subq.b	#1,(v_ani2_time).w
+		bpl.s	Sync4
+		move.b	#4-1,(v_ani2_time).w
+		addq.b	#1,(v_ani2_frame).w
+		andi.b	#7,(v_ani2_frame).w
 
 ; Used for bouncing rings
 Sync4:
@@ -3064,8 +3135,8 @@ Sync4:
 		move.b	(v_ani3_time).w,d0			; get remaining ring loss timer
 		add.w	(v_ani3_buf).w,d0			; add buffered timer value
 		move.w	d0,(v_ani3_buf).w			; set that as new buffered timer
-		rol.w	#7,d0					; align for speed
-		andi.w	#3,d0					; limit to frames 0-3
+		rol.w	#8,d0					; align for speed
+		andi.w	#7,d0					; limit to frames 0-7
 		move.b	d0,(v_ani3_frame).w			; set as current frame for lost rings
 		subq.b	#1,(v_ani3_time).w			; decrease ring loss timer
 
@@ -3137,6 +3208,7 @@ GM_Special:		; white fade-out from previous game mode
 		bsr.w	SS_BGLoad				; load background clouds/bubbles/birds/fish mappings
 		moveq	#plcid_SpecialStage,d0			; load special stage patterns
 		bsr.w	QuickPLC				; execute PLCs immediately (no queue)
+		bsr.w	InitRingFrame
 
 		clearRAM v_objspace				; clear object RAM space
 		clearRAM v_levelvariables			; clear various level variables
@@ -3203,6 +3275,7 @@ SS_MainLoop:
 
 		jsr	(ExecuteObjects).l			; execute Special Stage object
 		jsr	(BuildSprites).l			; build sprites
+		bsr.w	LoadRingFrame
 		jsr	(SS_ShowLayout).l			; render Special Stage layout
 		bsr.w	SS_BGAnimate				; animate Special Stage background
 
@@ -4020,15 +4093,8 @@ Map_UnkExplode:	include	"_maps/Unused Explosion.asm"
 		include	"_incObj/25, 37 Rings.asm"
 		include	"_incObj/4B, 7C Giant Ring and Flash.asm"
 		include	"_anim/Rings.asm"
-Map_Ring:   if Revision=0
-		include	"_maps/Rings (REV00).asm"
-	    else
-		; REV01 added an extra blank frame, possibly to mitigate
-		; rings occasionally popping up in the sign post sparkles
-		include	"_maps/Rings (REV01).asm"
-	    endif
+Map_Ring:	include "_maps/Rings.asm"
 Map_GRing:	include	"_maps/Giant Ring.asm"
-Map_Flash:	include	"_maps/Ring Flash.asm"
 
 
 ; ===========================================================================
@@ -4583,7 +4649,9 @@ Nem_Hud:	binclude	"artnem/HUD.nem" ; HUD (rings, time, score)
 		even
 Nem_Lives:	binclude	"artnem/HUD - Life Counter Icon.nem"
 		even
-Nem_Ring:	binclude	"artnem/Rings.nem"
+Art_Ring:	binclude	"artunc/Rings.unc"
+		even
+Nem_Sparkles:	binclude	"artnem/Ring Sparkles.nem"
 		even
 Nem_Monitors:	binclude	"artnem/Monitors.nem"
 		even
@@ -4601,7 +4669,7 @@ Nem_SignPost:	binclude	"artnem/Signpost.nem" ; end of level signpost
 		even
 Nem_Lamp:	binclude	"artnem/Lamppost.nem"
 		even
-Nem_BigFlash:	binclude	"artnem/Giant Ring Flash.nem"
+Art_BigFlash:	binclude	"artunc/Giant Ring Flash.unc"
 		even
 Nem_Bonus:	binclude	"artnem/Hidden Bonuses.nem" ; hidden bonuses at end of a level
 		even

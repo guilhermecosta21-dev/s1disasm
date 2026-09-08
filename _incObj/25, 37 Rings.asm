@@ -131,7 +131,6 @@ Ring_SpawningDone:
 ; ---------------------------------------------------------------------------
 
 Ring_Animate:	; Routine 2
-		move.b	(v_ani1_frame).w,obFrame(a0)		; set frame (updated in SynchroAnimate => Sync2)
 
 	if FixBugs
 		; Objects shouldn't call DisplaySprite and DeleteObject in
@@ -258,7 +257,7 @@ RLoss_Count:	; Routine 0
 		move.w	obX(a0),obX(a1)				; spawn at same X-position
 		move.w	obY(a0),obY(a1)				; spawn at same Y-position
 		move.l	#Map_Ring,obMap(a1)			; set mappings
-		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a1)	; set art tile and palette line
+		move.w	#ArtTile_Ring_Loss|Tile_Pal2,obGfx(a1)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
 		move.w	#$180,obPriority(a1)			; set sprite priority (1 lower than normal rings)
 		move.b	#col_12x12|col_item,obColType(a1)	; set to power-up collision type and hitbox 12x12 (=$47)
@@ -312,7 +311,6 @@ RLoss_Count:	; Routine 0
 ; ---------------------------------------------------------------------------
 
 RLoss_Bounce:	; Routine 2
-		move.b	(v_ani3_frame).w,obFrame(a0)		; set frame (updated in SynchroAnimate => Sync4)
 
 		bsr.w	SpeedToPos				; update ring position based on speed
 		addi.w	#$18,obVelY(a0)				; make ring fall faster
@@ -364,6 +362,7 @@ RLoss_Collect:	; Routine 4
 ; ---------------------------------------------------------------------------
 
 RLoss_Sparkle:	; Routine 6
+        move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a0)
 		lea	(Ani_Ring).l,a1				; get ring animation script
 		bsr.w	AnimateSprite				; advance ring animation
 		bra.w	DisplaySprite				; display ring sprite
@@ -371,4 +370,3 @@ RLoss_Sparkle:	; Routine 6
 
 RLoss_Delete:	; Routine 8
 		bra.w	DeleteObject				; delete this ring
-

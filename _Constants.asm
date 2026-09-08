@@ -595,6 +595,8 @@ ArtTile_Sonic:			equ $780
 ArtTile_Points:			equ $797
 ArtTile_Lamppost:		equ $7A0
 ArtTile_Ring:			equ $7B2
+ArtTile_Ring_Loss:		equ ArtTile_Ring+4
+ArtTile_Sparkles:		equ ArtTile_Ring+$A
 ArtTile_Lives_Counter:		equ $7D4
 ArtTile_Lives_Counter_Num:	equ ArtTile_Lives_Counter+9
 
@@ -608,7 +610,6 @@ ArtTile_Eggman_Exhaust:		equ ArtTile_Eggman+$12A
 
 ; End of Level
 ArtTile_Giant_Ring:		equ $400
-ArtTile_Giant_Ring_Flash:	equ $462
 ArtTile_Prison_Capsule:		equ $49D
 ArtTile_Hidden_Points:		equ $4B6
 ArtTile_Warp:			equ $541

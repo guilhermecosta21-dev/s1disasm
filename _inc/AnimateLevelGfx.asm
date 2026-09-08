@@ -8,7 +8,6 @@ AnimateLevelGfx:
 		bne.s	.isPaused				; if yes, branch
 
 		lea	(vdp_data_port).l,a6			; prepare VDP data port (shared by all gfx routines)
-		bsr.w	AniArt_GiantRing			; load giant ring graphics, if necessary
 
 		moveq	#0,d0					; clear d0
 		move.b	(v_zone).w,d0				; get current zone ID
@@ -564,39 +563,3 @@ AniArt_MZMagma:	dc.w	.magma_0123-AniArt_MZMagma		; 0 1 2 3
 		dbf	d1,.magma_F012				; repeat until the column is written
 		rts						; return
 ; End of function AniArt_MZMagma
-
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Animated pattern routine - load uncompressed Giant Ring patterns
-; The graphics are loaded incrementally at 14 tiles per frame.
-; This gets triggered from GRing_Okay by setting v_gfxbigring to:
-; Art_BigRing_size = 98 tiles * tile_size = $C40
-; ---------------------------------------------------------------------------
-
-AniArt_GiantRing:
-		tst.w	(v_gfxbigring).w			; are giant ring graphics set to be loaded?
-		bne.s	.loadTiles				; if so, get to work
-		rts						; nothing to do
-; ---------------------------------------------------------------------------
-
-	.loadTiles:
-		.size:	= 14					; number of tiles to load per frame
-
-		subi.w	#.size*tile_size,(v_gfxbigring).w	; count-down the 14 tiles we're going to load now
-		lea	(Art_BigRing).l,a1			; load uncompressed giant ring patterns
-		moveq	#0,d0					; clear d0
-		move.w	(v_gfxbigring).w,d0			; load current tile offset for giant ring patterns
-		lea	(a1,d0.w),a1				; jump to appropriate tile in patterns
-
-		; Turn VRAM address into VDP command
-		addi.w	#ArtTile_Giant_Ring*tile_size,d0	; advance to starting VRAM address of giant ring
-		lsl.l	#2,d0					; push upper address bits into upper word
-		lsr.w	#2,d0					; send rest back
-		ori.w	#$4000,d0				; set VDP mode bits (VRAM write mode)
-		swap	d0					; align for VDP in order
-		move.l	d0,4(a6)				; send VDP command (write to VRAM at address contained in v_gfxbigring)
-
-		move.w	#.size-1,d1				; number of 8x8 tiles
-		bra.w	LoadTiles				; transfer tiles to VRAM
-; End of function AniArt_GiantRing

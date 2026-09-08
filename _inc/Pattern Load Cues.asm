@@ -74,7 +74,7 @@ PLC_Main:	plcheader
 		plcm	Nem_Lamp,	ArtTile_Lamppost		; lamppost
 		plcm	Nem_Hud,	ArtTile_HUD			; HUD
 		plcm	Nem_Lives,	ArtTile_Lives_Counter		; lives counter
-		plcm	Nem_Ring,	ArtTile_Ring			; rings
+		plcm	Nem_Sparkles, ArtTile_Sparkles    ; ring sparkles
 		plcm	Nem_Points,	ArtTile_Points			; points from enemy
 PLC_Main_end:
 
@@ -289,7 +289,6 @@ PLC_Boss_end:
 PLC_Signpost:	plcheader
 		plcm	Nem_SignPost,	ArtTile_Signpost		; signpost
 		plcm	Nem_Bonus,	ArtTile_Hidden_Points		; hidden bonus points
-		plcm	Nem_BigFlash,	ArtTile_Giant_Ring_Flash	; giant ring flash effect
 PLC_Signpost_end:
 
 ; ---------------------------------------------------------------------------

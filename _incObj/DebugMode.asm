@@ -582,7 +582,7 @@ __LABEL__:	label	*
 	else
 		; REV01 cleared out most of this list, only leaving rings (two for some reason, second one is blank...)
 		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug 	Map_Ring,	id_Rings,		0,	8,	ArtTile_Ring|Tile_Pal2
+		dbug 	Map_Ring,	id_Rings,		0,	5,	ArtTile_Ring|Tile_Pal2
 	endif
 .EndingSS_end:
 

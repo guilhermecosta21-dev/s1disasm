@@ -416,7 +416,10 @@ v_ani2_frame:		ds.b	1				; synchronised sprite animation 2 - current frame
 v_ani3_time:		ds.b	1				; synchronised sprite animation 3 - time until next frame
 v_ani3_frame:		ds.b	1				; synchronised sprite animation 3 - current frame
 v_ani3_buf:		ds.w	1				; synchronised sprite animation 3 - info buffer
-			ds.b	$26				; unused
+v_ani1_prev:		ds.b	1		; synchronised sprite animation 1 - previous frame
+v_ani2_prev:		ds.b	1		; synchronised sprite animation 2 - previous frame
+v_ani3_prev:		ds.b	1		; synchronised sprite animation 3 - previous frame
+			ds.b	$23		; unused (used to be $26, three were taken for the above variables)
 v_limittopdb:		ds.w	1				; level upper boundary, buffered for debug mode
 v_limitbtmdb:		ds.w	1				; level bottom boundary, buffered for debug mode
 			ds.b	$C				; unused
