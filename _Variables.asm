@@ -253,7 +253,7 @@ v_palss_index:		ds.w	1				; palette cycling in Special Stage - index into palett
 v_ssbganim:		ds.w	1				; Special Stage background animation
 			ds.b	2				; unused
 v_obj31ypos:		ds.w	1				; y-position of object 31 (MZ stomper)
-			ds.b	1				; unused
+v_ssangleprev:			ds.b	1
 v_bossstatus:		ds.b	1				; status of boss and prison capsule (01 = boss defeated; 02 = prison opened)
 v_trackpos:		ds.w	1				; position tracking reference number
 v_trackbyte:		equ	v_trackpos+1			; low byte for position tracking

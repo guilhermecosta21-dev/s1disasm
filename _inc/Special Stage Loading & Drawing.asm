@@ -150,18 +150,6 @@ SS_ShowLayout:
 
 ; SS_AniWallsRings:
 SS_AnimateBlocks:
-	; --- Rotate square walls ---
-		lea	(v_ss_spritesettings+8+5-1).l,a1	; load sprite settings array, skip blank and target frame ID (word, +5-1)
-		moveq	#0,d0					; clear d0
-		move.b	(v_ssangle).w,d0			; get current rotation angle
-		lsr.b	#2,d0					; divide by 4 (walls are snapped to multiples of 4 degrees)
-		andi.w	#$F,d0					; limit to 16 rotations
-		moveq	#id_SS_WallGreen_8-1,d1			; rotate all wall blocks (id_SS_WallGreen_8 = last one = $24)
-	.rotateWalls:
-		move.w	d0,(a1)					; set new frame ID to rotated one
-		addq.w	#8,a1					; advance to next wall sprite setting
-		dbf	d1,.rotateWalls				; loop until all walls have been rotated
-
 	; --- Animate rings (8 frames) ---
 		lea	(v_ss_spritesettings+5).l,a1		; load sprite settings array, target frame ID (byte, +5)
 		subq.b	#1,(v_ani1_time).w			; decrement delay until ring animation needs to update
@@ -611,3 +599,31 @@ SS_LoadData:
 
 		rts						; return
 ; End of function SS_Load
+
+
+; ---------------------------------------------------------------------------
+; Subroutine to dynamically load wall graphics into VRAM
+; ---------------------------------------------------------------------------
+
+SS_LoadWalls:
+		moveq	#0,d0					; clear d0
+		move.b	(v_ssangle).w,d0			; get the Special Stage angle
+		lsr.b	#2,d0					; divide by four so it can be used as frame ID
+		andi.w	#$F,d0					; mask to a maximum of 16 frames
+		cmp.b	(v_ssangleprev).w,d0			; does the modified angle match the recorded value?
+		beq.w	.return					; if so, branch
+		move.b	d0,(v_ssangleprev).w			; record the modified angle for future comparison
+
+		lea	(Art_SSWalls).l,a1			; load wall art
+		lsl.w	#8,d0					; multiply by $200 because...
+		add.w	d0,d0					; ...tile_size ($20) * 16 sprites (extra add because lsl 9 doesn't work)
+		adda.w	d0,a1					; a1 = offset to current wall sprite for angle
+		
+		lea	(vdp_data_port).l,a6			; load VDP data port
+		locVRAM	ArtTile_SS_Wall*tile_size		; set target VRAM location for wall graphics
+		moveq	#16-1,d1				; write $10 8x8 tiles
+		jmp	(LoadTiles).l				; write tiles to VRAM
+
+	.return:
+		rts						; return
+; End of function SS_LoadWalls

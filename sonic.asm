@@ -747,6 +747,7 @@ VBlank_SpecialStage:
 
 		bsr.w	PalCycle_SS				; advance special stage palette cycle and animate bird/fish graphics
 
+		jsr	(SS_LoadWalls).l			; update graphics for square blocks in VRAM
 		tst.w	(v_generictimer).w			; is generic timer set?
 		beq.w	.end					; if not, branch
 		subq.w	#1,(v_generictimer).w			; decrement generic timer
@@ -832,6 +833,7 @@ VBlank_Continue:
 		jsr	ProcessDMAQueue(pc)
 		startZ80					; restart Z80
 
+		jsr	(SS_LoadWalls).l			; update graphics for square blocks in VRAM
 		tst.w	(v_generictimer).w			; is generic timer set?
 		beq.w	.end					; if not, branch
 		subq.w	#1,(v_generictimer).w			; decrement generic timer
@@ -3233,6 +3235,7 @@ GM_Special:		; white fade-out from previous game mode
 		move.l	#0,(v_screenposx).w			; reset X-camera position
 		move.l	#0,(v_screenposy).w			; reset Y-camera position
 		move.b	#id_SonicSpecial,(v_player).w		; load special stage Sonic object
+		move.b	#-1,(v_ssangleprev).w			; fill previous angle with obviously false value to force initial update
 		bsr.w	PalCycle_SS				; initialize palette cycle and background for fade-in
 		clr.w	(v_ssangle).w				; set stage angle to "upright"
 		move.w	#ss_rotatespeed,(v_ssrotate).w		; set initial stage rotation speed ($40, see object 09)
@@ -4413,7 +4416,7 @@ Nem_Goggle:	binclude	"artnem/Unused - Goggles.nem" ; unused goggles
 ; ---------------------------------------------------------------------------
 Map_SSWalls:	include	"_maps/SS Walls.asm"
 
-Nem_SSWalls:	binclude	"artnem/Special Walls.nem" ; special stage walls
+Art_SSWalls:	binclude	"artunc/Special Walls.unc" ; special stage walls
 		even
 Eni_SSBg1:	binclude	"tilemaps/SS Background 1.eni" ; special stage background (mappings)
 		even
