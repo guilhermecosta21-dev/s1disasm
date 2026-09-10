@@ -4395,9 +4395,9 @@ Nem_SyzSparkle:	binclude	"artnem/Unused - SYZ Sparkles.nem"
 		even
 	endif
 
-Nem_Shield:	binclude	"artnem/Shield.nem"
+Art_Shield:	binclude	"artunc/Shield.unc"
 		even
-Nem_Stars:	binclude	"artnem/Invincibility Stars.nem"
+Art_Stars:	binclude	"artunc/Invincibility Stars.unc"
 		even
 
 	if Revision=0

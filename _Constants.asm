@@ -577,7 +577,7 @@ ArtTile_Spikes:			equ $51B
 ArtTile_Spring_Horizontal:	equ $523
 ArtTile_Spring_Vertical:	equ $533
 ArtTile_Shield:			equ $541
-ArtTile_Invincibility:		equ $55C
+ArtTile_Invincibility:		equ ArtTile_Shield
 ArtTile_Game_Over:		equ $55E
 ArtTile_Title_Card:		equ $580
 ArtTile_Animal_1:		equ $580

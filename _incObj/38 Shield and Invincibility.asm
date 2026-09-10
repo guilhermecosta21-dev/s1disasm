@@ -1,3 +1,5 @@
+shistar_prev:	equ objoff_32		; previous frame, used to check if graphics need updating
+
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
 ; Object 38 - shield and invincibility stars
@@ -45,6 +47,15 @@ Shi_Shield:	; Routine 2
 		move.b	(v_player+obStatus).w,obStatus(a0)	; keep Sonic's status flags for rendering
 		lea	(Ani_Shield).l,a1			; load shield animation script
 		jsr	(AnimateSprite).l			; keep animating shield
+		move.b	obFrame(a0),d0				; load current frame to d0
+		cmp.b	shistar_prev(a0),d0			; has it changed?
+		beq.s	.display				; if so, branch
+		move.b	d0,shistar_prev(a0)			; mark frame's art as loaded
+		lea	ShieldStarDynPLC(pc),a2			; load shield/stars DPLCs to a2
+		move.l	#Art_Shield,d6				; load uncompressed graphics pointer to d6
+		move.w	#ArtTile_Shield*tile_size,d4		; load art tile x $20 to d4 to get VRAM offset
+		jsr	(LoadDynPLC).l				; load DPLCs
+.display:
 		jmp	(DisplaySprite).l			; display shield sprite
 
 	.hide:
@@ -56,28 +67,11 @@ Shi_Shield:	; Routine 2
 
 Shi_Stars:	; Routine 4
 		tst.b	(v_invinc).w				; has invincibility run out?
-		beq.s	Shi_Start_Delete			; if yes, delete stars object
+		beq.w	Shi_Start_Delete			; if yes, delete stars object
 
 		move.w	(v_trackpos).w,d0			; get index value for tracking data
 		move.b	obAnim(a0),d1				; get stars animation ID (1-4)
 		subq.b	#1,d1					; make it 0-based
-		bra.s	.trail					; skip over dead code
-
-; ===========================================================================
-; unused older trailing code that makes a much shorter trail
-	; .trail_unused:
-		lsl.b	#4,d1					; multiply animation ID by 16
-		addq.b	#4,d1
-		sub.b	d1,d0
-		move.b	stars_lag(a0),d1
-		sub.b	d1,d0					; use earlier tracking data to create trail
-		addq.b	#4,d1
-		andi.b	#$F,d1
-		move.b	d1,stars_lag(a0)
-		bra.s	.updateStars
-; ===========================================================================
-
-	.trail:
 		lsl.b	#3,d1					; multiply animation ID by 8
 		move.b	d1,d2
 		add.b	d1,d1
@@ -105,8 +99,26 @@ Shi_Stars:	; Routine 4
 		move.b	(v_player+obStatus).w,obStatus(a0)	; keep Sonic's status flags for rendering
 		lea	(Ani_Shield).l,a1			; load stars animation script (bundled with shield animations)
 		jsr	(AnimateSprite).l			; keep animating stars
+		cmpi.b	#1,obAnim(a0)				; is this the first invincibility object?
+		bne.s	.notfirst				; if not, don't spam the VDP with extra DMA transfers
+		move.b	obFrame(a0),d0				; load current frame to d0
+		cmp.b	shistar_prev(a0),d0			; has it changed?
+		beq.s	.display				; if so, branch
+		move.b	d0,shistar_prev(a0)			; mark frame's art as loaded
+		lea	ShieldStarDynPLC(pc),a2			; load shield/stars DPLCs to a2
+		move.l	#Art_Stars,d6				; load uncompressed graphics pointer to d6
+		move.w	#ArtTile_Invincibility*tile_size,d4	; load art tile x $20 to d4 to get VRAM offset
+		jsr	(LoadDynPLC).l				; load DPLCs
+		bra.s	.display				; draw sprite
+.notfirst:
+		tst.b	obFrame(a0)				; are we displaying a blank frame?
+		beq.s	.display				; if yes, branch
+		move.b	(v_starsobj1+obFrame).w,obFrame(a0)	; borrow frame from first invincibility object
+.display:
 		jmp	(DisplaySprite).l			; keep displaying stars
 ; ===========================================================================
 
 Shi_Start_Delete:
 		jmp	(DeleteObject).l			; delete invincibility stars object
+
+ShieldStarDynPLC:	include "_maps/Shield and Invincibility - Dynamic Gfx Script.asm"
