@@ -274,6 +274,7 @@ PLC_TitleCard_end:
 PLC_Boss:	plcheader
 		plcm	Nem_Eggman,	ArtTile_Eggman			; Eggman main patterns
 		plcm	Nem_Weapons,	ArtTile_Eggman_Weapons		; Eggman's weapons
+		plcm	Nem_ExplodeBoss, ArtTile_Explosion_Boss		; fiery explosions overwriting grayish ones
 		plcm	Nem_Prison,	ArtTile_Prison_Capsule		; prison capsule
 		plcm	Nem_Bomb,	ArtTile_Eggman_Spikeball	; bomb enemy (gets overwritten)
 		plcm	Nem_SlzSpike,	ArtTile_Eggman_Spikeball	; spikeball (SLZ boss)

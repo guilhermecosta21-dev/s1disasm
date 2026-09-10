@@ -35,24 +35,3 @@ Map_ExplodeItem:	mappingsTable
 .explode4_End
 
 	even
-
-; ---------------------------------------------------------------------------
-; Sprite mappings - explosion from when a boss is destroyed
-; This contains some nasty cross-referencing to the main explosion mappings.
-; ---------------------------------------------------------------------------
-Map_ExplodeBomb:	mappingsTable
-	mappingsTableEntry.w	Map_ExplodeItem.explode0	; backwards reference
-	mappingsTableEntry.w	.explode_boss1
-	mappingsTableEntry.w	.explode_boss2
-	mappingsTableEntry.w	Map_ExplodeItem.explode3	; backwards reference
-	mappingsTableEntry.w	Map_ExplodeItem.explode4	; backwards reference
-
-.explode_boss1:	spriteHeader
-	spritePiece	-$10, -$10, 4, 4, $40, 0, 0, 0, 0
-.explode_boss1_End
-
-.explode_boss2:	spriteHeader
-	spritePiece	-$10, -$10, 4, 4, $50, 0, 0, 0, 0
-.explode_boss2_End
-
-	even

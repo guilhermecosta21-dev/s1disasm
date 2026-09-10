@@ -72,7 +72,7 @@ Expl_Index:	dc.w Expl_Main-Expl_Index			; 0
 Expl_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)			; advance to ExItem_Animate (foreign object)
 
-		move.l	#Map_ExplodeBomb,obMap(a0)		; set mappings
+		move.l	#Map_ExplodeItem,obMap(a0)		; set mappings
 		move.w	#ArtTile_Explosion,obGfx(a0)		; set art tile
 		move.b	#sprite_cam_field,obRender(a0)		; set to playfield-positioned mode
 		move.w	#$80,obPriority(a0)			; set sprite priority (above SOnic)
