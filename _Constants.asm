@@ -592,7 +592,7 @@ ArtTile_HUDTimeSecs:		equ ArtTile_HUD+$2C
 ArtTile_HUDRings:		equ ArtTile_HUD+$30
 
 ArtTile_Sonic:			equ $780
-ArtTile_Points:			equ $797
+ArtTile_Points:			equ $79E
 ArtTile_Lamppost:		equ $7A0
 ArtTile_Ring:			equ $7B2
 ArtTile_Ring_Loss:		equ ArtTile_Ring+4

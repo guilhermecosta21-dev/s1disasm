@@ -4660,7 +4660,7 @@ Nem_Monitors:	binclude	"artnem/Monitors.nem"
 		even
 Nem_Explode:	binclude	"artnem/Explosion.nem"
 		even
-Nem_Points:	binclude	"artnem/Points.nem" ; points from destroyed enemy or object
+Art_Points:	binclude	"artunc/Points.unc"
 		even
 Nem_GameOver:	binclude	"artnem/Game Over.nem" ; game over / time over
 		even

@@ -75,7 +75,6 @@ PLC_Main:	plcheader
 		plcm	Nem_Hud,	ArtTile_HUD			; HUD
 		plcm	Nem_Lives,	ArtTile_Lives_Counter		; lives counter
 		plcm	Nem_Sparkles, ArtTile_Sparkles    ; ring sparkles
-		plcm	Nem_Points,	ArtTile_Points			; points from enemy
 PLC_Main_end:
 
 ; ---------------------------------------------------------------------------

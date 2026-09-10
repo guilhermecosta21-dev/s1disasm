@@ -75,9 +75,9 @@ Smab_Solid:	; Routine 2
 		move.w	#gravity,d2				; set counter-gravity for edge case in SmashObject
 		bsr.w	SmashObject				; smash the block into four fragment objects (set to routine 4, Smab_Fragment)
 
-		bsr.w	FindFreeObj				; find a free object slot for the points
-		bne.s	Smab_Fragment				; if object RAM is full, branch
-		_move.b	#id_Points,obID(a1)			; load floating points object
+		lea	(v_points).w,a1				; set target to reserved object slot for points
+		move.b	#id_Points,obID(a1)			; load points object
+		clr.b	obRoutine(a1)				; make sure point objects initializes
 		move.w	obX(a0),obX(a1)				; use block's X-position
 		move.w	obY(a0),obY(a1)				; use block's Y-position
 

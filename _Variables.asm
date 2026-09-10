@@ -55,6 +55,8 @@ v_ttlsonichide:		equ	v_objspace+object_size*4	; object variable space for hiding
 v_player:		equ	v_objspace+object_size*0	; object variable space for Sonic ($40 bytes)
 v_hud:			equ	v_objspace+object_size*1	; object variable space for the HUD ($40 bytes)
 
+v_points:		equ	v_objspace+object_size*16	; object variable space for the points from destroyed badniks etc. ($40 bytes)
+
 v_titlecard:		equ	v_objspace+object_size*2	; object variable space for the title card ($100 bytes)
 v_ttlcardname:		equ	v_titlecard+object_size*0	; object variable space for the title card zone name text ($40 bytes)
 v_ttlcardzone:		equ	v_titlecard+object_size*1	; object variable space for the title card "ZONE" text ($40 bytes)

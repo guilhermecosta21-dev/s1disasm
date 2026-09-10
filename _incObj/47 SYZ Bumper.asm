@@ -62,9 +62,9 @@ Bump_Hit:	; Routine 2
 		moveq	#1,d0					; set to add 10 points
 		jsr	(AddPoints).l				; add to score
 
-		bsr.w	FindFreeObj				; find a free object slot
-		bne.s	Bump_Display				; if object RAM is full, branch
-		_move.b	#id_Points,obID(a1)			; load floating points object
+		lea	(v_points).w,a1				; set target to reserved object slot for points
+		move.b	#id_Points,obID(a1)			; load points object
+		clr.b	obRoutine(a1)				; make sure point objects initializes
 		move.w	obX(a0),obX(a1)				; set to use bumper's X-position
 		move.w	obY(a0),obY(a1)				; set to use bumper's Y-position
 		move.b	#4,obFrame(a1)				; set to use "10" frame

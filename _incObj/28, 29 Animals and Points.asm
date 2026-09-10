@@ -180,9 +180,9 @@ Anml_FromEnemy:
 
 		tst.b	(v_bossstatus).w			; is this animal from a prison capsule?
 		bne.s	.fromPrison				; if yes, don't load points object
-		bsr.w	FindFreeObj				; find a free object slot
-		bne.s	.display				; if object RAM is full, branch
-		_move.b	#id_Points,obID(a1)			; load points object
+		lea	(v_points).w,a1				; set target to reserved object slot for points
+		move.b	#id_Points,obID(a1)			; load points object
+		clr.b	obRoutine(a1)				; make sure point objects initializes
 		move.w	obX(a0),obX(a1)				; copy X-position
 		move.w	obY(a0),obY(a1)				; copy Y-position
 		move.w	animal_pointsframe(a0),d0		; get carried-over frame ID from gray explosion object
@@ -556,6 +556,12 @@ Poi_Index:	dc.w Poi_Main-Poi_Index
 ; ===========================================================================
 
 Poi_Main:	; Routine 0
+        ; Load DPLCs for new points art and queue for DMA
+		move.b	obFrame(a0),d0				; load current frame to d0
+		lea	PointsDynPLC(pc),a2			; load shield/stars DPLCs to a2
+		move.l	#Art_Points,d6				; load uncompressed graphics pointer to d6
+		move.w	#ArtTile_Points*tile_size,d4		; load art tile x $20 to d4 to get VRAM offset
+		jsr	(LoadDynPLC).l				; load DPLCs
 		addq.b	#2,obRoutine(a0)			; advance to Poi_Slower
 		move.l	#Map_Points,obMap(a0)			; set mappings
 		move.w	#ArtTile_Points|Tile_Pal2,obGfx(a0)	; set art tile and palette
@@ -582,3 +588,4 @@ Map_Animal1:	include	"_maps/Animals 1.asm"
 Map_Animal2:	include	"_maps/Animals 2.asm"
 Map_Animal3:	include	"_maps/Animals 3.asm"
 Map_Points:	include	"_maps/Points.asm"
+PointsDynPLC:	include	"_maps/Points - DPLC.asm"
