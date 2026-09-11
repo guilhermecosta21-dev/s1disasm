@@ -1515,9 +1515,6 @@ Sonic_FloorDown:
 		tst.w	d1					; is Sonic grazing a wall to the left while falling?
 		bpl.s	.noleftgraze				; if not, branch
 		sub.w	d1,obX(a0)				; align Sonic with the wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 
 ; loc_135F0:
@@ -1526,9 +1523,6 @@ Sonic_FloorDown:
 		tst.w	d1					; is Sonic grazing a wall to the right while falling?
 		bpl.s	.norightgraze				; if not, branch
 		add.w	d1,obX(a0)				; align Sonic with the wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 
 ; loc_13602:
@@ -1564,9 +1558,6 @@ Sonic_FloorDown:
 ; loc_1361E:
 .landed:
 		add.w	d1,obY(a0)				; fix Sonic to floor
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		move.b	d3,obAngle(a0)				; update Sonic's angle for the landed-on floor
 		bsr.w	Sonic_ResetOnFloor			; reset various flags and states back to standing state
 		move.b	#id_Walk,obAnim(a0)			; set to "walking" animation
@@ -1637,9 +1628,6 @@ Sonic_FloorLeft:
 		tst.w	d1					; is Sonic grazing a wall to the left while falling?
 		bpl.s	.noleftgraze				; if not, branch
 		sub.w	d1,obX(a0)				; align Sonic to the wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 		move.w	obVelY(a0),obInertia(a0)		; convert in-air vertical speed to ground speed when landing
 		rts						; return
@@ -1651,9 +1639,6 @@ Sonic_FloorLeft:
 		tst.w	d1					; is Sonic touching the ceiling?
 		bpl.s	.noceiling				; if not, branch
 		sub.w	d1,obY(a0)				; align Sonic with the ceiling
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		tst.w	obVelY(a0)				; is vertical speed positive? (going down)
 		bpl.s	.noyspeedreset				; if yes, branch
 		move.w	#0,obVelY(a0)				; if going up, reset it to zero
@@ -1694,9 +1679,6 @@ Sonic_FloorLeft:
 .landed:
 	endif
 		add.w	d1,obY(a0)				; align Sonic with floor
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		move.b	d3,obAngle(a0)				; update Sonic's angle for the landed-on floor
 		bsr.w	Sonic_ResetOnFloor			; reset various flags and states back to standing state
 		move.b	#id_Walk,obAnim(a0)			; set to "walking" animation
@@ -1719,9 +1701,6 @@ Sonic_FloorUp:
 		tst.w	d1					; is Sonic grazing a wall to the left while going up?
 		bpl.s	.noleftgraze				; if not, branch
 		sub.w	d1,obX(a0)				; align Sonic to wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 
 ; loc_136F4:
@@ -1730,9 +1709,6 @@ Sonic_FloorUp:
 		tst.w	d1					; is Sonic grazing a wall to the right while going up?
 		bpl.s	.norightgraze				; if not, branch
 		add.w	d1,obX(a0)				; align Sonic to wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 
 ; loc_13706:
@@ -1741,9 +1717,6 @@ Sonic_FloorUp:
 		tst.w	d1					; is Sonic touching the ceiling?
 		bpl.s	.return					; if not, branch
 		sub.w	d1,obY(a0)				; align Sonic with the ceiling
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		move.b	d3,d0					; get Sonic's landing angle
 		addi.b	#$20,d0					; rotate it by 45 degrees
 		andi.b	#$40,d0					; are we bumping against an angled ceiling?
@@ -1777,9 +1750,6 @@ Sonic_FloorRight:
 		tst.w	d1					; is Sonic grazing a wall to the right while falling?
 		bpl.s	.norightgraze				; if not, branch
 		add.w	d1,obX(a0)				; align Sonic to the wall
-	if FixBugs
-		clr.w	obSubpixelX(a0)				; reset subpixel portion
-	endif
 		move.w	#0,obVelX(a0)				; clear horizontal speed
 		move.w	obVelY(a0),obInertia(a0)		; convert in-air vertical speed to ground speed when landing
 		rts						; return
@@ -1791,9 +1761,6 @@ Sonic_FloorRight:
 		tst.w	d1					; is Sonic touching the ceiling?
 		bpl.s	.noceiling				; if not, branch
 		sub.w	d1,obY(a0)				; align Sonic with the ceiling
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		tst.w	obVelY(a0)				; is vertical speed positive? (going down)
 		bpl.s	.noyspeedreset				; if yes, branch
 		move.w	#0,obVelY(a0)				; if going up, reset it to zero
@@ -1828,9 +1795,6 @@ Sonic_FloorRight:
 .landed:
 	endif
 		add.w	d1,obY(a0)				; align Sonic with floor
-	if FixBugs
-		clr.w	obSubpixelY(a0)				; reset subpixel portion
-	endif
 		move.b	d3,obAngle(a0)				; update Sonic's angle for the landed-on floor
 		bsr.w	Sonic_ResetOnFloor			; reset various flags and states back to standing state
 		move.b	#id_Walk,obAnim(a0)			; set to "walking" animation
