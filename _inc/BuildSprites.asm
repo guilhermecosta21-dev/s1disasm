@@ -74,6 +74,7 @@ BuildSprites:
 		cmpi.w	#224,d1					; is result greater than screen height?
 		bge.s	.skipObject				; if yes, bottom edge is out of bounds
 		addi.w	#$80,d2					; add VDP sprite start
+		andi.w	#$7FF,d2				; wrap Y axis
 		bra.s	.drawObject
 ; ---------------------------------------------------------------------------
 
@@ -88,6 +89,7 @@ BuildSprites:
 		move.w	obY(a0),d2
 		sub.w	4(a1),d2				; subtract camera Y-position
 		addi.w	#$80,d2
+		andi.w	#$7FF,d2				; wrap Y axis
 		cmpi.w	#$80-.ah,d2				; is top Y-position with assumed height out of bounds?
 		blo.s	.skipObject				; if yes, branch
 		cmpi.w	#$80+224+.ah,d2				; is bottom Y-position with assumed height out of bounds?

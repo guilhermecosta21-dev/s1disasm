@@ -1,3 +1,5 @@
+cat_inertia:	equ obAnim	; Caterkiller inertia (=$1C/$1D, both unused by Caterkiller)
+
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
 ; Object 78 - Caterkiller enemy (MZ, SBZ)
@@ -116,8 +118,9 @@ Cat_Head:	; Routine 2
 
 		moveq	#0,d0					; clear d0 for word-addressing
 		move.b	ob2ndRout(a0),d0			; get current secondary routine counter
-		move.w	Cat_HeadIndex(pc,d0.w),d1		; find index in head actions
-		jsr	Cat_HeadIndex(pc,d1.w)			; jump there, then return here
+		lea	Cat_HeadIndex(pc),a1
+		move.w	(a1,d0.w),d1
+		jsr	(a1,d1.w)
 
 		move.b	cat_mode(a0),d1				; should head frame get changed?
 		bpl.s	.display				; if not, branch
@@ -143,11 +146,8 @@ Cat_Head:	; Routine 2
 
 ; Cat_ChkGone:
 Cat_Despawn:
-		lea	(v_objstate).w,a2			; load respawn table
-		moveq	#0,d0					; clear d0 for word-addressing
-		move.b	obRespawnNo(a0),d0			; get respawn table index
-		beq.s	.delete					; if it doesn't have one, branch
-		bclr	#7,2(a2,d0.w)				; clear respawn block flag
+		respawn_entry.s	.delete
+		bclr	#7,(a2)
 
 	.delete:
 		move.b	#$A,obRoutine(a0)			; goto Cat_Delete next (also used as flag in .chk_broken)
@@ -173,11 +173,11 @@ Cat_Undulate:
 		addq.b	#2,ob2ndRout(a0)			; advance to Cat_Floor
 		move.b	#17-1,cat_waittime(a0)			; set timer for movement
 		move.w	#-$C0,obVelX(a0)			; move head to the left
-		move.w	#$40,obAnim(a0)
+		move.w	#$40,cat_inertia(a0)
 		bchg	#4,cat_mode(a0)				; change between mouth open/moving up, and mouth closed/moving down
 		bne.s	.updateHeadSprite			; if going up now (mouth open), branch
 		clr.w	obVelX(a0)				; don't move left
-		neg.w	obAnim(a0)
+		neg.w	cat_inertia(a0)
 
 	.updateHeadSprite:
 		bset	#7,cat_mode(a0)				; set flag to update head sprite
@@ -245,7 +245,7 @@ Cat_Floor:
 		move.w	#0,obVelX(a0)				; stop moving
 	else
 		clr.w	obVelX(a0)				; stop moving
-		clr.w	obAnim(a0)
+		clr.w	cat_inertia(a0)
 	endif
 		rts						; return
 ; ---------------------------------------------------------------------------
@@ -308,12 +308,12 @@ Cat_BodySeg1:	; Routine 4, 8
 		move.b	ob2ndRout(a1),ob2ndRout(a0)
 		beq.w	.chkBroken
 
-		move.w	obAnim(a1),obAnim(a0)
+		move.w	cat_inertia(a1),cat_inertia(a0)
 		move.w	obVelX(a1),d0
 	if Revision=0
-		add.w	obAnim(a1),d0
+		add.w	cat_inertia(a1),d0
 	else
-		add.w	obAnim(a0),d0
+		add.w	cat_inertia(a0),d0
 	endif
 		move.w	d0,obVelX(a0)				; update x speed
 		move.l	obX(a0),d2

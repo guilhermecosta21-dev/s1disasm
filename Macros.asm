@@ -272,26 +272,59 @@ jle:		macro loc
 
 ; ---------------------------------------------------------------------------
 ; check if object moves out of range
-; input: location to jump to if out of range, x-axis pos (obX(a0) by default), optional bmi exit
+; input: location to jump to if out of range, x-axis pos (obX(a0) by default)
 ; ---------------------------------------------------------------------------
 
-out_of_range:	macro exit,pos,bmicheck
-	if ("pos"<>"")
-		move.w	pos,d0					; get object position (if specified as not obX)
+out_of_range:	macro exit,customxpos
+	if ("customxpos"<>"")
+		move.w	customxpos,d0				; get object X position (if specified as not obX)
 	else
 		move.w	obX(a0),d0				; get object position
 	endif
 		andi.w	#$FF80,d0				; round down to nearest $80
-		move.w	(v_screenposx).w,d1			; get screen position
-		subi.w	#128,d1
-		andi.w	#$FF80,d1
-		sub.w	d1,d0					; approx distance between object and screen
-	if ("bmicheck"<>"")
-		; This bmi is in a few out_of_range calls (albeit redundant)
-		bmi.w	exit
-	endif
+		sub.w	(Camera_X_Coarse_Back).w,d0		; approx distance between object and screen
 		cmpi.w	#128+320+192,d0
-		bhi.ATTRIBUTE	exit
+		bls.s	.noOffscreenXDelete			; if object is still in range, don't do anything
+		respawn_entry.ATTRIBUTE exit			; try to fetch this object's respawn entry, exit if there is none
+		bclr	#7,(a2)					; clear respawn table entry, so object can be loaded again
+		bra.ATTRIBUTE	exit				; branch to exit (to delete the object)
+.noOffscreenXDelete:
+		endm
+
+; ---------------------------------------------------------------------------
+; same as out_of_range, but will also check for the y-axis
+; ---------------------------------------------------------------------------
+
+out_of_range_with_y_check: macro exit,customxpos,customypos
+		out_of_range.w	exit,customxpos			; do regular X check first
+		
+		; if X is still in range, check for Y now		
+	if ("customypos"<>"")
+		move.w	customypos,d0				; get custom object Y position
+	else
+		move.w	obY(a0),d0				; get object Y position
+	endif
+		andi.w	#$FF80,d0				; round down to nearest $80
+		sub.w	(Camera_Y_Coarse_Back).w,d0		; approx distance between object and screen
+		cmpi.w	#128+224+160,d0
+		bls.s	.noOffscreenYDelete			; if object is still in range, don't do anything
+		tst.w	(v_limittop2).w				; is vertical wrapping enabled?
+		bmi.s	.noOffscreenYDelete			; if yes, don't do delete
+		respawn_entry.ATTRIBUTE exit			; try to fetch this object's respawn entry, exit if there is none
+		bclr	#7,(a2)					; clear respawn table entry, so object can be loaded again
+		bra.ATTRIBUTE	exit				; branch to exit (to delete the object)
+.noOffscreenYDelete:
+		endm
+
+; ---------------------------------------------------------------------------
+; load pointer to current object's respawn table entry to a2
+; ("exit" will be branched to if no entry was found)
+; ---------------------------------------------------------------------------
+
+respawn_entry:	macro exit
+		move.w	respawn_index(a0),d0			; load object's respawn index
+		beq.ATTRIBUTE	exit				; if it's zero, this object has no entry, branch
+		movea.w	d0,a2					; load address to respawn table entry into a2
 		endm
 
 ; ---------------------------------------------------------------------------

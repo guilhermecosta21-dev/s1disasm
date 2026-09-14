@@ -34,11 +34,8 @@ PathSwapper:
 		rts						; otherwise, do nothing
 
 	.offscreen:
-		lea	(v_objstate).w,a2			; load object respawn table
-		moveq	#0,d0					; clear d0
-		move.b	obRespawnNo(a0),d0			; get object's respawn table index
-		beq.s	.delete					; if it's zero, branch
-		bclr	#7,2(a2,d0.w)				; clear respawn block flag for object
+		respawn_entry.s	.delete
+		bclr	#7,(a2)
 
 	.delete:
 		bra.w	DeleteObject				; delete path swapper

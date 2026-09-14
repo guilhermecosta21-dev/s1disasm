@@ -31,7 +31,13 @@ v_ngfx_buffer_end:
 
 v_spritequeue:		ds.b	spritelayer_num*spritelayer_size ; sprite display queue, in order of priority (8*$80=$400 bytes)
 
-			ds.b	$1800				; unused (previously v_16x16 block mappings)
+Object_Respawn_Table: 	ds.b	$300				; S3K Object Manager respawn table ($300 bytes)
+Camera_X_Pos_Last:	ds.w	1				; camera X position from previous frame (2 bytes)
+Camera_Y_Pos_Last:	ds.w	1				; camera Y position from previous frame (2 bytes)
+Camera_X_Coarse_Back:	ds.w	1				; camera X position - $80, rounded down to the nearest multiple of $80 (2 bytes)
+Camera_Y_Coarse_Back:	ds.w	1				; camera Y position - $80, rounded down to the nearest multiple of $80 (2 bytes)
+Object_Manager_size:	equ	*-Object_Respawn_Table
+			ds.b	$1800-Object_Manager_size	; unused RAM (was blocks buffers)
 
 VDP_Command_Buffer:	ds.w	7*$12				; stores 18 ($12) VDP commands to issue the next time ProcessDMAQueue is called
 VDP_Command_Buffer_Slot:ds.l	1				; stores the address of the next open slot for a queued VDP command
@@ -331,8 +337,10 @@ v_palette_fading_line_3:ds.b $20
 v_palette_fading_line_4:ds.b $20
 v_palette_fading_end:
 
-v_objstate:		ds.b	$C0				; object state list
-v_objstate_end:
+v_regbuffer:		ds.b	$40				; stores registers d0-a7 during an error event
+v_spbuffer:		ds.l	1				; stores most recent sp address
+v_errortype:		ds.b	1				; error type
+			ds.b	$C0-$45				; unused ($7B bytes)
 
 v_systemstack_end:	ds.b	$140				; system stack end (items get added backwards)
 v_systemstack:							; system stack start
@@ -509,14 +517,6 @@ v_ss_rotationmatrix:	ds.b	2*2*ss_matrixsize*ss_matrixsize	; rotated X/Y sprite c
 v_ss_scroll_bubbles:	ds.b	$28				; buffer to store scroll positions for SS background bubbles
 			ds.b	$D8				; unused in SS
 v_ss_scroll_clouds:	ds.b	$1C				; buffer to store scroll positions for SS background clouds
-	dephase
-
-
-; Error handler
-	phase	v_objstate
-v_regbuffer:		ds.b	$40				; stores registers d0-a7 during an error event
-v_spbuffer:		ds.l	1				; stores most recent sp address
-v_errortype:		ds.b	1				; error type
 	dephase
 
 

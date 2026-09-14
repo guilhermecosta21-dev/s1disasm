@@ -246,11 +246,12 @@ obY:			equ $C					; y-axis position (2-4 bytes)
 obSubpixelY:		equ $E					; y-axis subpixel position for playfield items (2 bytes)
 obVelX:			equ $10					; x-axis velocity (2 bytes)
 obVelY:			equ $12					; y-axis velocity (2 bytes)
+respawn_index:		equ $14					; S3K object manager respawn table address (2 bytes)
 obInertia:		equ $20					; potential speed (2 bytes) ; Changed from 14
 obHeight:		equ $16					; height/2
 obWidth:		equ $17					; width/2
 obPriority:		equ $18					; sprite stack priority -- 0 is front
-obActWid:		equ $14					; action width ; from 19
+obActWid:		equ $23					; action width ; from 19
 obFrame:		equ $1A					; current frame displayed
 obAniFrame:		equ $1B					; current frame in animation script
 obAnim:			equ $1C					; current animation
@@ -260,7 +261,7 @@ obDelayAni:		equ $1F					; time to delay animation
 obColType:		equ $20					; collision response type
 obColProp:		equ $21					; collision extra property
 obStatus:		equ $22					; orientation or mode
-obRespawnNo:		equ $23					; respawn list index number
+; obRespawnNo:		equ $23					; respawn list index number
 obRoutine:		equ $24					; routine number
 ob2ndRout:		equ $25					; secondary routine number
 obSolid:		equ ob2ndRout				; solid status flag

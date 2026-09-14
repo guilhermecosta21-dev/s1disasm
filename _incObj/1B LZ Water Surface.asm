@@ -27,6 +27,10 @@ Surf_Main:	; Routine 0
 ; ---------------------------------------------------------------------------
 
 Surf_Action:	; Routine 2
+        cmpi.w	#$7FF,(v_waterpos2).w			; is water hidden? (set to below maximum level height of $7FF)
+		bls.s	.visible				; if not, render it
+		rts						; otherwise, make sure it stays hidden
+	.visible:
 		move.w	(v_screenposx).w,d1			; get current camera X-position
 		andi.w	#$FFE0,d1				; wrap every $20px to make surface seem camera-independent
 		add.w	surf_origX(a0),d1			; add base X-position for left or right surface object
