@@ -1714,9 +1714,8 @@ GM_Sega:
 		disable_display					; disable screen output
 		bsr.w	ClearScreen				; wipe the screen
 
-		locVRAM	ArtTile_Sega_Tiles*tile_size		; set target VRAM location for Sega logo patterns
-		lea	(Nem_SegaLogo).l,a0			; load Sega logo patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_Sega,d0			; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		lea	(v_ram_start).l,a1			; set start of RAM to be used as decompression buffer
 		lea	(Eni_SegaLogo).l,a0			; load Sega logo mappings
@@ -1801,13 +1800,8 @@ GM_Title:		; fading out from previous game mode
 		bsr.w	ClearScreen				; wipe the screen
 		clearRAM v_objspace				; clear object RAM
 
-		locVRAM	ArtTile_Title_Japanese_Text*tile_size	; set target VRAM location for hidden Japanese credits
-		lea	(Nem_JapNames).l,a0			; load hidden Japanese credits
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
-
-		locVRAM	ArtTile_Sonic_Team_Font*tile_size	; set target VRAM location for "SONIC TEAM PRESENTS" font
-		lea	(Nem_CreditText).l,a0			; load STP font (same as the credits font)
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_TitleSonicTeam,d0	; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		lea	(v_ram_start).l,a1			; set start of RAM to be used as decompression buffer
 		lea	(Eni_JapNames).l,a0			; load mappings for hidden Japanese credits
@@ -1833,17 +1827,8 @@ GM_Title:		; fading out from previous game mode
 		; load main title screen patterns while "SONIC TEAM PRESENTS" screen is shown
 		disable_ints					; display is frozen during the STP screen
 
-		locVRAM	ArtTile_Title_Foreground*tile_size	; set target VRAM location title screen foreground emblem
-		lea	(Nem_TitleFg).l,a0			; load title screen foreground emblem patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
-
-		locVRAM	ArtTile_Title_Sonic*tile_size		; set target VRAM location big Sonic object
-		lea	(Nem_TitleSonic).l,a0			; load big Sonic title screen patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
-
-		locVRAM	ArtTile_Title_Trademark*tile_size	; set target VRAM location for "TM" patterns
-		lea	(Nem_TitleTM).l,a0			; load "TM" patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_TitleForeground,d0	; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		lea	(vdp_data_port).l,a6			; load VDP data transfer port
 		locVRAM	ArtTile_Level_Select_Font*tile_size,4(a6) ; set target VRAM location for level select font
@@ -1893,9 +1878,8 @@ Tit_LoadText:
 		copyTilemap v_ram_start,vram_fg+$206,34,22	; transfer decompressed patterns from RAM buffer to VRAM (off-center)
 	endif
 
-		locVRAM	ArtTile_Level*tile_size			; set target VRAM location for level patterns
-		lea	(Nem_Title).l,a0		; load Title patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_TitleBackground,d0	; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		moveq	#palid_Title,d0				; load title screen palette...
 		bsr.w	PalLoad_Fade				; ...to fade-in buffer
@@ -2600,9 +2584,8 @@ Level_NoMusicFade:
 		bmi.s	Level_ClrRam				; if yes, don't load title screen or main level patterns
 
 		disable_ints					; disable interrupts
-		locVRAM	ArtTile_Title_Card*tile_size		; set VRAM target location for title cards
-		lea	(Nem_TitleCard).l,a0			; load title card patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_TitleCard,d0		; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 		enable_ints					; enable interrupts again
 
 		moveq	#0,d0					; clear d0
@@ -3352,9 +3335,8 @@ SS_FinLoop_NoBrighten:
 		move.w	#vreg_planesize|%000001,(a6)		; 64-cell hscroll size
 		bsr.w	ClearScreen				; wipe screen
 
-		locVRAM	ArtTile_Title_Card*tile_size		; set VRAM location for title card font
-		lea	(Nem_TitleCard).l,a0			; load title card patterns
-		bsr.w	NemDec					; decompress Nemesis-compressed graphics directly to VRAM
+		moveq	#plcid_TitleCard,d0		; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		jsr	(Hud_Base).l				; load basic HUD graphics
 		enable_ints					; enable interrupts
@@ -3589,9 +3571,6 @@ End_LoadData:
 		lea	(v_collision2).w,a1
 		bsr.w	KosDec
 		enable_ints					; enable interrupts
-		lea	(Kos_EndFlowers).l,a0			; load extra flower patterns
-		lea	(v_ram_start+$20*chunk_size_128).l,a1	; RAM address to buffer the patterns (overwriting unused chunk RAM)
-		bsr.w	KosDec					; decompress Kosinski-compressed chunks mappings to buffer
 		moveq	#palid_Sonic,d0				; load Sonic's palette...
 		bsr.w	PalLoad_Fade				; ...to fade-in buffer
 		move.w	#bgm_Ending,d0				; play ending sequence music
@@ -3827,9 +3806,8 @@ GM_Credits:
 
 		clearRAM v_objspace				; clear object RAM
 
-		locVRAM	ArtTile_Credits_Font*tile_size		; set target VRAM location for credits font
-		lea	(Nem_CreditText).l,a0			; load credits font
-		bsr.w	NemDec					; decompress Nemesis-compressed patterns directly to VRAM
+		moveq	#plcid_Credits,d0		; load patterns through PLC list
+		bsr.w	QuickPLC			; decompress PLC list now and return once done
 
 		clearRAM v_palette_fading			; set palette fade-in buffer to all-black
 		moveq	#palid_Sonic,d0				; load Sonic's palette...
@@ -4814,7 +4792,7 @@ Nem_EndEggman:
 		binclude	"artnem/Unused - Eggman Ending.nem"
 		even
 	endif
-Kos_EndFlowers:	binclude	"artkos/Flowers at Ending.kos" ; ending sequence animated flowers
+Art_EndFlowers:	binclude	"artunc/Flowers at Ending.unc" ; ending sequence animated flowers
 		even
 Nem_EndFlower:	binclude	"artnem/Ending - Flowers.nem"
 		even

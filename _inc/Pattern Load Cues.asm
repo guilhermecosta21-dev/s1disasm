@@ -67,6 +67,13 @@ plcid_TryAgain:		plcptr	PLC_TryAgain
 plcid_EggmanSBZ2:	plcptr	PLC_EggmanSBZ2
 plcid_FZBoss:		plcptr	PLC_FZBoss
 
+plcid_Sega:		plcptr	PLC_Sega
+plcid_TitleSonicTeam:	plcptr	PLC_TitleSonicTeam
+plcid_TitleForeground:	plcptr	PLC_TitleForeground
+plcid_TitleBackground:	plcptr	PLC_TitleBackground
+plcid_Continue:		plcptr	PLC_Continue
+plcid_Credits:		plcptr	PLC_Credits
+
 ; ---------------------------------------------------------------------------
 ; Pattern load cues - standard block 1
 ; ---------------------------------------------------------------------------
@@ -431,3 +438,49 @@ PLC_FZBoss:	plcheader
 		plcm	Nem_Sbz2Eggman,	ArtTile_FZ_Eggman_No_Vehicle	; Eggman without ship
 		plcm	Nem_Exhaust,	ArtTile_Eggman_Exhaust		; exhaust flame
 PLC_FZBoss_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - Sega screen
+; ---------------------------------------------------------------------------
+PLC_Sega:	plcheader
+		plcm	Nem_SegaLogo,	ArtTile_Sega_Tiles
+PLC_Sega_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - "SONIC TEAM PRESENTS" before title screen
+; ---------------------------------------------------------------------------
+PLC_TitleSonicTeam:	plcheader
+		plcm	Nem_JapNames,	ArtTile_Title_Japanese_Text
+		plcm	Nem_CreditText,	ArtTile_Sonic_Team_Font
+PLC_TitleSonicTeam_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - Title screen FG (while Sonic Team Presents is displayed)
+; ---------------------------------------------------------------------------
+PLC_TitleForeground:	plcheader
+		plcm	Nem_TitleFg,	ArtTile_Title_Foreground
+		plcm	Nem_TitleSonic,	ArtTile_Title_Sonic
+		plcm	Nem_TitleTM,	ArtTile_Title_Trademark
+PLC_TitleForeground_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - Title screen BG (after Sonic Team Presents faded out)
+; ---------------------------------------------------------------------------
+PLC_TitleBackground:	plcheader
+		plcm	Nem_Title,	ArtTile_Level
+PLC_TitleBackground_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - Continue screen
+; ---------------------------------------------------------------------------
+PLC_Continue:	plcheader
+		plcm	Nem_ContSonic,	ArtTile_Continue_Sonic
+		plcm	Nem_MiniSonic,	ArtTile_Mini_Sonic
+PLC_Continue_end:
+
+; ---------------------------------------------------------------------------
+; Pattern load cues - Credits screen
+; ---------------------------------------------------------------------------
+PLC_Credits:	plcheader
+		plcm	Nem_CreditText,	ArtTile_Credits_Font
+PLC_Credits_end:
