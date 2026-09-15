@@ -349,7 +349,7 @@ Bri_Data_Align:	; Values used to align logs to the left & right of the one being
 ; ===========================================================================
 
 Bri_ChkDel:
-		out_of_range.w	.deleteBridge			; has bridge gone out of range? if yes, delete it with all child logs
+		out_of_range_with_y_check.s	.deleteBridge,obX(a0),bridge_origY(a0)
 	if FixBugs
 		; This has been moved to prevent a display-after-free bug.
 		bra.w	DisplaySprite				; display main bridge object
@@ -492,7 +492,7 @@ BriOpti_StoodOn:
 ; ---------------------------------------------------------------------------
 
 BriOpti_ChkDelOrDisplay:
-		out_of_range.w	DeleteObject,briopti_origX(a0)	; check if bridge has gone offscreen and delete it if so
+		out_of_range_with_y_check.w	DeleteObject,briopti_origX(a0),obY(a0)	; check if bridge has gone offscreen and delete it if so
 		bra.w	DisplaySprite				; display sprite
 ; ===========================================================================
 
