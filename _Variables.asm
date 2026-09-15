@@ -37,7 +37,17 @@ Camera_Y_Pos_Last:	ds.w	1				; camera Y position from previous frame (2 bytes)
 Camera_X_Coarse_Back:	ds.w	1				; camera X position - $80, rounded down to the nearest multiple of $80 (2 bytes)
 Camera_Y_Coarse_Back:	ds.w	1				; camera Y position - $80, rounded down to the nearest multiple of $80 (2 bytes)
 Object_Manager_size:	equ	*-Object_Respawn_Table
-			ds.b	$1800-Object_Manager_size	; unused RAM (was blocks buffers)
+
+v_ringmanager:
+v_ringstates:		ds.b	512				; collected rings status table, 1 byte per ring
+v_ringstates_pointer:	ds.w	1				; address within v_ringstates RAM of the first ring found within left screen boundary
+v_ringwindow_start:	ds.l	1				; address in ROM ring layout of the first ring found within left screen boundary
+v_ringwindow_end:	ds.l	1				; address in ROM ring layout of the first ring found beyond right screen boundary
+v_ringanimqueue_count:	ds.w	1				; current entry count in v_ringanimqueue
+v_ringanimqueue:	ds.w	$3F				; queue of recently collected rings storing pointers pointing inside v_ringstates
+v_draw_rings:		ds.b	1				; flag set if ring sprites should be drawn
+v_ringmanager_size:	equ	*-v_ringmanager			; size of all RAM occupied by rings manager
+			ds.b	$1800-Object_Manager_size-v_ringmanager_size	; unused RAM (was blocks buffers)
 
 VDP_Command_Buffer:	ds.w	7*$12				; stores 18 ($12) VDP commands to issue the next time ProcessDMAQueue is called
 VDP_Command_Buffer_Slot:ds.l	1				; stores the address of the next open slot for a queued VDP command

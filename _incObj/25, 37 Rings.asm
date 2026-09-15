@@ -1,6 +1,10 @@
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Object 25 - rings
+; Object 25 - standalone rings
+; 
+; With the introduction of the S3K rings manager, these are rarely
+; used anymore, mainly only in case rings get placed in debug mode.
+; Note that these standalone rings cannot be attracted by a shield.
 ; ---------------------------------------------------------------------------
 
 Rings:
@@ -9,196 +13,80 @@ Rings:
 		move.w	Ring_Index(pc,d0.w),d1
 		jmp	Ring_Index(pc,d1.w)
 ; ===========================================================================
-Ring_Index:	dc.w Ring_Main-Ring_Index	; 0
-		dc.w Ring_Animate-Ring_Index	; 2
-		dc.w Ring_Collect-Ring_Index	; 4
-		dc.w Ring_Sparkle-Ring_Index	; 6
-		dc.w Ring_Delete-Ring_Index	; 8
-
-ring_origX:	 equ objoff_32
-ring_respawnbit: equ objoff_34
+Ring_Index:	; CR = cross-referencing to bouncing rings object
+		dc.w Ring_Main-Ring_Index			; 0
+		dc.w Ring_Animate-Ring_Index			; 2
+		dc.w RLoss_Collect-Ring_Index			; 4 (CR)
+		dc.w RLoss_Sparkle-Ring_Index			; 6 (CR)
+		dc.w RLoss_Delete-Ring_Index			; 8 (CR)
 ; ===========================================================================
 
-; Distances between rings (format: horizontal, vertical)
-Ring_PosData:	dc.b  $10,   0		; $0 - right, short
-		dc.b  $18,   0		; $1 - right, medium
-		dc.b  $20,   0		; $2 - right, far
+Ring_Main:	; Routine 0/A
+		bsr.s	Ring_Setup_Self				; set up maps etc.
+; ---------------------------------------------------------------------------
 
-		dc.b    0, $10		; $3 - down, short
-		dc.b    0, $18		; $4 - down, medium
-		dc.b    0, $20		; $5 - down, far
+Ring_Animate:	; Routine 2
+	if SmoothRingsCompatibility=0
+		move.b	(v_ani1_frame).w,obFrame(a0)		; set frame (updated in SynchroAnimate => Sync2)
+	endif
+		out_of_range.w	DeleteObject			; has ring gone out of range? if yes, delete it
+		bra.w	DisplaySprite				; display ring sprite
 
-		dc.b  $10, $10		; $6 - diagonal right, short
-		dc.b  $18, $18		; $7 - diagonal right, medium
-		dc.b  $20, $20		; $8 - diagonal right, far
 
-		dc.b -$10, $10		; $9 - diagonal left, short
-		dc.b -$18, $18		; $A - diagonal left, medium
-		dc.b -$20, $20		; $B - diagonal left, far
-
-		dc.b  $10,   8		; $C - diagonal right-right, short
-		dc.b  $18, $10		; $D - diagonal right-right, medium
-
-		dc.b -$10,   8		; $E - diagonal left-left, short
-		dc.b -$18, $10		; $F - diagonal left-left, medium
 ; ===========================================================================
+; ---------------------------------------------------------------------------
+; Subroutine to set up basic ring data
+; ---------------------------------------------------------------------------
 
-Ring_Main:	; Routine 0
+Ring_Setup_Self:
+		movea.l	a0,a1					; setup parent ring itself
+; ---------------------------------------------------------------------------
 
-		; Ring respawn table data arrangement (in bits): R7654321
-		;   R = respawn block flag for entire ring group
-		;   # = "ring collected" flag per ring, set to 1 if collected
-		moveq	#0,d4
-		respawn_entry.s	.noentry
-		move.b	(a2),d4
-	.noentry:
-		moveq	#0,d0
-
-		; Rings are stored in groups within the level layouts, with the subtype dictating
-		; how many there are, and what distance/angle between individual rings to pick.
-		; The format is as follows: $ON
-		;   O = (Orientation) which entry in Ring_PosData to pick
-		;   N = (Number) amount of rings to spawn plus 1 (so 0 is one ring)
-		move.b	obSubtype(a0),d1			; get subtype for ring group
-		move.b	d1,d0					; remember for later
-		andi.w	#7,d1					; limit to 1-8 rings
-
-		; The following check prevents an 8th ring from spawning, which would corrupt
-		; the MSB in the respawn data byte (respawn block flag, reserved by object loader).
-		; It is a bit odd, since ideally no ring groups with 8 rings should be placed to begin
-		; with (and aren't anywhere), so this likely was used as a quick fix during development.
-		cmpi.w	#7,d1					; is this a group with 8 rings?
-		bne.s	.not8					; if not, branch
-		moveq	#6,d1					; spawn 7 rings instead
-	; loc_9B80:
-	.not8:
-
-		swap	d1					; store count in upper word (spawner will alternate between both words in d1)
-		move.w	#0,d1					; clear lower word
-		lsr.b	#4,d0					; shift orientation nybble to lower nybble
-		add.w	d0,d0					; double for word-based indexing
-		move.b	Ring_PosData+0(pc,d0.w),d5		; load ring spacing data for X-axis
-		ext.w	d5					; extend to word for coordinates
-		move.b	Ring_PosData+1(pc,d0.w),d6		; load ring spacing data for Y-axis
-		ext.w	d6					; extend to word for coordinates
-
-		movea.l	a0,a1					; load first actual ring into current RAM location
-		move.w	obX(a0),d2				; remember base X-position
-		move.w	obY(a0),d3				; remember base Y-position
-		lsr.b	#1,d4					; shift out first ring collected bit
-		bcs.s	Ring_NextRing				; has the first ring already been collected? if yes, skip spawning it
-		bra.s	Ring_SpawnRing				; spawn first ring object
-; ===========================================================================
-
-Ring_MakeRings:
-		swap	d1					; swap to respawn index bit
-		lsr.b	#1,d4					; shift out next remembered ring respawn bit
-		bcs.s	Ring_NextRing				; has this ring already been collected? if yes, branch
-
-		bsr.w	FindFreeObj				; find a free RAM slot for the new ring
-		bne.s	Ring_SpawningDone			; if object RAM is full, branch
-
-; loc_9BBA:
-Ring_SpawnRing:
-		_move.b	#id_Rings,obID(a1)			; load new ring object
-		addq.b	#2,obRoutine(a1)			; set to Ring_Animate
-		move.w	d2,obX(a1)				; set x-axis position based on d2
-		move.w	obX(a0),ring_origX(a1)			; remember original X-position for despawn logic
-		move.w	d3,obY(a1)				; set y-axis position based on d3
+Ring_Setup:
+		addq.b	#2,obRoutine(a1)			; advance to main routine for ring
 		move.l	#Map_Ring,obMap(a1)			; set mappings
 		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a1)	; set art tile and palette line
 		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
 		move.w	#$100,obPriority(a1)			; set sprite priority
 		move.b	#col_12x12|col_item,obColType(a1)	; set to power-up collision type and hitbox 12x12 (=$47)
 		move.b	#16/2,obActWid(a1)			; set sprite display width
-		move.w	respawn_index(a0),respawn_index(a1)
-		move.b	d1,ring_respawnbit(a1)			; remember "ring collected" index bit in respawn data
-
-; loc_9C02:
-Ring_NextRing:
-		addq.w	#1,d1					; advance index bit for next ring
-		add.w	d5,d2					; add ring X-spacing value to d2
-		add.w	d6,d3					; add ring Y-spacing value to d3
-		swap	d1					; swap to repeat count (dbf is for low word)
-		dbf	d1,Ring_MakeRings			; repeat for number of rings
-
-; loc_9C0E:
-Ring_SpawningDone:
-
-; ---------------------------------------------------------------------------
-
-Ring_Animate:	; Routine 2
-
-	out_of_range.s	.offscreen,ring_origX(a0)
-		bra.w	DisplaySprite
-
-.offscreen:
-		respawn_entry.w	DeleteObject
-		bclr	#7,(a2)
-		bra.w	DeleteObject
-; ===========================================================================
-
-Ring_Collect:	; Routine 4 (set from ReactToItem)
-		addq.b	#2,obRoutine(a0)			; advance to Ring_Sparkle
-		move.b	#col_none,obColType(a0)			; prevent ring from being collected again
-		move.w	#$80,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
-		bsr.w	CollectRing				; add 1 ring
-
-		respawn_entry.s	Ring_Sparkle
-		move.b	ring_respawnbit(a0),d1
-		bset	d1,(a2)
-; ---------------------------------------------------------------------------
-
-Ring_Sparkle:	; Routine 6
-		lea	(Ani_Ring).l,a1				; get ring animation script
-		bsr.w	AnimateSprite				; advance ring animation
-		bra.w	DisplaySprite				; display ring sprite
-; ===========================================================================
-
-Ring_Delete:	; Routine 8
-		bra.w	DeleteObject				; delete this ring
+		rts						; return
+; End of function Ring_Setup
 
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Subroutine to add 1 ring, update ring HUD, and maybe add an extra life
+; Subroutine to add rings (1 or custom amount) to ring counter, set flag
+; to update ring HUD, and award an extra life for each multiple of 100 rings.
 ; ---------------------------------------------------------------------------
 
 CollectRing:
-	if FixBugs
-		; There isn't any limit to how many rings the player can
-		; collect, which bugs out the ring counter at 999+ rings.
-		; Sonic 2 and 3K would add a cap to stop this.
 		moveq	#1,d0					; add 1 to rings
-		add.w	(v_rings).w,d0				; get previous ring count
-		cmpi.w	#999,d0					; does the player have 999 rings now?
-		blo.s	.belowmax				; if not, branch
-		move.w	#999,d0					; cap at 999 rings
-.belowmax:	move.w	d0,(v_rings).w				; set new ring count
-	else
-		addq.w	#1,(v_rings).w				; add 1 to rings
-	endif
-		ori.b	#1,(f_ringcount).w			; update the rings counter
+; ---------------------------------------------------------------------------
 
-		move.w	#sfx_Ring,d0				; play ring sound
+AddRings:	; d0 = custom number of rings to add
+		add.w	(v_rings).w,d0				; add current rings to number of additional rings
+		cmpi.w	#999,d0					; would new result overflow the 999 limit of the counter?
+		bls.s	.noOverflow				; if not, branch
+		move.w	#999,d0					; otherwise, cap ring counter to 999
+.noOverflow:	move.w	d0,(v_rings).w				; write result as new rings amount
+		ori.b	#1,(f_ringcount).w			; set flag to refresh rings counter in HUD_Update
 
-		cmpi.w	#100,(v_rings).w			; do you have 100 or more rings?
-		blo.s	.playSound				; if not, branch
-		bset	#1,(v_lifecount).w			; set "extra life for 100 rings" flag
-		beq.s	.extraLife				; if it wasn't set before, award an extra life
-		cmpi.w	#200,(v_rings).w			; do you have 200 or more rings?
-		blo.s	.playSound				; if not, branch
-		bset	#2,(v_lifecount).w			; set "extra life for 200 rings" flag
-		bne.s	.playSound				; if it was already set, do not award another extra life
+		move.l	d0,-(sp)				; backup d0 (long because mulu affects both words)
+		moveq	#1,d0					; set initial extra lives check value
+		add.b	(v_lifecount).w,d0			; add remembered value of collected extra lives
+		mulu.w	#100,d0					; multiply required ring value by 100 rings
+		cmp.l	(sp)+,d0				; do you have at least n*100 rings now?
+		bls.s	.extraLifeFromRings			; if yes, award extra life
 
-	.extraLife:
-		addq.b	#1,(v_lives).w				; add 1 to the number of lives you have
-		addq.b	#1,(f_lifecount).w			; update the lives counter
+.playRingSfx:
+		move.w	#sfx_Ring,d0				; set ring sound
+		jmp	(QueueSound2).l				; play it
+; ---------------------------------------------------------------------------
 
-		move.w	#bgm_ExtraLife,d0			; play extra life music
-
-	.playSound:
-		jmp	(QueueSound2).l				; play selected sound
+.extraLifeFromRings:
+		addq.b	#1,(v_lifecount).w			; remember extra life for this multiple of 100 rings was awarded
+		jmp	(ExtraLife).l				; award 1 extra life (Object 2E => Sonic monitor)
 ; End of function CollectRing
 
 
@@ -213,106 +101,123 @@ RingLoss:
 		move.w	RLoss_Index(pc,d0.w),d1
 		jmp	RLoss_Index(pc,d1.w)
 ; ===========================================================================
-RLoss_Index:	dc.w RLoss_Count-RLoss_Index	; 0
-		dc.w RLoss_Bounce-RLoss_Index	; 2
-		dc.w RLoss_Collect-RLoss_Index	; 4
-		dc.w RLoss_Sparkle-RLoss_Index	; 6
-		dc.w RLoss_Delete-RLoss_Index	; 8
+RLoss_Index:	; rings spilled from getting hurt
+		dc.w RLoss_Count-RLoss_Index			;  0
+		dc.w RLoss_Bounce-RLoss_Index			;  2
+		dc.w RLoss_Collect-RLoss_Index			;  4
+		dc.w RLoss_Sparkle-RLoss_Index			;  6
+		dc.w RLoss_Delete-RLoss_Index			;  8
 
-rloss_spread:	equ (2<<8)+$80+8	; (=$288) boost byte + angle fanning out + base angle variation
+		; rings attracted while having a shield
+		dc.w RLoss_Attract_Init-RLoss_Index		;  A
+		dc.w RLoss_Attract_Main-RLoss_Index		;  C
+		dc.w RLoss_Collect-RLoss_Index			;  E
+		dc.w RLoss_Sparkle-RLoss_Index			; 10
+		dc.w RLoss_Delete-RLoss_Index			; 12
 ; ===========================================================================
 
 RLoss_Count:	; Routine 0
-		movea.l	a0,a1					; load first bouncing ring into current object RAM slot
-		moveq	#0,d5					; clear d5
-		move.w	(v_rings).w,d5				; check number of rings you have
-		moveq	#32,d0					; spawn at most 32 rings
-		cmp.w	d0,d5					; do you have 32 or more?
+		move.w	(v_rings).w,d5				; get number of rings you have
+		moveq	#32,d0					; set maximum rings allowed to be spilled to 32
+		cmp.w	d0,d5					; do you more than 32 rings?
 		blo.s	.belowmax				; if not, branch
-		move.w	d0,d5					; if yes, cap number of rings to spawn to 32
+		move.w	d0,d5					; if yes, cap spilled ring count to 32
 
 	.belowmax:
-		subq.w	#1,d5					; decrement d5 for dbf
-		move.w	#rloss_spread,d4			; set initial ring angle spread value
-		bra.s	.makerings				; spawn first ring object
+		subq.w	#1,d5					; decrement for dbf
+		bmi.s	.resetcounter				; if we have no rings, abort process (failsafe)
+
+		lea	SpillRingData(pc),a3			; load pre-calculated spill velocities
+		movea.l	a0,a1					; load first spilled ring to current RAM location
+
+		move.w	obX(a0),d2				; spawn rings at parent X-position
+		move.w	obY(a0),d3				; spawn rings at parent Y-position
+		moveq	#0,d6					; set to above water by default
+		tst.b	(f_water).w				; does level have water?
+		beq.s	.makerings				; if not, branch
+		cmp.w	(v_waterpos1).w,d3			; are rings to be spawned underwater?
+		scc.b	d6					; d6 = set if rings are underwater
+		bra.s	.makerings				; init first ring
 ; ===========================================================================
 
 .loop:
-		bsr.w	FindFreeObj				; find a free RAM slot for the new ring
-		bne.w	.resetcounter				; if object RAM is full, branch
-
-.makerings:
-		_move.b	#id_RingLoss,obID(a1)			; load bouncing ring object
-		addq.b	#2,obRoutine(a1)			; set to RLoss_Animate
-		move.b	#16/2,obHeight(a1)			; set ring height
-		move.b	#16/2,obWidth(a1)			; set right width
-		move.w	obX(a0),obX(a1)				; spawn at same X-position
-		move.w	obY(a0),obY(a1)				; spawn at same Y-position
-		move.l	#Map_Ring,obMap(a1)			; set mappings
-		move.w	#ArtTile_Ring_Loss|Tile_Pal2,obGfx(a1)	; set art tile and palette line
-		move.b	#sprite_cam_field,obRender(a1)		; set to playfield-positioned mode
-		move.w	#$180,obPriority(a1)			; set sprite priority (1 lower than normal rings)
-		move.b	#col_12x12|col_item,obColType(a1)	; set to power-up collision type and hitbox 12x12 (=$47)
-		move.b	#16/2,obActWid(a1)			; set sprite display width
-	if FixBugs=0
-		; This resets the timer for all spilled rings,
-		; even if they were already close to getting deleted
-		; https://info.sonicretro.org/SCHG_How-to:Fix_Ring_Timers
-		move.b	#255,(v_ani3_time).w			; set bouncy ring animation timer to 255 frames
+		bsr.w	FindNextFreeObj				; find next free object RAM slot
+		bne.s	.resetcounter				; if object RAM is full, abort generating new rings
+	.makerings:
+		move.b	(a0),(a1)				; load new bouncing ring object
+		move.w	d2,obX(a1)				; copy parent X-position
+		move.w	d3,obY(a1)				; copy parent Y-position
+		move.l	(a3)+,obVelX(a1)			; move the data contained in the array to obVelX and obVelY, and increment the address in a3
+		tst.b	d6					; is ring underwater?
+		beq.s	.aboveWater				; if not, branch
+		asr.w	obVelX(a1)				; halve X-speed
+		asr.w	obVelY(a1)				; halve Y-speed
+	.aboveWater:
+		bsr.w	Ring_Setup				; complete remaining ring setup (maps etc.)
+	if SmoothRingsCompatibility
+		move.w	#ArtTile_Ring_Loss|Tile_Pal2,obGfx(a1)	; special art tile for smooth rings
 	endif
-
-		; Calculate bouncy ring angles
-		tst.w	d4					; are we spawning another ring and it's even?
-		bmi.s	.setRingSpeed				; if yes, just repeat the last X/Y velocities but X-flipped
-		move.w	d4,d0					; copy current spread value
-		jsr	    (CalcSine).l				; calculate sine and cosine of current spread value (upper byte is ignored)
-		move.w	d4,d2					; get current spread value again
-		lsr.w	#8,d2					; get upper byte of spread value ($2xx => 2)
-		asl.w	d2,d0					; boost X-speed by that value (multiply by 4)
-		asl.w	d2,d1					; boost Y-speed by that value (multiply by 4)
-		move.w	d0,d2					; store X-speed
-		move.w	d1,d3					; store Y-speed
-		addi.b	#$10,d4					; spread lost rings out further (don't affect boost byte)
-		bcc.s	.setRingSpeed				; for the first 7 ring pairs, branch here
-		subi.w	#$80,d4					; after 8 pairs of rings, reset angle (AND decrement boost byte)
-		bcc.s	.setRingSpeed				; has spread value totally underflowed?
-		move.w	#rloss_spread,d4			; if yes, reset it to default (impossible failsafe, can't happen with 32 rings)
-	.setRingSpeed:
-		move.w	d2,obVelX(a1)				; set X-velocity for lost ring
-		move.w	d3,obVelY(a1)				; set Y-velocity for lost ring
-		neg.w	d2					; negate X-velocity for next ring
-		neg.w	d4					; negate ring spill angle for next ring
-
-		dbf	d5,.loop				; repeat for number of rings (max 31)
+		dbf	d5,.loop				; repeat for number of spilled rings (max 31)
 
 .resetcounter:
-		move.w	#0,(v_rings).w				; reset number of rings to zero
+		clr.w	(v_rings).w				; reset number of rings to zero
+		clr.b	(v_lifecount).w				; reset the flags for extra lives on 100/200 rings collected
 		move.b	#$80,(f_ringcount).w			; update ring counter ($80 means all digits should be reset to __0)
-		move.b	#0,(v_lifecount).w			; reset the flags for extra lives on 100/200 rings collected
 
-	if FixBugs
-		; Fix Ring Timers
-		; https://info.sonicretro.org/SCHG_How-to:Fix_Ring_Timers
 		move.b	#255,d0					; set both timers to 255 frames
 		move.b	d0,obDelayAni(a0)			; set ring despawn timer
 		move.b	d0,(v_ani3_time).w			; set animation timer
-	endif
 
 		move.w	#sfx_RingLoss,d0			; set ring loss sound
 		jsr	(QueueSound2).l				; play it
+		bra.w	RLoss_Bounce				; skip over SpillRingData
+
+; ---------------------------------------------------------------------------
+; Precalculated spilled rings velocities
 ; ---------------------------------------------------------------------------
 
+SpillRingData:
+		dc.w   -$C4,-$3EC,   $C4,-$3EC,  -$238,-$350,  $238,-$350  ; 4
+		dc.w  -$350,-$238,  $350,-$238,  -$3EC, -$C4,  $3EC, -$C4  ; 8
+		dc.w  -$3EC,  $C4,  $3EC,  $C4,  -$350, $238,  $350, $238  ; 12
+		dc.w  -$238, $350,  $238, $350,   -$C4, $3EC,   $C4, $3EC  ; 16
+		dc.w   -$62,-$1F6,   $62,-$1F6,  -$11C,-$1A8,  $11C,-$1A8  ; 20
+		dc.w  -$1A8,-$11C,  $1A8,-$11C,  -$1F6, -$62,  $1F6, -$62  ; 24
+		dc.w  -$1F6,  $62,  $1F6,  $62,  -$1A8, $11C,  $1A8, $11C  ; 28
+		dc.w  -$11C, $1A8,  $11C, $1A8,   -$62, $156,   $62, $156  ; 32
+
+; ===========================================================================
+
 RLoss_Bounce:	; Routine 2
+	if SmoothRingsCompatibility=0
+		move.b	(v_ani3_frame).w,obFrame(a0)		; set frame (updated in SynchroAnimate => Sync2)
+	endif
 
-		bsr.w	SpeedToPos				; update ring position based on speed
-		addi.w	#$18,obVelY(a0)				; make ring fall faster
+		; SpeedToPos (inlined, optimized)
+		movem.w	obVelX(a0),d0/d2			; load X and Y speed to d0/d2
+		asl.l	#8,d0					; shift X up a byte (positions are 16.16 fixed)
+		add.l	d0,obX(a0)				; update X-position
+		asl.l	#8,d2					; shift Y speed up a byte
+		add.l	d2,obY(a0)				; update Y-position
+
+		; apply gravity
+		move.w	#$18,d0					; set basic fall velocity
+		tst.b	(f_water).w				; does level have water?
+		beq.s	.aboveWater				; if not, branch
+		move.w	(v_waterpos1).w,d1			; get current water position
+		cmp.w	obY(a0),d1				; is ring below water?
+		bcc.s	.aboveWater				; if not, branch
+		moveq	#$18/2,d0				; use slower fall speed
+	.aboveWater:
+		add.w	d0,obVelY(a0)				; add fall speed to current Y velocity
 		bmi.s	.chkdel					; is ring still going upwards? if yes, skip floor collision check
-
+	
+		; floor collision check
 		move.b	(v_vblank_byte).w,d0			; get VBlank counter byte
 		add.b	d7,d0					; add object RAM index as crude spreading-out of collision check over multiple frames
 		andi.b	#3,d0					; only check for floor collision every 4th frame
 		bne.s	.chkdel					; if on any other frame, branch
-
+	
 		jsr	(ObjFloorDist).l			; calculate distance between this ring and the floor
 		tst.w	d1					; has ring hit the floor?
 		bpl.s	.chkdel					; if not, branch
@@ -322,39 +227,29 @@ RLoss_Bounce:	; Routine 2
 		sub.w	d0,obVelY(a0)				; subtract that result from the previous speed to make it bounce less
 		neg.w	obVelY(a0)				; negate fall speed to make ring bounce up
 
-.chkdel:
-	if FixBugs
-		; Fix Ring Timers
-		; https://info.sonicretro.org/SCHG_How-to:Fix_Ring_Timers
+	.chkdel:
+		; check if ring should be deleted
 		subq.b	#1,obDelayAni(a0)			; decrement remaining time for bouncing ring
 		beq.w	DeleteObject				; if time reached zero, delete ring
-	else
-		tst.b	(v_ani3_time).w				; has global lost rings animation timer expired?
-		beq.s	RLoss_Delete				; if yes, delete ring
-	endif
 
 		move.w	(v_limitbtm2).w,d0			; get current bottom level boundary
 		addi.w	#224,d0					; add vertical screen height
 		cmp.w	obY(a0),d0				; has object moved below the bottom level boundary?
-	if FixBugs
-		; Fix accidental deletion of scattered rings at the top of the screen.
-		; The cause is using an unsigned check instead of a signed one.
 		blt.s	RLoss_Delete				; if yes, delete ring
-	else
-		blo.s	RLoss_Delete				; if yes, delete ring
-	endif
 		bra.w	DisplaySprite				; display this ring
 ; ===========================================================================
 
-RLoss_Collect:	; Routine 4
+RLoss_Collect:	; Routine 4 (set from ReactToItem)
 		addq.b	#2,obRoutine(a0)			; advance to RLoss_Sparkle
 		move.b	#col_none,obColType(a0)			; prevent ring from being collected again
 		move.w	#$80,obPriority(a0)			; make ring sparkles appear in front of Sonic's sprites
-		bsr.w	CollectRing				; add 1 ring
+		bsr.w	CollectRing				; add 1 ring 
 ; ---------------------------------------------------------------------------
 
 RLoss_Sparkle:	; Routine 6
-        move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a0)
+	if SmoothRingsCompatibility
+		move.w	#ArtTile_Ring|Tile_Pal2,obGfx(a0)	; reset art tile for sparkle animation
+	endif
 		lea	(Ani_Ring).l,a1				; get ring animation script
 		bsr.w	AnimateSprite				; advance ring animation
 		bra.w	DisplaySprite				; display ring sprite
@@ -362,3 +257,80 @@ RLoss_Sparkle:	; Routine 6
 
 RLoss_Delete:	; Routine 8
 		bra.w	DeleteObject				; delete this ring
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Attracted rings (set from S3K Rings Manager => AttractRing)
+; ---------------------------------------------------------------------------
+
+RLoss_Attract_Init:	; Routine A
+		bsr.w	Ring_Setup_Self				; set up maps etc.
+; ---------------------------------------------------------------------------
+
+RLoss_Attract_Main:	; Routine C
+		tst.b	(v_shield).w				; does Sonic still have a shield?
+		bne.s	.attract				; if yes, keep attracting ring
+
+		; Make rings bounce away at their current speed if Sonic lost his shield
+		move.b	#2,obRoutine(a0)			; change ring to RLoss_Bounce routine
+		move.b	#255,d0					; set both timers to 255 frames
+		move.b	d0,obDelayAni(a0)			; set ring despawn timer
+		move.b	d0,(v_ani3_time).w			; set animation timer
+		bra.w	RLoss_Bounce				; continue straight to ring loss object
+; ---------------------------------------------------------------------------
+
+.attract:
+		lea	(v_player).w,a1				; load Sonic player object
+		moveq	#$30,d1					; set horizontal ring move speed
+		move.w	obX(a1),d0				; get Sonic's current X-position
+		cmp.w	obX(a0),d0				; is attracted ring to the right of Sonic?
+		bcc.s	.ringLeft				; if not, branch
+
+	.ringRight:
+		neg.w	d1					; move ring to the left instead
+		tst.w	obVelX(a0)				; is ring already moving left?
+		bmi.s	.updateXSpeed				; if yes, branch
+		add.w	d1,d1					; quadruple horizontal speed...
+		add.w	d1,d1					; ...if ring needs to turn around
+		bra.s	.updateXSpeed				; update horizontal speed
+
+	.ringLeft:
+		tst.w	obVelX(a0)				; is ring already moving right?
+		bpl.s	.updateXSpeed				; if yes, branch
+		add.w	d1,d1					; quadruple horizontal speed...
+		add.w	d1,d1					; ...if ring needs to turn around
+
+	.updateXSpeed:
+		add.w	d1,obVelX(a0)				; update attracted ring's current X-speed
+; ---------------------------------------------------------------------------
+
+		moveq	#$30,d1					; set vertical ring move speed
+		move.w	obY(a1),d0				; get Sonic's current Y-position
+		cmp.w	obY(a0),d0				; is attracted ring below Sonic?
+		bcc.s	.ringAbove				; if not, branch
+
+	.ringBelow:
+		neg.w	d1					; move right upwards instead
+		tst.w	obVelY(a0)				; is ring already moving up?
+		bmi.s	.updateYSpeed				; if yes, branch
+		add.w	d1,d1					; quadruple vertical speed...
+		add.w	d1,d1					; ...if ring needs to turn around
+		bra.s	.updateYSpeed				; update vertical speed
+
+	.ringAbove:
+		tst.w	obVelY(a0)				; is ring already moving down?
+		bpl.s	.updateYSpeed				; if yes, branch
+		add.w	d1,d1					; quadruple vertical speed...
+		add.w	d1,d1					; ...if ring needs to turn around
+
+	.updateYSpeed:
+		add.w	d1,obVelY(a0)				; update attracted ring's current Y-speed
+; ---------------------------------------------------------------------------
+
+		jsr	(SpeedToPos).l				; translate speed to current position
+	if SmoothRingsCompatibility=0
+		move.b	(v_ani1_frame).w,obFrame(a0)		; set frame (updated in SynchroAnimate => Sync2)
+	endif
+		bra.w	DisplaySprite				; display ring sprite
+; ===========================================================================

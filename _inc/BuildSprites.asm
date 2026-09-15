@@ -27,6 +27,14 @@ BuildSprites:
 		lea	(v_spritequeue).w,a4
 		moveq	#spritelayer_num-1,d7
 .priorityLoop:
+        cmpi.w	#spritelayer_num-2,d7			; is sprite priority layer 2 up next for rendering?
+		bne.s	.noRings				; if not, branch
+		tst.b	(v_draw_rings).w			; are rings even meant to get rendered? (Level_started_flag in S2)
+		beq.s	.noRings				; if not, branch
+		movem.l	d7/a4,-(sp)				; backup v_spritequeue and layer iterator
+		bsr.w	BuildRings				; render ring sprites
+		movem.l	(sp)+,d7/a4				; restore v_spritequeue and layer iterator
+	.noRings:
 		tst.w	(a4)					; are there objects left to draw in current priority layer?
 		beq.w	.nextPriority				; if not, go to next priority layer
 

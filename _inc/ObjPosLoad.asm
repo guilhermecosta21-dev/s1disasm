@@ -1,5 +1,5 @@
 ; ---------------------------------------------------------------------------
-OPL_S1_Compatibility: equ 1
+OPL_S1_Compatibility: equ 0
 ; If 1, adds compatibility for the Sonic 1 objpos layout without needing any
 ; further adjustments. This will account for the following limitations:
 ; * Sonic 3 introduces one extra bit to the upper portion of the second word,
