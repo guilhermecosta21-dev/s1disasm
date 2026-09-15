@@ -2779,6 +2779,12 @@ Level_ChkWater:
 		move.w	#$120,(v_watersurface2+obX).w		; set base X-position for surface B
 
 Level_LoadObj:
+        cmpi.b	#id_SLZ,(v_zone).w	; are we in SLZ?
+		bne.s	.nopylon		; if not, don't load pylon
+		jsr	(FindFreeObj).l		; find a free object slot
+		bne.s	.nopylon		; if none are free, branch
+		move.b	#id_Pylon,(a1)		; manually load SLZ pylon
+.nopylon:
 		jsr	(ObjPosLoad).l				; initialize object manager
 		jsr	(ExecuteObjects).l			; load objects that are already visible during fade-in
 		jsr	(BuildSprites).l			; build sprites for objects before fade-in
