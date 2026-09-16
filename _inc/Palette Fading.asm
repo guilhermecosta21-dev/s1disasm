@@ -45,7 +45,6 @@ PalFadeIn_Alt:	; start position and size are already set
 		move.b	#id_VBlank_PaletteFade,(v_vblank_routine).w ; set VBlank routine to fade-in ($12)
 		bsr.w	WaitForVBlank				; wait for VBlank to transfer CRAM and sync screen
 		bsr.s	FadeIn_FromBlack			; fade-in all affected colors from black a bit more
-		bsr.w	RunPLC					; run any PLC, if necessary
 		dbf	d4,.fadeMainLoop			; loop for 22 frames
 
 		rts						; return
@@ -139,7 +138,6 @@ PaletteFadeOut:
 		move.b	#id_VBlank_PaletteFade,(v_vblank_routine).w ; set VBlank routine to fade-in ($12)
 		bsr.w	WaitForVBlank				; wait for VBlank to transfer CRAM and sync screen
 		bsr.s	FadeOut_ToBlack				; fade-out all affected colors to black a bit more
-		bsr.w	RunPLC					; run any PLC, if necessary
 		dbf	d4,.fadeMainLoop			; loop for 22 frames
 
 		rts						; return
@@ -229,7 +227,6 @@ PalWhiteIn_Alt:	; start position and size are already set
 		move.b	#id_VBlank_PaletteFade,(v_vblank_routine).w ; set VBlank routine to fade-in ($12)
 		bsr.w	WaitForVBlank				; wait for VBlank to transfer CRAM and sync screen
 		bsr.s	WhiteIn_FromWhite			; fade-in all affected colors from white a bit more
-		bsr.w	RunPLC					; run any PLC, if necessary
 		dbf	d4,.fadeMainLoop			; loop for 22 frames
 
 		rts						; return
@@ -318,7 +315,6 @@ PaletteWhiteOut:
 		move.b	#id_VBlank_PaletteFade,(v_vblank_routine).w ; set VBlank routine to fade-in ($12)
 		bsr.w	WaitForVBlank				; wait for VBlank to transfer CRAM and sync screen
 		bsr.s	WhiteOut_ToWhite			; fade-out all affected colors to white bit more
-		bsr.w	RunPLC					; run any PLC, if necessary
 		dbf	d4,.fadeMainLoop			; loop for 22 frames
 
 		rts						; return

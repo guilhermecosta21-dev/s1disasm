@@ -23,7 +23,10 @@ v_lvllayout_end:
 
 v_collision1:		ds.b	$300				; MJ: path A
 v_collision2:		ds.b	$300				; MJ: path B
-			ds.b	$1200				; unused
+
+Art_Buffer:		ds.b	$1000				; art decompression buffer used for PLCs
+Art_Buffer_End:							; end of decompression buffer
+			ds.b	$200				; unused
 
 v_bgscroll_buffer:	ds.b	$200				; background scroll buffer
 v_ngfx_buffer:		ds.b	$200				; Nemesis graphics decompression buffer
@@ -182,17 +185,13 @@ v_pal_buffer:		ds.b	$30				; palette data buffer (used for palette cycling)
 v_misc_variables_end:
 
 plc_slot_size:		equ	4+2				; size of a single PLC slot: 6 bytes = 4 bytes (data address) + 2 bytes (VRAM target address)
-v_plc_buffer:		ds.b	plc_slot_size*16		; pattern load cues buffer (maximum $10 PLCs)
-v_plc_buffer_dest:	equ	v_plc_buffer+4			; VRAM destination for 1st item in PLC buffer (2 bytes)
+v_plc_buffer:		ds.b	plc_slot_size*19		; pattern load cues buffer (maximum 19 PLCs)
 v_plc_buffer_only_end:
-v_plc_ptrnemcode:	ds.l	1				; pointer for nemesis decompression code ($1502 or $150C)
-v_plc_repeatcount:	ds.l	1
-v_plc_paletteindex:	ds.l	1
-v_plc_previousrow:	ds.l	1
-v_plc_dataword:		ds.l	1
-v_plc_shiftvalue:	ds.l	1
-v_plc_patternsleft:	ds.w	1
-v_plc_framepatternsleft:ds.w	1
+v_plc_BufferPtr:	ds.w	1				; pointer to decompression buffer location
+v_plc_VRAMAddr:		ds.w	1				; VRAM destination address
+v_plc_ArtPtr:		ds.l	1				; pointer within compressed art (for multi-module art)
+v_plc_Modules:		ds.b	1				; number of remaining modules (for multi-module art)
+v_plc_Busy:		ds.b	1				; flag set while PLC is being executed
 			ds.b	4				; unused
 v_plc_buffer_end:
 
