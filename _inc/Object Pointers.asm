@@ -46,7 +46,7 @@ id_MagicSwitch:		objptr	MagicSwitch		; 1D
 id_BallHog:		objptr	BallHog			; 1E
 id_Crabmeat:		objptr	Crabmeat		; 1F
 id_Cannonball:		objptr	Cannonball		; 20
-id_HUD:			objptr	HUD			; 21
+id_Obj21:		objptr	NullObject		; 21 (used to be the HUD object)
 id_BuzzBomber:		objptr	BuzzBomber		; 22
 id_Missile:		objptr	Missile			; 23
 id_UnusedExplosion:	objptr	UnusedExplosion		; 24

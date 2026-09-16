@@ -1096,7 +1096,9 @@ ClearScreen:
 		clearRAM v_hscrolltablebuffer,v_hscrolltablebuffer_end_padded+4 ; clear H-Scroll table buffer
 	endif
 
+    clr.b	(v_draw_hud).w				; disable HUD drawing
     clr.b	(v_draw_rings).w			; disable drawing ring sprites
+	
         ResetDMAQueue
 		rts						; return
 ; End of function ClearScreen
@@ -2684,7 +2686,7 @@ Level_SkipTtlCard:
 
 		tst.w	(f_demo).w				; is this a credits demo?
 		bmi.s	Level_ChkDebug				; if yes, don't load HUD
-		move.b	#id_HUD,(v_hud).w			; load HUD object
+		move.b	#1,(v_draw_hud).w			; enable HUD drawing
 
 Level_ChkDebug:
 		tst.b	(f_debugcheat).w			; has debug cheat been entered?
@@ -3516,7 +3518,7 @@ End_LoadSonic:
 		move.w	#(btnL<<8),(v_jpadhold2).w		; simulate holding down the left D-Pad button to move Sonic (and clear v_jpadpress2)
 		move.w	#-$800,(v_player+obInertia).w		; set Sonic's initial speed (speed cap immediately limits this to -$600)
 
-		move.b	#id_HUD,(v_hud).w			; load HUD object
+		move.b	#1,(v_draw_hud).w			; enable HUD drawing
 		jsr	(ObjPosLoad).l				; run the object manager to load level objects
 		jsr	(ExecuteObjects).l			; execute all objects in object RAM
 		jsr	(BuildSprites).l			; build sprite table
@@ -4215,7 +4217,7 @@ Map_SS_Chaos:	include	"_maps/SS Chaos Emeralds.asm"
 
 ; ===========================================================================
 ; >>> HUD objects
-		include	"_incObj/21 HUD.asm"
+Map_HUD:	include	"_maps/HUD.asm"
 		include	"_incObj/sub AddPoints.asm"
 		include	"_inc/HUD Update.asm" ; includes "ContScrCounter" subroutine
 

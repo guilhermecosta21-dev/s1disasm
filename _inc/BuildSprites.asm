@@ -23,7 +23,10 @@ BuildSpr_Cameras:
 BuildSprites:
 		lea	(v_spritetablebuffer).w,a2
 		moveq	#0,d5					; d5 will be used as counter for total rendered sprites
-
+        tst.b	(v_draw_hud).w				; is HUD rendering on? (Level_started_flag in S2)
+		beq.s	.noHud					; if not, branch
+		bsr.w	BuildHUD				; draw HUD directly to sprite buffer
+.noHud:
 		lea	(v_spritequeue).w,a4
 		moveq	#spritelayer_num-1,d7
 .priorityLoop:
@@ -267,3 +270,33 @@ BuildSpr_FlipY:
 BuildSpr_FlipXY:
 		buildsprite	1,1
 ; End of function BuildSpr_Draw
+
+
+; ---------------------------------------------------------------------------
+; Sonic 2 HUD renderer, ported and optimized for Sonic 1
+; ---------------------------------------------------------------------------
+
+BuildHUD:
+		moveq	#0,d1					; use frame 0 by default
+		btst	#3,(v_framebyte).w			; only blink HUD every 8 frames
+		bne.s	.drawHud				; branch otherwise
+		tst.w	(v_rings).w				; do you have any rings?
+		bne.s	.checkTime				; if so, branch
+		addq.w	#2,d1					; make ring counter flash red
+
+.checkTime:
+		cmpi.b	#9,(v_timemin).w			; have 9 minutes elapsed?
+		bne.s	.drawHud				; if not, branch
+		addq.w	#4,d1					; make time counter flash red
+
+.drawHud:
+		lea	(Map_HUD).l,a1				; set mappings location
+		adda.w	(a1,d1.w),a1				; get current HUD frame
+		move.b	(a1)+,d1				; get number of sprite pieces (changed from .w to .b for S1)
+		subq.b	#1,d1					; make it 0-based
+
+		move.w	#$80+$10,d3				; set X pos
+		move.w	#$80+$88,d2				; set Y pos
+		movea.w	#ArtTile_HUD,a3				; set art tile (prio flag is set from mappings themselves!)
+		bra.w	BuildSpr_Normal				; draw HUD directly to sprite buffer
+; End of function BuildHUD

@@ -74,7 +74,6 @@ v_ttlsonichide:		equ	v_objspace+object_size*4	; object variable space for hiding
 
 ; Level objects
 v_player:		equ	v_objspace+object_size*0	; object variable space for Sonic ($40 bytes)
-v_hud:			equ	v_objspace+object_size*1	; object variable space for the HUD ($40 bytes)
 
 v_points:		equ	v_objspace+object_size*16	; object variable space for the points from destroyed badniks etc. ($40 bytes)
 
@@ -302,7 +301,7 @@ v_obj6B:		ds.b	1				; object 6B (SBZ stomper) variable
 f_lockctrl:		ds.b	1				; flag set to lock controls during ending sequence
 f_bigring:		ds.b	1				; flag set when Sonic collects the giant ring
 f_obj56:		ds.b	1				; object 56 flag
-			ds.b	1				; unused
+v_draw_hud:		ds.b	1				; flag to enable/disable drawing the HUD
 v_itembonus:		ds.w	1				; item bonus from broken enemies, blocks etc.
 v_timebonus:		ds.w	1				; time bonus at the end of an act
 v_ringbonus:		ds.w	1				; ring bonus at the end of an act
