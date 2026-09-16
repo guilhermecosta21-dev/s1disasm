@@ -26,7 +26,7 @@ TSon_Main:	; Routine 0
 		move.w	#$80+$5E,obScreenY(a0)			; set initial Y-position
 		move.l	#Map_TSon,obMap(a0)			; set mappings
 		move.w	#ArtTile_Title_Sonic|Tile_Pal2,obGfx(a0) ; set art tile and palette line
-		move.w	#$80,obPriority(a0)			; set sprite priority
+		move.w	#$380,obPriority(a0)			; set sprite priority
 		move.b	#30-1,obDelayAni(a0)			; set time delay before Sonic moves in to 0.5 seconds
 		lea	(Ani_TSon).l,a1				; load animation script
 		bsr.w	AnimateSprite				; advance animation once
@@ -95,12 +95,19 @@ PSB_Main:	; Routine 0
 		cmpi.b	#2,obFrame(a0)				; is object "PRESS START"?
 		blo.s	PSB_PrsStart				; if yes, branch
 
+		; Set up sprite mask to hide Sonic's torso
+		clr.w	obGfx(a0)				; force art tile ID $0000
+		clr.w	obX(a0)					; force X-position 0 to activate masking
+		move.w	#$80+104,obScreenY(a0)			; set Y-position to cover Sonic's torso to 104px
+		move.w	#$300,obPriority(a0)			; set sprite priority for sprite mask (above Sonic)
+
 		; Object is either TM or masking sprites
 		addq.b	#2,obRoutine(a0)			; advance to PSB_Exit (static)
 		cmpi.b	#3,obFrame(a0)				; is the object "TM"?
 		bne.s	PSB_Exit				; if not, branch (object is masking sprites)
 
 		move.w	#ArtTile_Title_Trademark|Tile_Pal2,obGfx(a0) ; "TM" specific art tile
+		move.w	#0,obPriority(a0)			; set sprite priority for TM (highest)
 	if FixBugs
 		; Fix horizontal title screen position
 		move.w	#$80+$F8,obX(a0)			; +8px

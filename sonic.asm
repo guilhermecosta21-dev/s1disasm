@@ -1889,6 +1889,16 @@ Tit_MainLoop:
 		jsr	(ExecuteObjects).l			; execute title screen objects
 		bsr.w	DeformLayers				; run background deformation
 		jsr	(BuildSprites).l			; display sprites
+		lea	(v_spritetablebuffer+4).w,a1	; fetch sprite table buffer, starting from tile IDs
+		moveq	#0,d0				; this will be our X-position
+		moveq	#sprites_max-1,d6		; iterate through the whole sprite table (80-1)
+	.maskLoop:
+		tst.w	(a1)				; does this sprite have tile ID $0000 (indicates either a mask or nothing)?
+		bne.s	.next				; if not, then this is a normal sprite, do not modify its X-position
+		bchg	#2,d0				; alternate between X-position of 0 and 4 (masks need a non X=0 higher priority sprite to mask)
+		move.w	d0,2(a1)			; write to X-position
+	.next:	addq.w	#8,a1				; go to next sprite
+		dbf	d6,.maskLoop			; loop
 		bsr.w	PalCycle_Title				; run title screen palette cycle
 
 		move.w	(v_player+obX).w,d0			; get current title screen position (big Sonic object)

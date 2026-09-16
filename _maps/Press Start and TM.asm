@@ -17,38 +17,12 @@ Map_PSB_internal:	mappingsTable
 .psb_End
 
 .spritemask:	spriteHeader
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0	; sprite line limiter
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$48, 4, 4, 0, 0, 0, 0, 0
-
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -$28, 4, 4, 0, 0, 0, 0, 0
-
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
-	spritePiece	-$80, -8, 4, 4, 0, 0, 0, 0, 0
+	spritePiece	 0, 00, 1, 4, 0, 0, 0, 0, 0	; sprite masks
+	spritePiece	-8, 00, 1, 4, 0, 0, 0, 0, 0
+	spritePiece	 0, 32, 1, 4, 0, 0, 0, 0, 0
+	spritePiece	-8, 32, 1, 4, 0, 0, 0, 0, 0
+	spritePiece	 0, 64, 1, 4, 0, 0, 0, 0, 0
+	spritePiece	-8, 64, 1, 4, 0, 0, 0, 0, 0
 .spritemask_End
 
 .tm:	spriteHeader
