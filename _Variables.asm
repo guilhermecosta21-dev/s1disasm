@@ -26,7 +26,9 @@ v_collision2:		ds.b	$300				; MJ: path B
 
 Art_Buffer:		ds.b	$1000				; art decompression buffer used for PLCs
 Art_Buffer_End:							; end of decompression buffer
-			ds.b	$200				; unused
+			
+v_registeredcollision:	ds.b	$80				; collision response queue for ReactToItem
+			ds.b	$180				; unused
 
 v_bgscroll_buffer:	ds.b	$200				; background scroll buffer
 v_ngfx_buffer:		ds.b	$200				; Nemesis graphics decompression buffer

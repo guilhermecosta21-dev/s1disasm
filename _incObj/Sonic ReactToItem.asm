@@ -12,6 +12,10 @@
 
 ReactToItem:
 		jsr	(Touch_Rings).l				; allow Sonic to collect S3K Rings Manager rings
+		tst.w	(v_registeredcollision).w		; does collision response queue contain entries?
+		bne.s	.queueNotEmpty				; if yes, branch
+		rts						; queue is empty, exit early (nothing to do)
+.queueNotEmpty:
 		move.w	obX(a0),d2				; load Sonic's x-axis position
 		move.w	obY(a0),d3				; load Sonic's y-axis position
 		subq.w	#sonic_react_width,d2			; d2 = X-position of Sonic's left edge
@@ -41,20 +45,19 @@ ReactToItem:
 		move.w	#sonic_react_width*2,d4			; d4 = Sonic's hitbox width
 		add.w	d5,d5					; d5 = Sonic's hitbox height
 
-		lea	(v_lvlobjspace).w,a1			; set object RAM start address
-		move.w	#(v_lvlobjend-v_lvlobjspace)/object_size-1,d6 ; iterate through the entire level object RAM space
+		lea	(v_registeredcollision).w,a3		; load start of register collision objects
+		move.w	(a3)+,d6				; get number of entries in queue
+		lsr.w	#1,d6					; divide by two (entry count is doubled)
 ; .loop:
 React_LoopObjects:
-		; Sonic 2 onwards removed this, allowing objects that do not set the
-		; 'object visible flag' to process their collision.
-		tst.b	obRender(a1)				; is object on screen? (sprite rendered)
-		bpl.s	React_CheckNext				; if not, don't check collision for it
-		move.b	obColType(a1),d0			; load collision type
-		bne.s	React_CheckHitboxOverlap		; if non-zero (i.e. not col_none), check for collision
+		move.w	(a3)+,d0				; get next registered object RAM pointer
+		beq.s	React_CheckNext				; if slot is empty, skip it
+		movea.w	d0,a1					; load pointer to a1
+		move.b	obColType(a1),d0			; load object collision type
+		bne.s	React_CheckHitboxOverlap		; if valid, begin handling collision response
 ; .next:
 React_CheckNext:
-		lea	object_size(a1),a1			; next object RAM
-		dbf	d6,React_LoopObjects			; repeat $5F more times
+		dbf	d6,React_LoopObjects			; loop for all queued objects
 
 		moveq	#0,d0					; no collision was processed
 		rts						; return
