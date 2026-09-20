@@ -1644,7 +1644,7 @@ GM_Sega:
 		move.b	#bgm_Stop,d0				; set stop music command
 		bsr.w	QueueSound2				; stop music
 		bsr.w	ClearPLC				; stop any potential in-progress PLC
-		bsr.w	PaletteFadeOut				; fade-out previous game mode
+		bsr.w	PaletteWhiteOut			; white fade-out because the Sega screen has a white background
 ; ---------------------------------------------------------------------------
 
 		; screen setup and loading patterns
