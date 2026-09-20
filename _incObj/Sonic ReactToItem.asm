@@ -379,7 +379,7 @@ HurtSonic:
 		tst.b	(v_shield).w				; does Sonic have a shield?
 		bne.s	.bounceSonicAway			; if yes, branch
 		tst.w	(v_rings).w				; does Sonic have any rings?
-		beq.w	.hitWithoutRings			; if not, branch to kill Sonic
+		beq.w	KillSonic			; if not, branch to kill Sonic
 
 		jsr	(FindFreeObj).l				; find a free object slot
 		bne.s	.bounceSonicAway			; if object RAM is full, branch
@@ -434,15 +434,9 @@ HurtSonic:
 
 		moveq	#-1,d0					; collision detected
 		rts						; return
+
+
 ; ===========================================================================
-
-; .norings:
-.hitWithoutRings:
-		tst.w	(f_debugmode).w				; is debug mode cheat on?
-		bne.w	.bounceSonicAway			; if yes, survive dying from no rings
-		; continue straight to KillSonic...
-
-
 ; ---------------------------------------------------------------------------
 ; Subroutine to kill Sonic
 ; 

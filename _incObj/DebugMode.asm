@@ -251,6 +251,39 @@ Debug_Move:
 	endif
 
 .setNewDebugPosition:
+        cmpi.b	#id_Special,(v_gamemode).w ; is game mode $10 (special stage)?
+		beq.s	.right_ok		; if yes, don't cap position (there are no dynamic boundaries)
+
+		moveq	#0,d5			; clear d5
+		move.w	(v_limittop2).w,d5	; get top level boundary
+		swap	d5			; swap to high word
+		cmp.l	d5,d2			; is new debug position above top boundary?
+		bge.s	.top_ok			; if not, branch
+		move.l	d5,d2			; cap debug position to top boundary
+.top_ok:
+		moveq	#0,d5			; clear d5
+		move.w	(v_limitbtm2).w,d5	; get bottom level boundary
+		addi.w	#224,d5			; add screen height (224px)
+		swap	d5			; swap to high word
+		cmp.l	d5,d2			; is new debug position below bottom boundary?
+		ble.s	.bottom_ok		; if not, branch
+		move.l	d5,d2			; cap debug position to bottom boundary
+.bottom_ok:
+		moveq	#0,d5			; clear d5
+		move.w	(v_limitleft2).w,d5	; get left level boundary
+		swap	d5			; swap to high word
+		cmp.l	d5,d3			; is new debug position past left boundary?
+		bge.s	.left_ok		; if not, branch
+		move.l	d5,d3			; cap debug position to left boundary
+.left_ok:
+		moveq	#0,d5			; clear d5
+		move.w	(v_limitright2).w,d5	; get right level boundary
+		addi.w	#320,d5			; add screen width (320px)
+		swap	d5			; swap to high word
+		cmp.l	d5,d3			; is new debug position past right boundary?
+		ble.s	.right_ok		; is not, branch
+		move.l	d5,d3			; cap debug position to right boundary
+.right_ok:
 		move.l	d2,obY(a0)				; set new Y-position
 		move.l	d3,obX(a0)				; set new X-position
 		; continue to Debug_ChgItem...
@@ -315,6 +348,10 @@ Debug_ExitDebugMode:
 
 		moveq	#0,d0					; prepare 0 value
 		move.w	d0,(v_debuguse).w			; deactivate debug mode
+		bsr.w	Hud_Base				; revert to normal HUD
+		move.b	#1,(f_ringcount).w			; revert Rings HUD
+		move.b	#1,(f_timecount).w			; revert Time HUD
+		move.b	#1,(f_scorecount).w			; revert Score HUD
 		move.l	#Map_Sonic,(v_player+obMap).w		; reset Sonic's mappings
 		move.w	#ArtTile_Sonic,(v_player+obGfx).w	; reset Sonic's art tile
 		move.b	d0,(v_player+obAnim).w			; reset Sonic's animation to walking
@@ -385,16 +422,30 @@ __LABEL__:	label	*
 		dc.w	((__LABEL___end)-(__LABEL__)-2)/8
 		endm
 
+dbugcommon:	macro
+		;	mappings	object			subtype	frame	VRAM setting
+		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
+		dbug	Map_Monitor,	id_Monitor,		6,	8,	ArtTile_Monitor	; Rings
+		dbug	Map_Monitor,	id_Monitor,		4,	6,	ArtTile_Monitor	; Shield
+		dbug	Map_Monitor,	id_Monitor,		3,	5,	ArtTile_Monitor	; Speed Shoes
+		dbug	Map_Monitor,	id_Monitor,		5,	7,	ArtTile_Monitor	; Invincibility
+		dbug	Map_Monitor,	id_Monitor,		2,	4,	ArtTile_Monitor	; Extra Life
+		dbug	Map_Monitor,	id_Monitor,		1,	3,	ArtTile_Monitor	; Eggman (Unused)
+		dbug	Map_Monitor,	id_Monitor,		7,	9,	ArtTile_Monitor	; Super (Unused)
+		dbug	Map_Monitor,	id_Monitor,		8,	10,	ArtTile_Monitor	; Goggles (Unused)
+		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
+		dbug	Map_Spike,	id_Spikes,		0,	0,	ArtTile_Spikes
+		dbug	Map_Pri_internal, id_Prison,		1,	0,	ArtTile_Prison_Capsule
+	endm
+
 ; ---------------------------------------------------------------------------
 
 .GHZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
+		dbugcommon
 		dbug	Map_Crab,	id_Crabmeat,		0,	0,	ArtTile_Crabmeat
 		dbug	Map_Buzz,	id_BuzzBomber,		0,	0,	ArtTile_Buzz_Bomber
 		dbug	Map_Chop,	id_Chopper,		0,	0,	ArtTile_Chopper
-		dbug	Map_Spike,	id_Spikes,		0,	0,	ArtTile_Spikes
 		dbug	Map_Plat_GHZ,	id_BasicPlatform,	0,	0,	ArtTile_Level|Tile_Pal3
 		dbug	Map_PRock,	id_PurpleRock,		0,	0,	ArtTile_GHZ_Purple_Rock|Tile_Pal4
 		dbug	Map_Moto,	id_MotoBug,		0,	0,	ArtTile_Moto_Bug
@@ -402,7 +453,6 @@ __LABEL__:	label	*
 		dbug	Map_Newt,	id_Newtron,		0,	0,	ArtTile_Newtron|Tile_Pal2
 		dbug	Map_Edge,	id_EdgeWalls,		0,	0,	ArtTile_GHZ_Edge_Wall|Tile_Pal3
 		dbug	Map_GBall,	id_Obj19,		0,	0,	ArtTile_GHZ_Giant_Ball|Tile_Pal3
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 		dbug	Map_GRing,	id_GiantRing,		0,	0,	ArtTile_Giant_Ring|Tile_Pal2
 		dbug	Map_Bonus,	id_HiddenBonus,		1,	1,	ArtTile_Hidden_Points|Tile_Prio
 .GHZ_end:
@@ -411,8 +461,7 @@ __LABEL__:	label	*
 
 .LZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
+		dbugcommon
 		dbug	Map_Spring,	id_Springs,		0,	0,	ArtTile_Spring_Horizontal
 		dbug	Map_Jaws,	id_Jaws,		8,	0,	ArtTile_Jaws|Tile_Pal2
 		dbug	Map_Burro,	id_Burrobot,		0,	2,	ArtTile_Burrobot|Tile_Prio
@@ -420,7 +469,6 @@ __LABEL__:	label	*
 		dbug	Map_Harp,	id_Harpoon,		2,	3,	ArtTile_LZ_Harpoon
 		dbug	Map_Push,	id_PushBlock,		0,	0,	ArtTile_LZ_Push_Block|Tile_Pal3
 		dbug	Map_But,	id_Button,		0,	0,	ArtTile_Button_Main
-		dbug	Map_Spike,	id_Spikes,		0,	0,	ArtTile_Spikes
 		dbug	Map_MBlockLZ,	id_MovingBlock,		4,	0,	ArtTile_LZ_Moving_Block|Tile_Pal3
 		dbug	Map_LBlock,	id_LabyrinthBlock,	1,	0,	ArtTile_LZ_Blocks|Tile_Pal3
 		dbug	Map_LBlock,	id_LabyrinthBlock,	$13,	1,	ArtTile_LZ_Blocks|Tile_Pal3
@@ -440,17 +488,14 @@ __LABEL__:	label	*
 		dbug	Map_WFall,	id_Waterfall,		9,	9,	ArtTile_LZ_Splash|Tile_Pal3|Tile_Prio
 		dbug	Map_Pole,	id_Pole,		0,	0,	ArtTile_LZ_Pole|Tile_Pal3
 		dbug	Map_Flap,	id_FlapDoor,		2,	0,	ArtTile_LZ_Flapping_Door|Tile_Pal3
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 .LZ_end:
 
 ; ---------------------------------------------------------------------------
 
 .MZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
+		dbugcommon
 		dbug	Map_Buzz,	id_BuzzBomber,		0,	0,	ArtTile_Buzz_Bomber
-		dbug	Map_Spike,	id_Spikes,		0,	0,	ArtTile_Spikes
 		dbug	Map_Spring,	id_Springs,		0,	0,	ArtTile_Spring_Horizontal
 		dbug	Map_Fire,	id_LavaMaker,		0,	0,	ArtTile_MZ_Fireball
 		dbug	Map_Brick,	id_MarbleBrick,		0,	0,	ArtTile_Level|Tile_Pal3
@@ -470,15 +515,13 @@ __LABEL__:	label	*
 		dbug	Map_LTag,	id_LavaTag,		0,	0,	ArtTile_Monitor|Tile_Prio
 		dbug	Map_Bas,	id_Basaran,		0,	0,	ArtTile_Basaran
 		dbug	Map_Cat,	id_Caterkiller,		0,	0,	ArtTile_MZ_SYZ_Caterkiller|Tile_Pal2
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 .MZ_end:
 
 ; ---------------------------------------------------------------------------
 
 .SLZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
+		dbugcommon
 		dbug	Map_Elev,	id_Elevator,		0,	0,	ArtTile_Level|Tile_Pal3
 		dbug	Map_CFlo,	id_CollapseFloor,	0,	2,	ArtTile_SLZ_Collapsing_Floor|Tile_Pal3
 		dbug	Map_Plat_SLZ,	id_BasicPlatform,	0,	0,	ArtTile_Level|Tile_Pal3
@@ -491,16 +534,13 @@ __LABEL__:	label	*
 		dbug	Map_Scen,	id_Scenery,		0,	0,	ArtTile_SLZ_Fireball_Launcher|Tile_Pal3
 		dbug	Map_Bomb,	id_Bomb,		0,	0,	ArtTile_Bomb
 		dbug	Map_Orb,	id_Orbinaut,		0,	0,	ArtTile_SLZ_Orbinaut|Tile_Pal2
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 .SLZ_end:
 
 ; ---------------------------------------------------------------------------
 
 .SYZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
-		dbug	Map_Spike,	id_Spikes,		0,	0,	ArtTile_Spikes
+		dbugcommon
 		dbug	Map_Spring,	id_Springs,		0,	0,	ArtTile_Spring_Horizontal
 		dbug	Map_Roll,	id_Roller,		0,	0,	ArtTile_Roller
 		dbug	Map_Light,	id_SpinningLight,	0,	0,	ArtTile_Level
@@ -512,14 +552,12 @@ __LABEL__:	label	*
 		dbug	Map_FBlock,	id_FloatingBlock,	0,	0,	ArtTile_Level|Tile_Pal3
 		dbug	Map_But,	id_Button,		0,	0,	ArtTile_Button_Main
 		dbug	Map_Cat,	id_Caterkiller,		0,	0,	ArtTile_MZ_SYZ_Caterkiller|Tile_Pal2
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 .SYZ_end:
 ; ---------------------------------------------------------------------------
 
 .SBZ:		dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
-		dbug	Map_Monitor,	id_Monitor,		0,	0,	ArtTile_Monitor
+		dbugcommon
 		dbug	Map_Bomb,	id_Bomb,		0,	0,	ArtTile_Bomb
 		dbug	Map_Orb,	id_Orbinaut,		0,	0,	ArtTile_SBZ_Orbinaut
 		dbug	Map_Cat,	id_Caterkiller,		0,	0,	ArtTile_SBZ_Caterkiller|Tile_Pal2
@@ -546,7 +584,6 @@ __LABEL__:	label	*
 		dbug	Map_Gird,	id_Girder,		0,	0,	ArtTile_SBZ_Girder|Tile_Pal3
 		dbug	Map_Invis,	id_Invisibarrier,	$11,	0,	ArtTile_Monitor|Tile_Prio
 		dbug	Map_Hog,	id_BallHog,		4,	0,	ArtTile_Ball_Hog|Tile_Pal2
-		dbug	Map_Lamp,	id_Lamppost,		1,	0,	ArtTile_Lamppost
 .SBZ_end:
 
 ; ---------------------------------------------------------------------------
@@ -555,7 +592,7 @@ __LABEL__:	label	*
 .EndingSS:	dbugheader
 		;	mappings	object			subtype	frame	VRAM setting
 	if Revision=0
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
+		dbugcommon
 		dbug	Map_Bump,	id_Bumper,		0,	0,	ArtTile_SYZ_Bumper
 	    if FixBugs
 		dbug	Map_Animal2,	id_Animals,		$A,	0,	ArtTile_Ending_Flicky
@@ -577,7 +614,7 @@ __LABEL__:	label	*
 		dbug	Map_Animal3,	id_Animals,		$14,	0,	ArtTile_Ending_Squirrel
 	else
 		; REV01 cleared out most of this list, only leaving rings (two for some reason, second one is blank...)
-		dbug 	Map_Ring,	id_Rings,		0,	0,	ArtTile_Ring|Tile_Pal2
+		dbugcommon
 		dbug 	Map_Ring,	id_Rings,		0,	5,	ArtTile_Ring|Tile_Pal2
 	endif
 .EndingSS_end:

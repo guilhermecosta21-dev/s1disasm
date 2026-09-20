@@ -4,7 +4,7 @@
 ; ---------------------------------------------------------------------------
 
 HUD_Update:
-		tst.w	(f_debugmode).w				; is debug mode on?
+		tst.w	(v_debuguse).w	; has the player entered debug mode?
 		bne.w	HudDebug				; if yes, branch to alternate HUD logic
 ; ---------------------------------------------------------------------------
 
