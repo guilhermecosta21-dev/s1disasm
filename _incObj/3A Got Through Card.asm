@@ -107,6 +107,8 @@ Got_MoveIn:
 		bne.s	.checkOffScreen				; if not, branch
 		addq.b	#2,obRoutine(a0)			; set to Got_Wait (4)
 		move.w	#3*60,obTimeFrame(a0)			; set time delay before tally to 3 seconds
+		move.w	#bgm_GotThrough,d0
+		jsr	(QueueSound2).l	; play "Sonic got through" music
 ; ---------------------------------------------------------------------------
 
 Got_Wait:	; Routine 4, 8, $C
@@ -123,27 +125,13 @@ Got_Wait:	; Routine 4, 8, $C
 Got_Bonus:	; Routine 6
 		bsr.w	DisplaySprite				; keep displaying card sprites
 		move.b	#1,(f_endactbonus).w			; set time/ring bonus HUD update flag
-		moveq	#0,d0					; set ticked-down bonus points to 0 by default
 
-	.timeBonus:
-		tst.w	(v_timebonus).w				; is any time bonus left?
-		beq.s	.ringBonus				; if not, branch
-		addi.w	#10,d0					; add 100 to score
-		subi.w	#10,(v_timebonus).w			; subtract 100 points from remaining time bonus
+		add.w	(v_timebonus).w,d0	; add entire remaining time bonus to d0
+		add.w	(v_ringbonus).w,d0	; add entire remaining ring bonus to d0
+		clr.w	(v_timebonus).w		; clear remaining time bonus
+		clr.w	(v_ringbonus).w		; clear remaining ring bonus
+		jsr	(AddPoints).l		; add up the points stored in d0
 
-	; Got_RingBonus:
-	.ringBonus:
-		tst.w	(v_ringbonus).w				; is any ring bonus left?
-		beq.s	.checkFinished				; if not, branch
-		addi.w	#10,d0					; add 100 to score
-		subi.w	#10,(v_ringbonus).w			; subtract 100 points from remaining ring bonus
-
-	; Got_ChkBonus:
-	.checkFinished:
-		tst.w	d0					; have any bonuses been ticked down this frame?
-		bne.s	.addBonusPoints				; if yes, branch
-
-	.finished:
 		move.w	#sfx_Cash,d0				; set "ka-ching" sound
 		jsr	(QueueSound2).l				; play it
 
@@ -155,21 +143,7 @@ Got_Bonus:	; Routine 6
 	; Got_SetDelay:
 	.setPostDelay:
 		move.w	#3*60,obTimeFrame(a0)			; set post summing-up time delay to 3 seconds
-
-	; locret_C692:
-	.return:
 		rts						; return
-; ---------------------------------------------------------------------------
-
-	; Got_AddBonus:
-	.addBonusPoints:
-		jsr	(AddPoints).l				; add d0 points to score
-
-		move.b	(v_vblank_byte).w,d0			; get current VBlank byte
-		andi.b	#3,d0					; only play blip sound every 4th frame
-		bne.s	.return					; on other frames, branch
-		move.w	#sfx_Switch,d0				; set "blip" sound
-		jmp	(QueueSound2).l				; play it
 ; ===========================================================================
 
 Got_NextLevel:	; Routine $A
@@ -304,19 +278,19 @@ Got_ItemData:
 
 		; Score tally
 		dc.w $520, $120
-		dc.w $EC
+		dc.w $126
 		dc.b 2
 		dc.b 2
 
 		; Time Bonus tally
 		dc.w $540, $120
-		dc.w $FC
+		dc.w $F6
 		dc.b 2
 		dc.b 3
 
 		; Ring Bonus tally
 		dc.w $560, $120
-		dc.w $10C
+		dc.w $106
 		dc.b 2
 		dc.b 4
 

@@ -197,8 +197,8 @@ GotThroughAct:
 		move.w	d0,(v_ringbonus).w			; set ring bonus
 
 		; SFX
-		move.w	#bgm_GotThrough,d0			; set "Sonic got through" music
-		jsr	(QueueSound2).l				; play it
+		move.w	#bgm_Fade,d0
+		jsr	(QueueSound2).l	; fade-out music
 
 ; locret_ECEE:
 Sign_Return:

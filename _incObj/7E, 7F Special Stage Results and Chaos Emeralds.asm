@@ -122,6 +122,15 @@ SSR_RingBonus:	; Routine 6
 		bsr.w	DisplaySprite				; keep displaying card sprites
 		move.b	#1,(f_endactbonus).w			; set time/ring bonus HUD update flag
 
+		add.w	(v_timebonus).w,d0	; add entire remaining time bonus to d0
+		add.w	(v_ringbonus).w,d0	; add entire remaining ring bonus to d0
+		clr.w	(v_timebonus).w		; clear remaining time bonus
+		clr.w	(v_ringbonus).w		; clear remaining ring bonus
+		jsr	(AddPoints).l		; add up the points stored in d0
+		moveq	#0,d0			; set remaining bonus to 0 so that Got_AddBonus gets skipped
+		bra.s	.finished		; skip regular logic
+
+	.normal:
 		tst.w	(v_ringbonus).w				; is any ring bonus left?
 		beq.s	.finished				; if not, branch
 		subi.w	#10,(v_ringbonus).w			; subtract 100 points from remaining ring bonus
