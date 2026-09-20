@@ -298,7 +298,6 @@ SonicSS_Jump:
 		beq.s	SonicSS_NoJump				; if not, branch
 
 		move.b	(v_ssangle).w,d0			; get current angle of the special stage rotation
-		andi.b	#$FC,d0					; snap to nearest multiple of 4 to match stage rotation
 		neg.b	d0					; negate for sine calculation
 		subi.b	#$40,d0					; rotate it perpendicularly for jump trajectory
 		jsr	(CalcSine).l				; get sine and cosine values based on angle
@@ -334,7 +333,6 @@ SonicSS_JumpHeight:
 		btst	#7,obStatus(a0)		; did Sonic jump or is he just falling or hit by a bumper?
 		beq.s	.return			; if not, branch to return
 		move.b	(v_ssangle).w,d0	; get SS angle
-		andi.b	#$FC,d0
 		neg.b	d0
 		subi.b	#$40,d0
 		jsr	(CalcSine).l			
@@ -348,7 +346,6 @@ SonicSS_JumpHeight:
 		cmpi.w	#$400,d1		; compare the combined speed with the jump release speed
 		ble.s	.return			; if it's less, branch to return
 		move.b	(v_ssangle).w,d0
-		andi.b	#$FC,d0
 		neg.b	d0
 		subi.b	#$40,d0
 		jsr	(CalcSine).l
@@ -461,7 +458,6 @@ SonicSS_Fall:
 		move.l	obY(a0),d2				; get Sonic's current Y position
 		move.l	obX(a0),d3				; get Sonic's current X position
 		move.b	(v_ssangle).w,d0			; get current angle of the special stage rotation
-		andi.b	#$FC,d0					; snap to nearest multiple of 4 to match stage rotation
 		jsr	(CalcSine).l				; get sine and cosine values based on angle
 
 		move.w	obVelX(a0),d4				; get Sonic's current X velocity
