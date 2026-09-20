@@ -4137,12 +4137,14 @@ Map_LWall:	include	"_maps/Wall of Lava.asm"
 ; ===========================================================================
 ; >>> Various unique objects
 		include	"_incObj/0A LZ Drowning Countdown.asm" ; includes ResumeMusic
-		include	"_incObj/38 Shield and Invincibility.asm"
+		include	"_incObj/38 Shield.asm"
+		include	"_incObj/02 Invincibility Stars.asm"
 		include	"_incObj/4A Unused - Special Stage Entry.asm"
 		include	"_incObj/03 Collision Switcher.asm"
 		include	"_incObj/08 LZ Water Splash.asm"
 		include	"_anim/Shield and Invincibility.asm"
-Map_Shield:	include	"_maps/Shield and Invincibility.asm"
+Map_Shield:	include	"_maps/Shield.asm"
+Map_Invincibility:	include	"_maps/Invincibility Stars.asm"
 		include	"_anim/Special Stage Entry (Unused).asm"
 Map_Vanish:	include	"_maps/Special Stage Entry (Unused).asm"
 Map_PathSwapper: include "_maps/Collision Switcher.asm"
@@ -4320,7 +4322,7 @@ KosPM_SyzSparkle:	binclude	"artkospm/Unused - SYZ Sparkles.kospm"
 Art_Shield:	binclude	"artunc/Shield.unc"
 		even
 Art_Stars:	binclude	"artunc/Invincibility Stars.unc"
-		even
+Art_StarsEnd:	even
 
 	if Revision=0
 KosPM_LzSonic:	binclude	"artkospm/Unused - LZ Sonic.kospm" ; Sonic holding his breath
