@@ -66,30 +66,34 @@ fr_Float1:	equ $3C
 fr_Float2:	equ $3D
 fr_Float3:	equ $3E
 fr_Float4:	equ $3F
-fr_Spring:	equ $40
-fr_Hang1:	equ $41
-fr_Hang2:	equ $42
-fr_Leap1:	equ $43
-fr_Leap2:	equ $44
-fr_Push1:	equ $45
-fr_Push2:	equ $46
-fr_Push3:	equ $47
-fr_Push4:	equ $48
-fr_Surf:	equ $49
-fr_BubStand:	equ $4A
-fr_Burnt:	equ $4B
-fr_Drown:	equ $4C
-fr_Death:	equ $4D
-fr_Shrink1:	equ $4E
-fr_Shrink2:	equ $4F
-fr_Shrink3:	equ $50
-fr_Shrink4:	equ $51
-fr_Shrink5:	equ $52
-fr_Float5:	equ $53
-fr_Float6:	equ $54
-fr_Injury:	equ $55
-fr_GetAir:	equ $56
-fr_Slide:	equ $57 ; formerly named fr_WaterSlide (was too long...)
+fr_SpringTwirl1:    equ $40
+fr_SpringTwirl2:    equ $41
+fr_SpringTwirl3:    equ $42
+fr_SpringTwirl4:    equ $43
+fr_SpringTwirl5:    equ $44
+fr_Hang1:	equ $45
+fr_Hang2:	equ $46
+fr_Leap1:	equ $47
+fr_Leap2:	equ $48
+fr_Push1:	equ $49
+fr_Push2:	equ $4A
+fr_Push3:	equ $4B
+fr_Push4:	equ $4C
+fr_Surf:	equ $4D
+fr_BubStand:	equ $4E
+fr_Burnt:	equ $4F
+fr_Drown:	equ $50
+fr_Death:	equ $51
+fr_Shrink1:	equ $52
+fr_Shrink2:	equ $53
+fr_Shrink3:	equ $54
+fr_Shrink4:	equ $55
+fr_Shrink5:	equ $56
+fr_Float5:	equ $57
+fr_Float6:	equ $58
+fr_Injury:	equ $59
+fr_GetAir:	equ $5A
+fr_Slide:	equ $5B ; formerly named fr_WaterSlide (was too long...)
 
 
 ; ---------------------------------------------------------------------------
@@ -121,7 +125,7 @@ id_Warp4:	sonani	SonAni_Warp4	; $0C
 id_Stop:	sonani	SonAni_Stop	; $0D
 id_Float1:	sonani	SonAni_Float1	; $0E
 id_Float2:	sonani	SonAni_Float2	; $0F
-id_Spring:	sonani	SonAni_Spring	; $10
+id_SpringTwirl:	sonani	SonAni_Spring	; $10
 id_Hang:	sonani	SonAni_Hang	; $11
 id_Leap1:	sonani	SonAni_Leap1	; $12
 id_Leap2:	sonani	SonAni_Leap2	; $13
@@ -236,8 +240,10 @@ SonAni_Float2:	dc.b 7
 		dc.b afEnd
 		even
 
-SonAni_Spring:	dc.b 47
-		dc.b fr_Spring
+SonAni_Spring:	dc.b 3
+                dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
+		dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
+		dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
 		dc.b afChange, id_Walk
 		even
 
