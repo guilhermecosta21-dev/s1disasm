@@ -52,3 +52,22 @@ DisplaySprite2:
 
 	.return_16542:
                 rts				         ; return
+; End of function DisplaySprite2
+
+; ---------------------------------------------------------------------------
+; Subroutine to display a sprite/object, when a0 is the object RAM
+; and d0 is already priority*$80
+; ---------------------------------------------------------------------------
+
+DisplaySprite3:
+		lea	(v_spritequeue).w,a1			; load base sprite queue address
+		adda.w	d0,a1					; add precalculated queue offset from d0
+		move.w	(a1),d0					; get sprite queue's entry count
+		addq.b	#2,d0					; increase count by another entry (word)
+		bmi.s	DSpr3_Full				; if byte value went to $80, queue is full
+		move.w	d0,(a1)					; set new sprite queue's entry count
+		move.w	a0,(a1,d0.w)				; insert RAM address for object to queue
+
+DSpr3_Full:
+		rts
+; End of function DisplaySprite3

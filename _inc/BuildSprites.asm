@@ -51,6 +51,8 @@ BuildSprites:
 	; --- Coordinate system ---
 		move.b	obRender(a0),d0
 		move.b	d0,d4
+		btst	#6,d0					; is the multi-draw/sub-sprites flag set?
+		bne.w	BuildSprites_MultiDraw			; if yes, branch to multi-sprite drawing logic
 		andi.w	#sprite_cam_field|sprite_cam_bg,d0	; get drawing coordinate system in render flags (bit 2-3)
 		beq.s	.screenCoords				; branch if 0 (on-screen positioning coordinate system)
 		movea.l	BuildSpr_Cameras(pc,d0.w),a1		; load camera pointers for coordinate system (in practice, only foreground camera is ever used)
@@ -240,6 +242,109 @@ buildsprite:	macro xflip,yflip
 
 
 ; ---------------------------------------------------------------------------
+; Multi-Sprite Renderer Subroutine
+; ---------------------------------------------------------------------------
+
+BuildSprites_NextObj: equ .skipObject	; for cross-referencing local labels
+BuildSprites_MultiDraw:
+		move.l	a4,-(sp)
+		lea	(v_screenposx).w,a4
+		movea.w obGfx(a0),a3
+		movea.l obMap(a0),a5
+		moveq	#0,d0
+	
+		; check if object is within X bounds
+		move.b	mainspr_width(a0),d0	; load pixel width
+		move.w	obX(a0),d3
+		sub.w	(a4),d3
+		move.w	d3,d1
+		add.w	d0,d1
+		bmi.w	.skipObject	; left edge out of bounds
+		move.w	d3,d1
+		sub.w	d0,d1
+		cmpi.w	#320,d1
+		bge.w	.skipObject	; right edge out of bounds
+		addi.w	#128,d3		; VDP sprites start at 128px
+
+		; check if object is within Y bounds
+		btst	#4,d4		; is assume height flag on?
+		beq.s	.assumeHeight	; if yes, branch
+		moveq	#0,d0
+		move.b	mainspr_height(a0),d0	; load pixel height
+		move.w	obY(a0),d2
+		sub.w	4(a4),d2
+		move.w	d2,d1
+		add.w	d0,d1
+		bmi.w	.skipObject	; top edge out of bounds
+		move.w	d2,d1
+		sub.w	d0,d1
+		cmpi.w	#224,d1
+		bge.w	.skipObject	; bottom edge out of bounds
+		addi.w	#128,d2		; VDP sprites start at 128px
+		bra.s	.drawObject
+
+	.assumeHeight:
+		move.w	obY(a0),d2
+		sub.w	4(a4),d2
+		addi.w	#128,d2
+		;andi.w	#$7FF,d2	; used in Sonic 2, but gone in Sonic 1
+		cmpi.w	#-32+128,d2
+		blo.w	.skipObject	; top edge out of bounds
+		cmpi.w	#32+128+224,d2
+		bhs.w	.skipObject	; bottom edge out of bounds
+
+.drawObject:
+		moveq	#0,d1
+		move.b	mainspr_mapframe(a0),d1	; get current frame
+		beq.s	.setVisible	; branch if parent object has no sprite
+		add.b	d1,d1
+		movea.l a5,a1
+		adda.w	(a1,d1.w),a1	; get mappings frame address
+		move.b	(a1)+,d1	; number of sprite pieces
+		subq.b	#1,d1
+		bmi.s	.setVisible
+		move.w	d4,-(sp)
+		bsr.w	ChkDrawSprite	; write data from sprite pieces to buffer
+		move.w	(sp)+,d4
+	.setVisible:
+		bset	#7,obRender(a0)
+		lea	subspr_data(a0),a6
+		moveq	#0,d0
+		move.b	mainspr_childsprites(a0),d0	; get child sprite count
+		subq.w	#1,d0		; if there are 0, go to next object
+		bcs.s	.skipObject
+
+.drawSubSpritesLoop:
+		swap	d0
+		move.w	(a6)+,d3	; get X pos
+		sub.w	(a4),d3
+		addi.w	#128,d3
+		move.w	(a6)+,d2	; get Y pos
+		sub.w	4(a4),d2
+		addi.w	#128,d2
+		addq.w	#1,a6
+		moveq	#0,d1
+		move.b	(a6)+,d1	; get mapping frame
+		add.b	d1,d1
+		movea.l a5,a1
+		adda.w	(a1,d1.w),a1	; get mappings frame address
+		move.b	(a1)+,d1	; number of sprite pieces
+		subq.b	#1,d1
+		bmi.s	.nextSubSprite
+		move.w	d4,-(sp)
+		bsr.w	ChkDrawSprite	; write data from sprite pieces to buffer
+		move.w	(sp)+,d4
+	.nextSubSprite:
+		swap	d0
+		dbf	d0,.drawSubSpritesLoop	; repeat for number of child sprites
+
+.skipObject:
+		movea.l (sp)+,a4
+		bra.w	BuildSprites_NextObj
+; End of function .BuildSprites_MultiDraw
+
+
+; ---------------------------------------------------------------------------
 ; Subroutine to convert a object mapping frame (with multiple sprite pieces)
 ; into valid, linked Mega Drive sprites and buffer them, with flipping.
 ; ---------------------------------------------------------------------------
@@ -247,6 +352,7 @@ buildsprite:	macro xflip,yflip
 BuildSpr_Draw:
 		movea.w	obGfx(a0),a3				; get VRAM settings for object (art tile, palette line, priority flag)
 
+ChkDrawSprite:
 		btst	#sprite_xflip_bit,d4			; is X-flip flag set?
 		bne.s	BuildSpr_FlipX				; if yes, branch
 		btst	#sprite_yflip_bit,d4			; is Y-flip flag set?

@@ -268,6 +268,40 @@ obSolid:		equ ob2ndRout				; solid status flag
 obAngle:		equ $26					; angle
 obSubtype:		equ $28					; object subtype
 
+; Sub sprites from Sonic 2: when childsprites are activated (bit 6 of obRender set)
+; (Comments denote overridden SSTs, 0-5 and high words of obX/obY same as normal)
+next_subspr:		equ 6	; Length of sub sprite data
+mainspr_mapframe:	equ $B	; obScreenY (low byte)
+mainspr_width:		equ $E	; obY (low word hi)
+mainspr_childsprites:	equ $F	; obY (low word lo)
+mainspr_height:		equ $14	; obInertia (high byte)
+subspr_data:		equ $10
+sub2_x_pos:		equ subspr_data+next_subspr*0+0	; obVelX
+sub2_y_pos:		equ subspr_data+next_subspr*0+2	; obVelY
+sub2_mapframe:		equ subspr_data+next_subspr*0+5	; obInertia (low byte)
+sub3_x_pos:		equ subspr_data+next_subspr*1+0	; obHeight/obWidth
+sub3_y_pos:		equ subspr_data+next_subspr*1+2	; obPriority/obActWid
+sub3_mapframe:		equ subspr_data+next_subspr*1+5	; obAniFrame
+sub4_x_pos:		equ subspr_data+next_subspr*2+0	; obAnim/obPrevAni
+sub4_y_pos:		equ subspr_data+next_subspr*2+2	; obTimeFrame/obDelayAni
+sub4_mapframe:		equ subspr_data+next_subspr*2+5	; obColProp
+sub5_x_pos:		equ subspr_data+next_subspr*3+0	; obStatus/obRespawnNo
+sub5_y_pos:		equ subspr_data+next_subspr*3+2	; obRoutine/ob2ndRout
+sub5_mapframe:		equ subspr_data+next_subspr*3+5	; obAngle (low byte)
+sub6_x_pos:		equ subspr_data+next_subspr*4+0	; obSubtype/objoff_29
+sub6_y_pos:		equ subspr_data+next_subspr*4+2	; objoff_2A/objoff_2B
+sub6_mapframe:		equ subspr_data+next_subspr*4+5	; objoff_2D
+sub7_x_pos:		equ subspr_data+next_subspr*5+0	; objoff_2E/objoff_2F
+sub7_y_pos:		equ subspr_data+next_subspr*5+2	; objoff_30/objoff_31
+sub7_mapframe:		equ subspr_data+next_subspr*5+5	; objoff_33
+sub8_x_pos:		equ subspr_data+next_subspr*6+0	; objoff_34/objoff_35
+sub8_y_pos:		equ subspr_data+next_subspr*6+2	; objoff_36/objoff_37
+sub8_mapframe:		equ subspr_data+next_subspr*6+5	; objoff_39
+sub9_x_pos:		equ subspr_data+next_subspr*7+0	; objoff_3A/objoff_3B
+sub9_y_pos:		equ subspr_data+next_subspr*7+2	; objoff_3C/objoff_3D
+sub9_mapframe:		equ subspr_data+next_subspr*7+5	; objoff_3F
+; End of Sonic 2 variables
+
 ; Object variables used by Sonic
 flashtime:		equ $30					; time between flashes after getting hit (2 bytes)
 invtime:		equ $32					; time left for invincibility (2 bytes)
