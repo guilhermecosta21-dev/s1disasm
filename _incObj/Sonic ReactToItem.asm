@@ -450,7 +450,7 @@ HurtSonic:
 
 KillSonic:
 		tst.w	(v_debuguse).w				; is debug mode active?
-		bne.s	.return					; if yes, branch
+		bne.w	.return					; if yes, branch
 
 		move.b	#0,(v_invinc).w				; remove invincibility
 		move.b	#6,obRoutine(a0)			; set Sonic to "Sonic_Death" routine
@@ -485,6 +485,29 @@ KillSonic:
 	endif
 
 	.sound:
+	move.b	obID(a2),d1		; get object ID of object that killed Sonic
+		cmpi.b	#id_LavaBall,d1		; MZ and SLZ lava balls (object 14)
+		beq.s	.firedeath
+		cmpi.b	#id_GrassFire,d1	; MZ grass fire (object 35)
+		beq.s	.firedeath
+		cmpi.b	#id_LavaTag,d1		; MZ invisible lava tag (object 54)
+		beq.s	.firedeath
+		cmpi.b	#id_LavaGeyser,d1	; MZ lava geysers/falls (object 4D)
+		beq.s	.firedeath
+		cmpi.b	#id_LavaWall,d1		; MZ wall of lava from act 2 (object 4E)
+		beq.s	.firedeath
+		cmpi.b	#id_Gargoyle,d1		; LZ gargoyle fireballs (object 62)
+		beq.s	.firedeath
+		cmpi.b	#id_Flamethrower,d1	; SBZ flamethrower (obejct 6D)
+		beq.s	.firedeath
+		cmpi.b	#id_BossFire,d1		; MZ fire balls from boss (object 74)
+		bne.s	.normal			; if it was none of the above, don't do burnt death
+
+	.firedeath:
+		move.b	#id_Burnt,obAnim(a0)	; set Sonic to "burnt death" animation
+		move.w	#sfx_Flamethrower,d0	; use burnt death sound
+
+	.normal:
 		jsr	(QueueSound2).l				; play selected sound
 
 	; .dontdie:
