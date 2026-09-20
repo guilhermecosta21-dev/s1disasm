@@ -37,8 +37,8 @@ ExecuteObjects:
 		beq.s	.no_collision				; if not, branch
 		tst.b	obRender(a0)				; is object even visible?
 		bpl.s	.no_collision				; if not, branch
-	;	btst	#6,obRender(a0)				; is this a sub-sprite object?
-	;	bne.s	.no_collision				; if yes, ignore collision (obColType is overwritten with unrelated data)
+		btst	#6,obRender(a0)				; is this a sub-sprite object?
+		bne.s	.no_collision				; if yes, ignore collision (obColType is overwritten with unrelated data)
 		lea	(v_registeredcollision).w,a1		; get target queue
 		move.w	(a1),d0					; get queue's entry count
 		addq.b	#2,d0					; increase count by another entry (word)
