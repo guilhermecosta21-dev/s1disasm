@@ -94,6 +94,8 @@ fr_Float6:	equ $58
 fr_Injury:	equ $59
 fr_GetAir:	equ $5A
 fr_Slide:	equ $5B ; formerly named fr_WaterSlide (was too long...)
+fr_Victory1:	equ fr_Slide+1
+fr_Victory2:	equ fr_Victory1+1
 
 
 ; ---------------------------------------------------------------------------
@@ -140,6 +142,7 @@ id_Slide:	sonani	SonAni_Slide	; $1B
 id_Null:	sonani	SonAni_Null	; $1C
 id_Float3:	sonani	SonAni_Float3	; $1D
 id_Float4:	sonani	SonAni_Float4	; $1E
+id_Victory:	sonani	SonAni_Victory
 
 ; ---------------------------------------------------------------------------
 ; --- Special animations (walk/run/roll/push) ---
@@ -318,4 +321,9 @@ SonAni_Float3:	dc.b 3
 SonAni_Float4:	dc.b 3
 		dc.b fr_Float1
 		dc.b afChange, id_Walk
+		even
+
+SonAni_Victory:	dc.b 9
+		dc.b fr_Victory1, fr_Victory2
+		dc.b afEnd
 		even

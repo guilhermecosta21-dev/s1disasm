@@ -2680,6 +2680,7 @@ Level_CheckTtlCard:
 		jsr	(Hud_Base).l				; load basic HUD graphics (only in levels, not in the ending demos)
 
 Level_SkipTtlCard:
+        clr.b	(v_player+victorypose).w		; clear victory pose flag
         bsr.w	InitRingFrame
 		moveq	#palid_Sonic,d0				; load Sonic's palette to fade-in buffer
 		bsr.w	PalLoad_Fade				; (doesn't actually do anything, the PalFadeIn_Alt call below skips the first palette line)

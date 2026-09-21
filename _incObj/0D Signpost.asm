@@ -118,33 +118,18 @@ Sign_SonicRun:	; Routine 6
 		tst.w	(v_debuguse).w				; is debug mode in use?
 		bne.w	Sign_Return				; if yes, don't load end cards until debug mode was exited
 
-	if FixBugs
-		; This function's checks are a mess, creating an edge case where it's
-		; possible for the player to avoid having their controls locked by
-		; jumping at the right side of the screen just as the score tally
-		; appears.
-		tst.b	(v_player+obID).w			; has Sonic's object been deleted (because he entered the giant ring)?
+		clr.w	(v_jpadhold2).w				; clear inputs before locking controls
+		move.b	#1,(f_lockctrl).w			; lock controls
+
+		lea	(v_player).w,a1		; load Sonic object to a1
+		tst.b	obID(a1)		; has Sonic been deleted (because he entered the giant ring)?
 		beq.s	Sign_LoadEndCards			; if yes, skip all other checks
 		btst	#1,(v_player+obStatus).w		; is Sonic airborne?
 		bne.w	Sign_Return				; if yes, don't do anything until he has landed
-		move.b	#1,(f_lockctrl).w			; lock controls
-		move.w	#btnR<<8,(v_jpadhold2).w		; make Sonic run to the right
-	else
-		btst	#1,(v_player+obStatus).w		; is Sonic airborne?
-		bne.s	.airborne				; if yes, don't lock controls
-		move.b	#1,(f_lockctrl).w			; lock controls
-		move.w	#btnR<<8,(v_jpadhold2).w		; make Sonic run to the right
-	; loc_EC70:
-	.airborne:
-		tst.b	(v_player+obID).w			; has Sonic's object been deleted (because he entered the giant ring)?
-		beq.s	Sign_LoadEndCards			; if yes, skip right-side position check
-	endif
 
-		move.w	(v_player+obX).w,d0			; get Sonic's X-position
-		move.w	(v_limitright2).w,d1			; get right level boundary
-		addi.w	#320-24,d1				; add screen width minus 24px of leeway (see Sonic_LevelBound)
-		cmp.w	d1,d0					; has Sonic crossed the right side including leeway?
-		blo.s	Sign_Return				; if not, don't load end cards yet
+		move.b	#1,victorypose(a1)			; set Sonic's victory pose flag
+		clr.w	(v_player+obVelX).w			; clear Sonic's X-velocity
+		clr.w	(v_player+obInertia).w			; clear Sonic's ground inertia
 
 ; loc_EC86:
 Sign_LoadEndCards:

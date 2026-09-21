@@ -235,6 +235,7 @@ Got_SBZ2_MoveOut: ; Routine $E
 
 		addq.b	#2,obRoutine(a0)			; set to Got_SBZ2_Boundary
 		clr.b	(f_lockctrl).w				; unlock controls
+		clr.b	(v_player+victorypose).w		; clear victory pose flag
 		move.w	#bgm_FZ,d0				; set FZ music
 		jmp	(QueueSound1).l				; play it
 ; ===========================================================================

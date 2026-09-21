@@ -303,6 +303,7 @@ sub9_mapframe:		equ subspr_data+next_subspr*7+5	; objoff_3F
 ; End of Sonic 2 variables
 
 ; Object variables used by Sonic
+victorypose:		equ $29					; flag set when Sonic should do his Sonic 3-styled victory pose
 flashtime:		equ $30					; time between flashes after getting hit (2 bytes)
 invtime:		equ $32					; time left for invincibility (2 bytes)
 shoetime:		equ $34					; time left for speed shoes (2 bytes)

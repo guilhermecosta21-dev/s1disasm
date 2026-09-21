@@ -1,4 +1,4 @@
-Map_5024: mappingsTable
+Map_417b: mappingsTable
 	mappingsTableEntry.w	MS_Null
 	mappingsTableEntry.w	MS_Stand
 	mappingsTableEntry.w	MS_Wait1
@@ -91,6 +91,8 @@ Map_5024: mappingsTable
 	mappingsTableEntry.w	Map_5024_89
 	mappingsTableEntry.w	Map_5024_90
 	mappingsTableEntry.w	Map_5024_91
+	mappingsTableEntry.w	Map_417b_92
+	mappingsTableEntry.w	Map_417b_93
 
 MS_Null:	spriteHeader
 MS_Null_End
@@ -635,5 +637,15 @@ Map_5024_91:	spriteHeader
  spritePiece -$14, -$10, 4, 4, 0, 0, 0, 0, 0
  spritePiece $C, -8, 1, 3, $10, 0, 0, 0, 0
 Map_5024_91_End
+
+Map_417b_92:	spriteHeader
+ spritePiece -$A, -$13, 3, 3, 0, 0, 0, 0, 0
+ spritePiece -$A, 5, 2, 2, 9, 0, 0, 0, 0
+Map_417b_92_End
+
+Map_417b_93:	spriteHeader
+ spritePiece -$A, -$13, 3, 3, 0, 0, 0, 0, 0
+ spritePiece -$A, 5, 2, 2, 9, 0, 0, 0, 0
+Map_417b_93_End
 
 	even

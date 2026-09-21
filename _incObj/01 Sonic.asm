@@ -414,6 +414,10 @@ Sonic_Move:
 		bne.w	Sonic_ResetScr				; if not, branch
 		bclr	#5,obStatus(a0)				; clear pushing flag
 		move.b	#id_Wait,obAnim(a0)			; use "standing" animation
+		tst.b	victorypose(a0)				; is victory pose flag set?
+		beq.s	.notVictory				; if not, branch
+		move.b	#id_Victory,obAnim(a0)			; use "victory" animation instead
+.notVictory:
 		btst	#3,obStatus(a0)				; is Sonic standing on a platform object?
 		beq.s	.chkbalance				; if not, branch
 

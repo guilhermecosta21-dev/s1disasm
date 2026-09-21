@@ -106,8 +106,6 @@ Pri_Switch:	; Routine 4
 		move.w	#1*60,obTimeFrame(a0)			; set time between animal spawns
 		clr.b	(f_timecount).w				; stop time counter
 		clr.b	(f_lockscreen).w			; lock screen position
-		move.b	#1,(f_lockctrl).w			; lock controls
-		move.w	#(btnR<<8),(v_jpadhold2).w		; simulate holding down the right D-Pad button to move Sonic
 		clr.b	obSolid(a0)				; clear capsule's collision flag
 		bclr	#3,(v_player+obStatus).w		; clear Sonic's on-platform flag
 		bset	#1,(v_player+obStatus).w		; set Sonic to be in air
@@ -224,7 +222,21 @@ Pri_EndAct:	; Routine $E
 		beq.s	.return					; if not yet, branch
 		adda.w	d2,a1					; check next object RAM slot
 		dbf	d0,.loopFindAnimals			; repeat for entire object RAM space
+        move.b	#1,(f_lockctrl).w	; lock controls
+		clr.w	(v_jpadhold2).w		; clear inputs before locking controls
 
+		lea	(v_player).w,a1		; load Sonic object to a1
+		tst.b	obID(a1)		; has Sonic been deleted (because he entered the giant ring)?
+		beq.s	.bigRing		; if yes, branch
+		btst	#1,obStatus(a1)		; is Sonic still in the air?
+		bne.w	.return			; if yes, wait until he has landed
+
+		moveq	#0,d0			; set d0 to 0
+		move.w	d0,obInertia(a1)	; clear Sonic's ground inertia
+		move.w	d0,obVelX(a1)		; clear Sonic's X-velocity
+		move.b	#1,victorypose(a1)	; set Sonic's victory pose flag
+
+.bigRing:
 		jsr	(GotThroughAct).l			; all animal objects have been deleted, launch end-of-level title cards (object 3A)
 	if FixBugs
 		; Avoid returning to Prison to prevent display-and-delete
