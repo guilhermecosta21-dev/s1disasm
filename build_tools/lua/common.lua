@@ -201,8 +201,10 @@ local function get_directory_contents(path, extension)
 		end
 
 		local contents = {}
-		for entry in listing:lines() do
-			contents[1 + #contents] = entry
+		if listing then
+			for entry in listing:lines() do
+				contents[1 + #contents] = entry
+			end
 		end
 
 		return contents
@@ -562,6 +564,7 @@ local function convert_audio_to_u8(audio)
 end
 
 local function convert_wav_file(audio, output_file_path, callback)
+	local message
 	local output_file = io.open(output_file_path, "wb")
 
 	if not output_file then
@@ -730,6 +733,8 @@ end
 -- Assembling --
 ----------------
 
+local assemble_file -- Forward declaration
+
 local function assemble_file_and_handle_failure(...)
 	handle_failure(assemble_file(...))
 end
@@ -737,7 +742,7 @@ end
 -- Produce a binary from an assembly file.
 -- Returns two booleans: the first indicating whether the build was entirely successful,
 -- and the second indicating whether the build process should continue or not.
-local function assemble_file(input_filename, output_filename, as_arguments, p2bin_arguments, create_header_file, repository)
+assemble_file = function(input_filename, output_filename, as_arguments, p2bin_arguments, create_header_file, repository)
 	local function assemble_file_inner(input_filename, output_filename, as_arguments, p2bin_arguments, create_header_file, repository)
 		-- Obtain the paths to the native build tools for the current platform.
 		local tools = find_tools("'p2bin' tool", "https://github.com/Clownacy/p2bin", repository, "p2bin")
