@@ -1,4 +1,4 @@
-DPLC_7bf4: mappingsTable
+DPLC_6e5d: mappingsTable
 	mappingsTableEntry.w	SonPLC_Null
 	mappingsTableEntry.w	SonPLC_Stand
 	mappingsTableEntry.w	SonPLC_Wait1
@@ -93,6 +93,8 @@ DPLC_7bf4: mappingsTable
 	mappingsTableEntry.w	DPLC_2424_91
 	mappingsTableEntry.w	DPLC_7bf4_92
 	mappingsTableEntry.w	DPLC_7bf4_93
+	mappingsTableEntry.w	DPLC_6e5d_94
+	mappingsTableEntry.w	DPLC_6e5d_95
 
 SonPLC_Null:	dplcHeader
 SonPLC_Null_End
@@ -640,5 +642,15 @@ DPLC_7bf4_92_End
 DPLC_7bf4_93:	dplcHeader
  dplcEntry $D, $56C
 DPLC_7bf4_93_End
+
+DPLC_6e5d_94:	dplcHeader
+ dplcEntry $10, $579
+ dplcEntry 3, $589
+DPLC_6e5d_94_End
+
+DPLC_6e5d_95:	dplcHeader
+ dplcEntry $10, $58C
+ dplcEntry 1, $59C
+DPLC_6e5d_95_End
 
 	even

@@ -96,6 +96,8 @@ fr_GetAir:	equ $5A
 fr_Slide:	equ $5B ; formerly named fr_WaterSlide (was too long...)
 fr_Victory1:	equ fr_Slide+1
 fr_Victory2:	equ fr_Victory1+1
+fr_Fall1:       equ fr_Victory2+1
+fr_Fall2:       equ fr_Fall1+1
 
 
 ; ---------------------------------------------------------------------------
@@ -142,6 +144,7 @@ id_Slide:	sonani	SonAni_Slide	; $1B
 id_Null:	sonani	SonAni_Null	; $1C
 id_Float3:	sonani	SonAni_Float3	; $1D
 id_Float4:	sonani	SonAni_Float4	; $1E
+id_Fall:    sonani  SonAni_Fall
 id_Victory:	sonani	SonAni_Victory
 
 ; ---------------------------------------------------------------------------
@@ -247,7 +250,7 @@ SonAni_Spring:	dc.b 3
                 dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
 		dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
 		dc.b fr_SpringTwirl1, fr_SpringTwirl2, fr_SpringTwirl3, fr_SpringTwirl4, fr_SpringTwirl5
-		dc.b afChange, id_Walk
+		dc.b afChange, id_Fall
 		even
 
 SonAni_Hang:	dc.b 4
@@ -327,3 +330,8 @@ SonAni_Victory:	dc.b 9
 		dc.b fr_Victory1, fr_Victory2
 		dc.b afEnd
 		even
+
+SonAni_Fall:    dc.b 3
+        dc.b fr_Fall1, fr_Fall2
+        dc.b afEnd
+        even
