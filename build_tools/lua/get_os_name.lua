@@ -20,6 +20,7 @@ function M.get_os_name()
     -- 64bits is not always indicated so do not rely hardly on this value.
 
     local raw_os_name, raw_arch_name = '', ''
+    local jit = rawget(_G, "jit")
 
     -- LuaJIT shortcut
     if jit and jit.os and jit.arch then
