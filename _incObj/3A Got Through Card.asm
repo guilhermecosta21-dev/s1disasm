@@ -63,7 +63,12 @@ Got_Loop:
 ; Got_Move:
 Got_MoveIn:
 		; Routine 2
-		moveq	#$10,d1					; set horizontal move-in speed
+		move.w	got_mainX(a0),d1			; get target moving-in X-position
+		sub.w	obX(a0),d1				; calculate difference to current X-position
+		bpl.s	.pos					; is result positive? if yes, branch
+		neg.w	d1					; otherwise, make it positive
+	.pos:	lsr.w	#3,d1					; divide difference by 8
+		addq.w	#1,d1					; set lower cap speed to 1px/frame
 		move.w	got_mainX(a0),d0			; get target moving in X-position
 		cmp.w	obX(a0),d0				; has item reached its target position?
 		beq.s	.reachedXTarget				; if yes, branch
@@ -199,7 +204,12 @@ LevelOrder:
 
 ; Got_Move2: Got_MoveBack:
 Got_SBZ2_MoveOut: ; Routine $E
-		moveq	#2*$10,d1				; set horizontal move-out speed (twice as fast as moving in)
+		move.w	got_finalX(a0),d1			; get target moving-in X-position
+		sub.w	obX(a0),d1				; calculate difference to current X-position
+		bpl.s	.pos					; is result positive? if yes, branch
+		neg.w	d1					; otherwise, make it positive
+	.pos:	lsr.w	#2,d1					; divide difference by 4
+		addq.w	#1,d1					; set lower cap speed to 1px/frame
 		move.w	got_finalX(a0),d0			; get target moving-out X-position
 		cmp.w	obX(a0),d0				; has card reached its finish position?
 		beq.s	Got_SBZ2_StartCutscene			; if yes, branch
@@ -211,21 +221,11 @@ Got_SBZ2_MoveOut: ; Routine $E
 
 	; .checkOffScreen:
 		move.w	obX(a0),d0				; get current x-position of card
-		bmi.s	.return					; if it's negative, don't display
 		cmpi.w	#$80+320+64,d0				; has card moved beyond $200 on x-axis (to the right)?
-	if FixBugs
-		; See the fix at Card_NoMove
-		bgt.s	.return					; if yes, branch
+		bgt.s	Got_SBZ2_StartCutscene				; if yes, branch
 		cmpi.w	#$80-64+16,d0				; has card moved beyond $50 on the x-axis (to the left)?
-		bgt.w	DisplaySprite				; if not, display card
-	else
-		bhs.s	.return					; if yes, branch
-		bra.w	DisplaySprite				; display card
-	endif
-
-	; locret_C748:
-	.return:
-		rts						; don't display card
+		ble.s	Got_SBZ2_StartCutscene				; if yes, branch
+		bra.w	DisplaySprite				; otherwise, keep displaying card
 ; ---------------------------------------------------------------------------
 
 	; Got_SBZ2:

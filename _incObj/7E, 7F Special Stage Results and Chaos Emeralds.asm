@@ -69,7 +69,12 @@ SSR_Loop:
 ; ---------------------------------------------------------------------------
 
 SSR_Move:	; Routine 2
-		moveq	#$10,d1					; set horizontal move-in speed
+		move.w	ssr_mainX(a0),d1			; get target moving-in X-position
+		sub.w	obX(a0),d1				; calculate difference to current X-position
+		bpl.s	.pos					; is result positive? if yes, branch
+		neg.w	d1					; otherwise, make it positive
+	.pos:	lsr.w	#3,d1					; divide difference by 8
+		addq.w	#1,d1					; set lower cap speed to 1px/frame
 		move.w	ssr_mainX(a0),d0			; get target moving in X-position
 		cmp.w	obX(a0),d0				; has item reached its target position?
 		beq.s	.reachedXTarget				; if yes, branch

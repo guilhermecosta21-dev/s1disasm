@@ -79,7 +79,12 @@ Card_Loop:
 
 ; Card_ChkPos:
 Card_MoveIn:	; Routine 2
-		moveq	#$10,d1					; set horizontal move-in speed
+		move.w	card_mainX(a0),d1			; get target moving-in X-position
+		sub.w	obX(a0),d1				; calculate difference to current X-position
+		bpl.s	.pos					; is result positive? if yes, branch
+		neg.w	d1					; otherwise, make it positive
+	.pos:	lsr.w	#3,d1					; divide difference by 8
+		addq.w	#1,d1					; set lower cap speed to 1px/frame
 		move.w	card_mainX(a0),d0			; get target moving in X-position
 		cmp.w	obX(a0),d0				; has item reached its target position?
 		beq.s	.checkOffScreen				; if yes, branch
@@ -123,7 +128,12 @@ Card_MoveOut:
 		tst.b	obRender(a0)				; is card off screen?
 		bpl.s	Card_ChangeArt				; if yes, branch
 
-		moveq	#2*$10,d1				; set horizontal move-out speed (twice as fast as moving in)
+		move.w	card_mainX(a0),d1			; get target moving-in X-position
+		sub.w	obX(a0),d1				; calculate difference to current X-position
+		bpl.s	.pos					; is result positive? if yes, branch
+		neg.w	d1					; otherwise, make it positive
+	.pos:	lsr.w	#2,d1					; divide difference by 4
+		addq.w	#1,d1					; set lower cap speed to 1px/frame
 		move.w	card_finalX(a0),d0			; get target moving-out X-position
 		cmp.w	obX(a0),d0				; has card reached the finish position?
 		beq.s	Card_ChangeArt				; if yes, branch
@@ -135,21 +145,11 @@ Card_MoveOut:
 
 	; .checkOffScreen:
 		move.w	obX(a0),d0				; get current x-position of card
-		bmi.s	.return					; if it's negative, don't display
 		cmpi.w	#$80+320+64,d0				; has card moved beyond $200 on x-axis (to the right)?
-	if FixBugs
-		; See above.
-		bgt.s	.return					; if yes, branch
+		bgt.s	Card_ChangeArt				; if yes, branch
 		cmpi.w	#$80-64+16,d0				; has card moved beyond $50 on the x-axis (to the left)?
-		bgt.w	DisplaySprite				; if not, display card
-	else
-		bhs.s	.return					; if yes, branch
-		bra.w	DisplaySprite				; display card
-	endif
-
-	; locret_C412:
-	.return:
-		rts						; don't display card
+		ble.s	Card_ChangeArt				; if yes, branch
+		bra.w	DisplaySprite				; otherwise, keep displaying card
 ; ===========================================================================
 
 Card_ChangeArt:
@@ -215,4 +215,3 @@ Card_ConData:	;    Name       ZONE        ACT        Oval
 		zonewarning Card_ConData,$10
 		dc.w $000,$120, -$11C,$124, $3EC,$3EC, $1EC,$12C ; FZ
 ; ===========================================================================
-
