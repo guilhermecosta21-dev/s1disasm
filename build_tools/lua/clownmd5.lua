@@ -262,6 +262,10 @@ end
 local function HashFile(filename)
 	local file = io.open(filename, "rb")
 
+    if file == nil then
+		error("Could not open file '" .. filename .. "' for hashing!")
+	end
+
 	local hasher = CreateMD5Object()
 
 	while true do
