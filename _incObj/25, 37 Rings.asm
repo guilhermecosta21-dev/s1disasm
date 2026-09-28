@@ -236,6 +236,13 @@ RLoss_Bounce:	; Routine 2
 		addi.w	#224,d0					; add vertical screen height
 		cmp.w	obY(a0),d0				; has object moved below the bottom level boundary?
 		blt.s	RLoss_Delete				; if yes, delete ring
+		move.b	obDelayAni(a0),d0			; get remaining lifetime for ring
+		cmpi.b	#80,d0					; is ring close to despawning? (80 frames = roughly 1.3 seconds)
+		bhs.s	.show					; if not, show ring
+		andi.b	#1,d0					; are we currently on an even frame?
+		beq.s	.show					; if yes, show ring
+		rts						; otherwise, hide ring this frame
+.show:
 		bra.w	DisplaySprite				; display this ring
 ; ===========================================================================
 

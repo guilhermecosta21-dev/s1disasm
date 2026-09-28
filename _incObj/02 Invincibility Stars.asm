@@ -93,6 +93,13 @@ Inv_Main:	; Routine 2
 .positive:
 		add.b	d0,objoff_34(a0)
 		move.w	#$80,d0
+		move.w	(v_player+invtime).w,d1			; get remaining invincibility time
+		cmpi.w	#80,d1					; is invincibility close to running out? (80 frames = roughly 1.3 seconds)
+		bhs.s	.show					; if not, show stars
+		andi.w	#1,d1					; are we currently on an even frame?
+		beq.s	.show					; if yes, show stars
+		rts						; otherwise, hide stars this frame
+.show:
 		bra.w	DisplaySprite3
 ; ===========================================================================
 
@@ -151,6 +158,13 @@ Inv_Second:
 .loc_1DB20:
 		add.b	d0,objoff_34(a0)
 		move.w	#$80,d0
+		move.w	(v_player+invtime).w,d1			; get remaining invincibility time
+		cmpi.w	#80,d1					; is invincibility close to running out? (80 frames = roughly 1.3 seconds)
+		bhs.s	.show					; if not, show stars
+		andi.w	#1,d1					; are we currently on an even frame?
+		beq.s	.show					; if yes, show stars
+		rts						; otherwise, hide stars this frame
+.show:
 		bra.w	DisplaySprite3
 ; ===========================================================================
 
