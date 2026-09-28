@@ -206,6 +206,7 @@ Deform_LZ:
 ; REV01 - additional water ripple effects
 
 		move.w	(v_waterpos1).w,d4
+		addq.w	#7,d4		; adjust ripple effect target line for S3K HBlank water palette transfer system
 		move.w	(v_screenposy).w,d5
 
 		; write normal scroll before meeting water position

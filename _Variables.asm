@@ -94,8 +94,6 @@ v_starsobj4:		equ	v_objspace+object_size*11	; object variable space for the invi
 
 v_splash:		equ	v_objspace+object_size*12	; object variable space for the water splash ($40 bytes)
 v_sonicbubbles:		equ	v_objspace+object_size*13	; object variable space for the bubbles that come out of Sonic's mouth/drown countdown ($40 bytes)
-v_watersurface1:	equ	v_objspace+object_size*30	; object variable space for the water surface #1 ($40 bytes)
-v_watersurface2:	equ	v_objspace+object_size*31	; object variable space for the water surface #1 ($40 bytes)
 
 v_endcard:		equ	v_objspace+object_size*23	; object variable space for the level results card ($1C0 bytes)
 v_endcardsonic:		equ	v_endcard+object_size*0		; object variable space for the level results card "SONIC HAS" text ($40 bytes)
@@ -290,7 +288,7 @@ v_lani4_time:		ds.b	1				; level graphics animation 4 - time until next frame
 v_lani5_frame:		ds.b	1				; level graphics animation 5 - current frame
 v_lani5_time:		ds.b	1				; level graphics animation 5 - time until next frame
 v_squashbuffer:		ds.b	1		; buffer Sonic's squash distance for one frame to prevent cheap deaths			
-			ds.b	1				; unused
+v_waterline:		ds.b	1		; backup of the water line used for HBlank
 v_gfxbigring:		ds.w	1				; settings for giant ring graphics loading
 f_conveyrev:		ds.b	1				; flag set to reverse conveyor belts in LZ/SBZ
 v_obj63:		ds.b	6				; flags set if conveyor group is loaded for LZ (object 63) and SBZ (object 6F)

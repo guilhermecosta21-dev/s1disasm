@@ -40,7 +40,7 @@ id_Helix:		objptr	Helix			; 17
 id_BasicPlatform:	objptr	BasicPlatform		; 18
 id_Obj19:		objptr	Obj19			; 19
 id_CollapseLedge:	objptr	CollapseLedge		; 1A
-id_WaterSurface:	objptr	WaterSurface		; 1B
+id_Obj1B:		objptr	NullObject		; 1B (was the LZ water surface)
 id_Scenery:		objptr	Scenery			; 1C
 id_MagicSwitch:		objptr	MagicSwitch		; 1D
 id_BallHog:		objptr	BallHog			; 1E

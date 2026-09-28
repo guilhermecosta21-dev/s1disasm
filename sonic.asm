@@ -603,7 +603,9 @@ VBlank_Lag:
 	.waterAbove:
 		writeCRAM	v_palette_water,0		; write water palette buffer to CRAM
 	.waterBelow:
-		move.w	(v_hblank_hreg).w,(a5)			; write HBlank trigger scan line for water palette swap to VDP
+		move.w	(v_hblank_hreg).w,d0	; get HBlank interrupt counter
+		move.w	d0,(a5)			; write to VDP register ($8Axx)
+		move.b	d0,(v_waterline).w	; copy target scan line ($xx)
 		startZ80					; restart Z80
 
 		bra.w	VBlank_Music				; branch back to update sound driver and resume operation
@@ -684,7 +686,9 @@ VBlank_Levels:
 	.waterAbove:
 		writeCRAM	v_palette_water,0		; write water palette buffer to CRAM
 	.waterBelow:
-		move.w	(v_hblank_hreg).w,(a5)			; write HBlank trigger scan line for water palette swap to VDP
+		move.w	(v_hblank_hreg).w,d0	; get HBlank interrupt counter
+		move.w	d0,(a5)			; write to VDP register ($8Axx)
+		move.b	d0,(v_waterline).w	; copy target scan line ($xx)
 
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
@@ -772,7 +776,9 @@ VBlank_Ending:
 	.waterAbove:
 		writeCRAM	v_palette_water,0		; write water palette buffer to CRAM
 	.waterBelow:
-		move.w	(v_hblank_hreg).w,(a5)			; write HBlank trigger scan line for water palette swap to VDP
+		move.w	(v_hblank_hreg).w,d0	; get HBlank interrupt counter
+		move.w	d0,(a5)			; write to VDP register ($8Axx)
+		move.b	d0,(v_waterline).w	; copy target scan line ($xx)
 
 		writeVRAM	v_hscrolltablebuffer,vram_hscroll ; transfer H-scroll buffer table to actual H-scroll VRAM
 		writeVRAM	v_spritetablebuffer,vram_sprites  ; transfer sprite buffer table to actual sprites VRAM
@@ -810,7 +816,9 @@ VBlank_Unused0E:
 ; loc_F9A: VBla_12:
 VBlank_PaletteFade:
 		bsr.w	VBlank_StandardTransfers		; do standard screen transfers
-		move.w	(v_hblank_hreg).w,(a5)			; write HBlank trigger scan line for water palette swap to VDP
+		move.w	(v_hblank_hreg).w,d0	; get HBlank interrupt counter
+		move.w	d0,(a5)			; write to VDP register ($8Axx)
+		move.b	d0,(v_waterline).w	; copy target scan line ($xx)
 		rts
 
 ; ===========================================================================
@@ -873,25 +881,56 @@ VBlank_StandardTransfers:
 
 ; PalToCRAM: <-- old misnomer
 HBlank:
-		disable_ints					; disable interrupts (VBlank in this context)
 		tst.w	(f_hblank_pal).w			; is palette set to change?
-		beq.s	.nochg					; if not, branch
+		beq.w	.nochg					; if not, branch
 		move.w	#0,(f_hblank_pal).w			; clear palette change flag
 
-		movem.l	a0-a1,-(sp)				; backup a0 and a1 registers
+		movem.l	d0-d2/a0-a2,-(sp)			; backup registers
+		stopZ80						; request Z80 stop
+		waitZ80						; wait until it stopped
+
 		lea	(vdp_data_port).l,a1			; load VDP data port to a1
-		lea	(v_palette_water).w,a0			; get water palette from RAM
-		move.l	#$C0000000,4(a1)			; set VDP to CRAM write
-		rept (4*$10)/2					; overwrite full palette (4 rows, 2 colors per move)
-			move.l	(a0)+,(a1)			; move water palette to CRAM
-		endr						; repeat at assembly time
-		move.w	#vreg_hintrate|223,4(a1)			; reset horizontal interrupt counter
-		movem.l	(sp)+,a0-a1				; restore a0 and a1
+		move.w	#$8A00+223,4(a1)			; reset horizontal interrupt counter
+
+		lea	HBlank_LZWater(pc),a2			; get water transition LUT
+		move.w	#(HBlank_LZWater_End-HBlank_LZWater)/2-1,d1 ; get number of entries in list
+		move.b	(v_waterline).w,d0			; get scanline that was written to
+		subi.b	#200,d0					; is H-int occurring below line 200?
+		bcs.s	.transferColors				; if it is, branch
+		sub.b	d0,d1					; skip relevant number of entries in LUT
+		bcs.s	.skipTransfer				; if everything was skipped, branch
+
+	.transferColors:
+		moveq	#0,d0					; clear d0
+		move.w	(a2)+,d0				; get palette offset from LUT
+		lea	(v_palette_water).w,a0			; get buffered water palette
+		adda.w	d0,a0					; go to specified entry in palette buffer
+		addi.w	#$C000,d0				; prepare CRAM write
+		swap	d0					; move to upper word
+		move.l	d0,4(a1)				; write to CRAM at appropriate address
+
+		swap	d1					; high word of D1 is used for buffering
+		move.l	(a0)+,d2				; buffer colors to registers for faster transfer
+		move.w	(a0)+,d1				; ''
+
+		move.b	#320/2,d0				; trigger transfer once H-Counter has gone offscreen to the right
+	.waitH:	cmp.b	vdp_counter-vdp_data_port+1(a1),d0	; read H-Counter, has it gone offscreen?
+		bhi.s	.waitH					; if not, loop until it has
+
+		move.l	d2,(a1)					; transfer two colors
+		move.w	d1,(a1)					; transfer the third color
+		swap	d1					; use d1 as counter again
+		dbf	d1,.transferColors			; repeat for number of colors
+; ---------------------------------------------------------------------------
+
+.skipTransfer:
+		startZ80					; restart Z80
+		movem.l	(sp)+,d0-d2/a0-a2			; restore registers
 
 		tst.b	(f_doupdatesinhblank).w			; was frame update delayed by water surface being near the top of the screen?
 		bne.s	.delayed_transfer			; if yes, resume transfer now
 
-.nochg:
+	.nochg:
 		rte						; return from horizontal interrupt and resume normal operation
 ; ===========================================================================
 
@@ -904,6 +943,37 @@ HBlank:
 		movem.l	(sp)+,d0-a6				; restore registers
 		rte						; return from horizontal interrupt and resume normal operation
 ; End of function HBlank
+
+
+; ---------------------------------------------------------------------------
+; Table for the Horizontal interrupt
+; ---------------------------------------------------------------------------
+
+HBlank_LZWater:
+		dc.w $62	; line 4, color 1-2-3
+		dc.w $68	; line 4, color 4-5-6
+		dc.w $7A	; line 4, color D-E-F
+		dc.w $6E	; line 4, color 7-8-9
+		dc.w $74	; line 4, color A-B-C
+
+		dc.w $42	; line 3, color 1-2-3
+		dc.w $48	; line 3, color 4-5-6
+		dc.w $4E	; line 3, color 7-8-9
+		dc.w $54	; line 3, color A-B-C
+		dc.w $5A	; line 3, color D-E-F
+
+		dc.w $02	; line 1, color 1-2-3
+		dc.w $08	; line 1, color 4-5-6
+		dc.w $0E	; line 1, color 7-8-9
+		dc.w $14	; line 1, color A-B-C
+		dc.w $1A	; line 1, color D-E-F
+
+		dc.w $34	; line 2, color A-B-C
+		dc.w $22	; line 2, color 1-2-3
+		dc.w $3A	; line 2, color D-E-F
+		dc.w $2E	; line 2, color 7-8-9
+		dc.w $28	; line 2, color 4-5-6
+HBlank_LZWater_End:
 
 
 ; ===========================================================================
@@ -2710,13 +2780,6 @@ Level_ChkWater:
 		move.w	#0,(v_jpadhold2).w			; clear button input states for Sonic player object
 		move.w	#0,(v_jpadhold1).w			; clear actual button input states for controller 1
 
-		cmpi.b	#id_LZ,(v_zone).w			; is level LZ?
-		bne.s	Level_LoadObj				; if not, branch
-		move.b	#id_WaterSurface,(v_watersurface1).w	; load water surface object A
-		move.w	#$60,(v_watersurface1+obX).w		; set base X-position for surface A
-		move.b	#id_WaterSurface,(v_watersurface2).w	; load water surface object B
-		move.w	#$120,(v_watersurface2+obX).w		; set base X-position for surface B
-
 Level_LoadObj:
         jsr	(RingsManager_Init).l			; initialize the S3K Rings Manager at level start
         cmpi.b	#id_SLZ,(v_zone).w	; are we in SLZ?
@@ -4114,7 +4177,6 @@ Map_LWall:	include	"_maps/Wall of Lava.asm"
 		include	"_incObj/5A SLZ Circling Platform.asm"
 		include	"_incObj/5B SLZ Staircase.asm"
 		include	"_incObj/5C SLZ Foreground Pylon.asm"
-		include	"_incObj/1B LZ Water Surface.asm"
 		include	"_incObj/0B LZ Pole that Breaks.asm"
 		include	"_incObj/0C LZ Flapping Door.asm"
 		include	"_incObj/71 Invisible Solid Barriers.asm"
@@ -4415,8 +4477,6 @@ KosPM_GhzWall2:	binclude	"artkospm/GHZ Edge Wall.kospm"
 ; ---------------------------------------------------------------------------
 ; Compressed graphics - LZ stuff
 ; ---------------------------------------------------------------------------
-KosPM_Water:	binclude	"artkospm/LZ Water Surface.kospm"
-		even
 KosPM_Splash:	binclude	"artkospm/LZ Water & Splashes.kospm"
 		even
 KosPM_LzSpikeBall:binclude	"artkospm/LZ Spiked Ball & Chain.kospm"
