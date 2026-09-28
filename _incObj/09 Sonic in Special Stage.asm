@@ -647,7 +647,7 @@ SonicSS_GetContinue:
 		jsr	(CollectRing).l				; add a ring
 		cmpi.w	#ss_continue_rings,(v_rings).w		; check if you now have 50 rings
 		blo.s	SonicSS_NoContinue			; if not, branch
-		bset	#0,(v_lifecount).w			; remember that a continue has already been awarded
+		bset	#7,(v_lifecount).w			; remember that a continue has already been awarded
 		bne.s	SonicSS_NoContinue			; if flag was already set, branch
 		addq.b	#1,(v_continues).w			; add 1 to number of continues
 		move.w	#sfx_Continue,d0			; set extra continue sound
@@ -671,10 +671,7 @@ SonicSS_Chk1Up:
 
 ; Obj09_Get1Up:
 SonicSS_Get1Up:
-		addq.b	#1,(v_lives).w				; add 1 to number of lives
-		addq.b	#1,(f_lifecount).w			; update the lives counter
-		move.w	#bgm_ExtraLife,d0			; set extra life music
-		jsr	(QueueSound1).l				; play it
+		jsr	(ExtraLife).l				; add 1 to number of lives
 
 		moveq	#0,d4					; regular item
 		rts						; return
