@@ -289,7 +289,8 @@ v_lani4_frame:		ds.b	1				; level graphics animation 4 - current frame
 v_lani4_time:		ds.b	1				; level graphics animation 4 - time until next frame
 v_lani5_frame:		ds.b	1				; level graphics animation 5 - current frame
 v_lani5_time:		ds.b	1				; level graphics animation 5 - time until next frame
-			ds.b	2				; unused
+v_squashbuffer:		ds.b	1		; buffer Sonic's squash distance for one frame to prevent cheap deaths			
+			ds.b	1				; unused
 v_gfxbigring:		ds.w	1				; settings for giant ring graphics loading
 f_conveyrev:		ds.b	1				; flag set to reverse conveyor belts in LZ/SBZ
 v_obj63:		ds.b	6				; flags set if conveyor group is loaded for LZ (object 63) and SBZ (object 6F)
