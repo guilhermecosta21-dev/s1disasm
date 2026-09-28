@@ -177,6 +177,7 @@ PLC_MZ:		plcheader
 		plcm	KosPM_MzGlass,	ArtTile_MZ_Glass_Pillar		; green glassy block
 		plcm	KosPM_Lava,	ArtTile_MZ_Lava			; lava
 		plcm	KosPM_Buzz,	ArtTile_Buzz_Bomber		; buzz bomber enemy
+		plcm    KosPM_Splats,	ArtTile_Splats			; splats enemy
 		plcm	KosPM_Yadrin,	ArtTile_Yadrin			; yadrin enemy
 		plcm	KosPM_Basaran,	ArtTile_Basaran			; basaran enemy
 		plcm	KosPM_Cater,	ArtTile_MZ_SYZ_Caterkiller	; caterkiller enemy

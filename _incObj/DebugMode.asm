@@ -496,6 +496,7 @@ dbugcommon:	macro
 		;	mappings	object			subtype	frame	VRAM setting
 		dbugcommon
 		dbug	Map_Buzz,	id_BuzzBomber,		0,	0,	ArtTile_Buzz_Bomber
+		dbug	Map_Splats,	id_Splats,		0,	0,	ArtTile_Splats
 		dbug	Map_Spring,	id_Springs,		0,	0,	ArtTile_Spring_Horizontal
 		dbug	Map_Fire,	id_LavaMaker,		0,	0,	ArtTile_MZ_Fireball
 		dbug	Map_Brick,	id_MarbleBrick,		0,	0,	ArtTile_Level|Tile_Pal3

@@ -661,7 +661,7 @@
                 }
             ],
             "isDirectory": true,
-            "expanded": true,
+            "expanded": false,
             "config": {}
         },
         {
@@ -1620,6 +1620,39 @@
                     }
                 },
                 {
+                    "name": "Splats (Badnik)",
+                    "palettes": [
+                        {
+                            "path": "../palette/Sonic.bin",
+                            "length": 1
+                        },
+                        {
+                            "path": "../palette/Marble Zone.bin",
+                            "length": 3
+                        }
+                    ],
+                    "format": "Sonic 1.js",
+                    "art": {
+                        "path": "../artkospm/Enemy Splats.kospm",
+                        "compression": "KosinskiPlus-M",
+                        "offset": 0,
+                        "extra": []
+                    },
+                    "mappings": {
+                        "path": "../_maps/Splats.asm",
+                        "label": ""
+                    },
+                    "dplcs": {
+                        "enabled": false,
+                        "path": "../",
+                        "label": ""
+                    },
+                    "expanded": true,
+                    "config": {
+                        "mapMacros": true
+                    }
+                },
+                {
                     "name": "Yadrin (Badnik)",
                     "palettes": [
                         {
@@ -1654,7 +1687,7 @@
                 }
             ],
             "isDirectory": true,
-            "expanded": false,
+            "expanded": true,
             "config": {}
         },
         {
