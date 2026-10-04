@@ -124,6 +124,13 @@ LevSz_StartLoc:
 
 ; SetScreen: LevSz_SkipStartPos:
 LevSz_InitCameraPositions:
+        clr.w	(v_trackpos).w				; reset Sonic's position tracking index 
+		lea	(v_tracksonic).w,a2			; load the tracking array into a2 
+		moveq	#64-1,d2				; begin a 64-step loop
+	.looppoint: 
+		move.w	d1,(a2)+				; fill in X 
+		move.w	d0,(a2)+				; fill in Y 
+		dbf	d2,.looppoint				; loop
 	; --- Camera X-Position ---
 	.chkXLeft:
 		subi.w	#320/2,d1				; initial camera X-position is Sonic horizontally centered on the screen

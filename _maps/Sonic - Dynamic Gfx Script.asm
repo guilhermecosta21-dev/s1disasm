@@ -1,4 +1,4 @@
-DPLC_6e5d: mappingsTable
+DPLC_3995: mappingsTable
 	mappingsTableEntry.w	SonPLC_Null
 	mappingsTableEntry.w	SonPLC_Stand
 	mappingsTableEntry.w	SonPLC_Wait1
@@ -95,6 +95,12 @@ DPLC_6e5d: mappingsTable
 	mappingsTableEntry.w	DPLC_7bf4_93
 	mappingsTableEntry.w	DPLC_6e5d_94
 	mappingsTableEntry.w	DPLC_6e5d_95
+	mappingsTableEntry.w	DPLC_3995_96
+	mappingsTableEntry.w	DPLC_3995_97
+	mappingsTableEntry.w	DPLC_3995_98
+	mappingsTableEntry.w	DPLC_3995_99
+	mappingsTableEntry.w	DPLC_3995_100
+	mappingsTableEntry.w	DPLC_3995_101
 
 SonPLC_Null:	dplcHeader
 SonPLC_Null_End
@@ -652,5 +658,29 @@ DPLC_6e5d_95:	dplcHeader
  dplcEntry $10, $58C
  dplcEntry 1, $59C
 DPLC_6e5d_95_End
+
+DPLC_3995_96:	dplcHeader
+ dplcEntry $F, $59D
+DPLC_3995_96_End
+
+DPLC_3995_97:	dplcHeader
+ dplcEntry $F, $5AC
+DPLC_3995_97_End
+
+DPLC_3995_98:	dplcHeader
+ dplcEntry $F, $5BB
+DPLC_3995_98_End
+
+DPLC_3995_99:	dplcHeader
+ dplcEntry $F, $5CA
+DPLC_3995_99_End
+
+DPLC_3995_100:	dplcHeader
+ dplcEntry $F, $5D9
+DPLC_3995_100_End
+
+DPLC_3995_101:	dplcHeader
+ dplcEntry $F, $5E8
+DPLC_3995_101_End
 
 	even

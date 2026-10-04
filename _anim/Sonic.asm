@@ -98,6 +98,12 @@ fr_Victory1:	equ fr_Slide+1
 fr_Victory2:	equ fr_Victory1+1
 fr_Fall1:       equ fr_Victory2+1
 fr_Fall2:       equ fr_Fall1+1
+fr_SpinDash1:	equ fr_Fall2+1
+fr_SpinDash2:	equ fr_SpinDash1+1
+fr_SpinDash3:	equ fr_SpinDash2+1
+fr_SpinDash4:	equ fr_SpinDash3+1
+fr_SpinDash5:	equ fr_SpinDash4+1
+fr_SpinDash6:	equ fr_SpinDash5+1
 
 
 ; ---------------------------------------------------------------------------
@@ -144,8 +150,9 @@ id_Slide:	sonani	SonAni_Slide	; $1B
 id_Null:	sonani	SonAni_Null	; $1C
 id_Float3:	sonani	SonAni_Float3	; $1D
 id_Float4:	sonani	SonAni_Float4	; $1E
-id_Fall:    sonani  SonAni_Fall
-id_Victory:	sonani	SonAni_Victory
+id_Victory:	sonani	SonAni_Victory	; $1F
+id_Fall:    sonani  SonAni_Fall	; $20
+id_SpinDash:	sonani	SonAni_SpinDash	; $21
 
 ; ---------------------------------------------------------------------------
 ; --- Special animations (walk/run/roll/push) ---
@@ -335,3 +342,10 @@ SonAni_Fall:    dc.b 3
         dc.b fr_Fall1, fr_Fall2
         dc.b afEnd
         even
+
+SonAni_SpinDash:
+		dc.b 0
+		dc.b fr_SpinDash1, fr_SpinDash2, fr_SpinDash1, fr_SpinDash3, fr_SpinDash1
+		dc.b fr_SpinDash4, fr_SpinDash1, fr_SpinDash5, fr_SpinDash1, fr_SpinDash6
+		dc.b afEnd
+		even

@@ -103,6 +103,8 @@ Mon_Solid:	; Routine 2
 
 ; loc_A20A:
 .dontbreak:
+		tst.b	spindash_flag(a1)			; is spindash flag set?
+		bne.s	.checkpush				; if yes, branch
 		tst.w	d1					; has Sonic touched the monitor from the sides?
 		bpl.s	.sidetouch				; if yes, branch
 		sub.w	d3,obY(a1)				; align Sonic to the top of the monitor

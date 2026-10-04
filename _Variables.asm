@@ -87,6 +87,7 @@ v_gameovertext1:	equ	v_objspace+object_size*2	; object variable space for the "G
 v_gameovertext2:	equ	v_objspace+object_size*3	; object variable space for the "OVER" in "GAME OVER"/"TIME OVER" text ($40 bytes)
 
 v_shieldobj:		equ	v_objspace+object_size*6	; object variable space for the shield ($40 bytes)
+v_dustobj:		    equ	v_objspace+object_size*7	; object variable space for the Spin Dash dust ($40 bytes)
 v_starsobj1:		equ	v_objspace+object_size*8	; object variable space for the invincibility stars #1 ($40 bytes)
 v_starsobj2:		equ	v_objspace+object_size*9	; object variable space for the invincibility stars #2 ($40 bytes)
 v_starsobj3:		equ	v_objspace+object_size*10	; object variable space for the invincibility stars #3 ($40 bytes)
@@ -307,7 +308,11 @@ v_ringbonus:		ds.w	1				; ring bonus at the end of an act
 f_endactbonus:		ds.b	1				; time/ring bonus update flag at the end of an act
 v_sonicend:		ds.b	1				; routine counter for Sonic in the ending sequence
 v_lz_deform:		ds.w	1				; LZ deformation offset, in units of $80
-			ds.b	6				; unused
+v_cam_x_delay:		ds.w	1				; (word) horizontal camera delay timer after a Spin Dash
+v_cam_y_delay:		ds.b	1				; vertical camera delay when looking up/down
+v_spindash_sfx_flag:	ds.b	1				; set to 1 if the Spin Dash sound was the last one played and 0 if it was not
+v_spindash_sfx_timer:	ds.b	1				; timer to reset the Spin Dash rev pitch after a second of inactivity
+v_spindash_sfx_pitch:	ds.b	1				; current Spin Dash rev pitch value
 f_switch:		ds.b	$10				; flags set when Sonic stands on a switch
 v_scroll_block_1_size:	ds.w	1
 v_scroll_block_2_size:	ds.w	1				; unused

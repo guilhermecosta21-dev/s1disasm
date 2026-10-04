@@ -310,6 +310,9 @@ shoetime:		equ $34					; time left for speed shoes (2 bytes)
 angleright:		equ $36					; angle of floor on Sonic's right side
 angleleft:		equ $37					; angle of floor on Sonic's left side
 sticktoconvex:		equ $38					; flag set while running on an SBZ gear
+spindash_flag:		equ $39					; Spin Dash flag
+spindash_count:		equ $3A					; Spin Dash rev counter
+spindash_decay:		equ $3B					; Spin Dash rev decay timer
 ;unused:		equ $39					; unused by Sonic
 restartime:		equ $3A					; time left before level restarts after dying (2 bytes)
 jumping:		equ $3C					; flag set while Sonic is jumping
@@ -450,6 +453,11 @@ sfx__Last:		equ ((ptr_sndend-SoundIndex-4)/4)+sfx__First
 spec__First:		equ $D0
 sfx_Waterfall:		equ ((ptr_sndD0-SpecSoundIndex)/4)+spec__First
 spec__Last:		equ ((ptr_specend-SpecSoundIndex-4)/4)+spec__First
+
+; Extra sound effects
+ext__First:		equ $D1
+sfx_SpinDash:		equ ((ptr_sndD1-ExtSoundIndex)/4)+ext__First
+ext__Last:		equ ((ptr_extend-ExtSoundIndex-4)/4)+ext__First
 
 ; Sound commands
 flg__First:		equ $E0
@@ -630,7 +638,8 @@ ArtTile_HUDRings:		equ ArtTile_HUD+$30
 
 ArtTile_Sonic:			equ $780
 ArtTile_Points:			equ $79E
-ArtTile_Lamppost:		equ $7A0
+ArtTile_Lamppost:		equ $D800/tile_size		; =$6C0 (changed from $7A0 to make room for the Spin Dash dust)
+ArtTile_SpinDust:		equ $F400/tile_size		; = $7A0
 ArtTile_Ring:			equ $7B2
 ArtTile_Ring_Loss:		equ ArtTile_Ring+4
 ArtTile_Sparkles:		equ ArtTile_Ring+$A

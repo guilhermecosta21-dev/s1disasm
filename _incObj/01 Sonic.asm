@@ -47,6 +47,7 @@ Sonic_Main:	; Routine 0
 		move.w	#son_maxspeed,(v_sonspeedmax).w		; set Sonic's top speed
 		move.w	#son_acceleration,(v_sonspeedacc).w	; set Sonic's acceleration
 		move.w	#son_deceleration,(v_sonspeeddec).w	; set Sonic's deceleration
+		move.b	#id_SpinDust,(v_dustobj).w		; prepare Spin Dash dust object
 ; ---------------------------------------------------------------------------
 
 ; Obj01_Control:
@@ -321,6 +322,7 @@ Sonic_Water:
 
 ; Obj01_MdNormal:
 Sonic_MdNormal:	; While Sonic is on the ground and not rolling
+		bsr.w	Sonic_SpinDash
 		bsr.w	Sonic_Jump				; check if we need to jump
 		bsr.w	Sonic_SlopeResistWalk			; handle resistance from running up slopes
 		bsr.w	Sonic_Move				; handle Sonic's left/right movement
@@ -334,6 +336,7 @@ Sonic_MdNormal:	; While Sonic is on the ground and not rolling
 
 ; Obj01_MdJump:
 Sonic_MdJump:	; While Sonic is in the air but not rolling
+		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
 		bsr.w	Sonic_LevelBound			; make sure Sonic stays within level bounds and handle bottomless pits
@@ -363,6 +366,7 @@ Sonic_MdRoll:	; While Sonic is on the ground and rolling
 
 ; Obj01_MdJump2:
 Sonic_MdJump2:	; While Sonic is in the air and rolling (usually, but not limited to, jumping)
+		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
 		bsr.w	Sonic_LevelBound			; make sure Sonic stays within level bounds and handle bottomless pits
@@ -476,6 +480,10 @@ Sonic_LookUp:
 		btst	#bitUp,(v_jpadhold2).w			; is up being held?
 		beq.s	Sonic_Duck				; if not, check for ducking instead
 		move.b	#id_LookUp,obAnim(a0)			; use "looking up" animation
+		addq.b	#1,(v_cam_y_delay).w			; add 1 to camera Y delay
+		cmpi.b	#120,(v_cam_y_delay).w			; did we reach target wait time of 120 frames (2 seconds)?
+		blo.s	Sonic_ResetScr_Part2			; if not, branch
+		move.b	#120,(v_cam_y_delay).w			; cap wait time
 		cmpi.w	#$C8,(v_lookshift).w			; has camera already fully moved up?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, don't move it up further
 		addq.w	#2,(v_lookshift).w			; move camera up further
@@ -487,6 +495,10 @@ Sonic_Duck:
 		btst	#bitDn,(v_jpadhold2).w			; is down being held?
 		beq.s	Sonic_ResetScr				; if not, branch
 		move.b	#id_Duck,obAnim(a0)			; use "ducking" animation
+		addq.b	#1,(v_cam_y_delay).w			; add 1 to camera Y delay
+		cmpi.b	#120,(v_cam_y_delay).w			; did we reach target wait time of 120 frames (2 seconds)?
+		blo.s	Sonic_ResetScr_Part2			; if not, branch
+		move.b	#120,(v_cam_y_delay).w			; cap wait time
 		cmpi.w	#8,(v_lookshift).w			; has camera already fully moved down?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, branch
 		subq.w	#2,(v_lookshift).w			; move camera down further
@@ -495,6 +507,9 @@ Sonic_Duck:
 
 ; Obj01_ResetScr:
 Sonic_ResetScr:
+        clr.b	(v_cam_y_delay).w			; reset camera Y delay timer
+
+Sonic_ResetScr_Part2:
 		cmpi.w	#$60,(v_lookshift).w			; is screen in its default position?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, branch
 		bcc.s	.resetdown				; does camera need to go back down? if yes, branch
@@ -843,6 +858,16 @@ Sonic_RollSlowdownDone:
 
 ; loc_131CC:
 Sonic_AngledRollSpeed:
+        cmpi.w	#$60,(v_lookshift).w			; is vertical camera shift already at base value?
+		beq.s	.y_cam_reset_end			; if yes, branch
+		bhs.s	.y_cam_pull_up				; is camera offset downwards? if yes, branch
+		addq.w	#2,(v_lookshift).w			; pull camera back down
+		bra.s	.y_cam_reset_end			; branch over
+
+	.y_cam_pull_up:
+		subq.w	#2,(v_lookshift).w			; pull camera back up
+
+	.y_cam_reset_end:
 	if FixBugs
 		; Sonic 1 does not reset the camera to its default position when
 		; rolling. This oversight was corrected in Sonic 2.
@@ -1153,18 +1178,20 @@ Sonic_Roll:
 		tst.b	(f_slidemode).w				; is Sonic currently on a water slide?
 		bne.s	.noroll					; if yes, don't allow rolling
 
+		move.b	(v_jpadhold2).w,d0			; get held buttons
+		andi.b	#btnL+btnR,d0				; is left/right being held?
+		bne.s	.noroll					; if yes, prevent rolling (some kind of fat-fingering convenience feature?)
+		btst	#bitDn,(v_jpadhold2).w			; is down being held?
+		beq.s	.noroll					; if not, branch
+		
 		move.w	obInertia(a0),d0			; get Sonic's current ground speed
 		bpl.s	.ispositive				; is it positive? if yes, branch
 		neg.w	d0					; otherwise, make it positive
 ; loc_13392:
 .ispositive:
-		cmpi.w	#$80,d0					; is Sonic moving at $80 speed or faster?
-		blo.s	.noroll					; if not, branch
-		move.b	(v_jpadhold2).w,d0			; get held buttons
-		andi.b	#btnL+btnR,d0				; is left/right being held?
-		bne.s	.noroll					; if yes, prevent rolling (some kind of fat-fingering convenience feature?)
-		btst	#bitDn,(v_jpadhold2).w			; is down being held?
-		bne.s	Sonic_ChkRoll				; if yes, branch
+		cmpi.w	#$100,d0					; is Sonic moving at $100 speed or faster?
+		bhi.s	Sonic_ChkRoll				; if yes, branch
+		move.b	#id_Duck,obAnim(a0)			; use "ducking" animation
 
 ; Obj01_NoRoll:
 .noroll:
@@ -2322,3 +2349,114 @@ Sonic_LoadGfx:
 		rts						; return
 ; End of function Sonic_LoadGfx
 ; ===========================================================================
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Subroutine to charge and release a Spin Dash
+; ---------------------------------------------------------------------------
+
+Sonic_SpinDash:
+		btst	#0,spindash_flag(a0)			; is Spin Dash flag already set?
+		bne.s	Sonic_UpdateSpindash			; if yes, branch to alternate routine
+		cmpi.b	#id_Duck,obAnim(a0)			; is Sonic in his ducking animation?
+		bne.s	.end					; if not, branch
+		moveq	#btnABC,d0				; is A, B, or C...
+		and.b	(v_jpadpress2).w,d0			; ...currently pressed? (not held)
+		beq.w	.end					; if not, branch
+
+		move.b	#id_SpinDash,obAnim(a0)			; change Sonic's animation to Spin Dashing
+		move.w	#sfx_SpinDash,d0			; set Spin Dash sound
+		jsr	(QueueSound2).l				; play it
+		addq.l	#4,sp					; skip previous stack entry (i.e. don't do anything else in Sonic_MdNormal)
+		bset	#0,spindash_flag(a0)			; set the Spin Dash flag
+		clr.w	spindash_count(a0)			; set the Spin Dash counter to start at 0
+
+		bsr.w	Sonic_LevelBound			; because we skipped the stack pointer...
+		bsr.w	Sonic_AnglePos				; ...we need to manually run some Sonic stuff
+.end:
+		rts
+; ===========================================================================
+
+Sonic_UpdateSpindash:
+		btst	#bitDn,(v_jpadhold2).w			; is down (still) held?
+		bne.w	Sonic_ChargingSpindash			; if yes, keep charging Spin Dash
+
+Sonic_ReleaseSpindash:
+		bclr	#0,spindash_flag(a0)			; unset Spin Dash flag
+		move.b	#sonic_roll_height,obHeight(a0)		; set Sonic's hitbox height to rolling size
+		move.b	#sonic_roll_width,obWidth(a0)		; set Sonic's hitbox width to rolling size
+		addq.w	#sonic_height-sonic_roll_height,obY(a0)	; add the difference between Sonic's rolling and standing heights
+		move.b	#id_Roll,obAnim(a0)			; set Sonic's animation to rolling
+		bset	#2,obStatus(a0)				; set Sonic's rolling flag
+		move.w	#sfx_Teleport,d0			; set Spin Dash zoom sound
+		jsr	(QueueSound2).l 			; play it
+
+		moveq	#0,d0					; clear d0
+		move.b	spindash_count(a0),d0			; get number of Spin Dash revs that were performed
+		lsl.w	#7,d0					; multiply by $80 for each rev
+		move.w	d0,d1					; copy for camera-delay calculation
+		addi.w	#$800,d0				; add base speed of $800
+
+		btst	#0,obStatus(a0)				; is Sonic looking to the left?
+		beq.s	.not_left				; if not, branch
+		neg.w	d0					; negate charge direction
+.not_left:	move.w	d0,obInertia(a0)			; apply final speed
+
+		; Camera delay
+		add.w	d1,d1					; double 0-based speed
+		andi.w	#$1F00,d1				; limit result
+		neg.w	d1					; make result negative
+		addi.w	#$2000,d1				; add a static base delay against it
+		move.w	d1,(v_cam_x_delay).w			; set the final value as camera delay
+
+		; Set new velocties immediately
+		move.b	obAngle(a0),d0				; get Sonic's current floor angle
+		jsr	(CalcSine).l				; calculate the sine and cosine
+		muls.w	obInertia(a0),d1			; multiply sine by release speed
+		asr.l	#8,d1					; divide by $100
+		move.w	d1,obVelX(a0)				; set new X velocity
+		muls.w	obInertia(a0),d0			; multiply cosine by release speed
+		asr.l	#8,d0					; divide by $100
+		move.w	d0,obVelY(a0)				; set new Y velocity
+
+		bra.s	Sonic_Spindash_ResetScr			; skip
+; ===========================================================================
+
+Sonic_ChargingSpindash:
+		move.b	#id_SpinDash,obAnim(a0)			; make sure Spin Dash animation stays
+
+		; Charge decay
+		tst.w	spindash_count(a0)			; were any revs done?
+		beq.s	.no_rev					; if not, branch
+		move.w	spindash_count(a0),d0			; get current number of revs
+		lsr.w	#5,d0					; divide that number by 32
+		sub.w	d0,spindash_count(a0)			; subtract that number from the stored revs (basically a decay)
+		bhs.s	.no_rev					; if result is still positive, branch
+		clr.w	spindash_count(a0)			; if we underflowed, reset rev counter to 0
+.no_rev:
+		moveq	#btnABC,d0				; is A, B, or C...
+		and.b	(v_jpadpress2).w,d0			; ...currently pressed? (not held)
+		beq.w	Sonic_Spindash_ResetScr			; if not, branch
+		move.w	#(id_SpinDash<<8),obAnim(a0)		; restart Spin Dash animation
+		move.w	#sfx_SpinDash,d0			; set Spin Dash charge sound
+		jsr	(QueueSound2).l				; play it
+		addi.w	#$200,spindash_count(a0)		; increase rev counter by 2
+		cmpi.w	#$800,spindash_count(a0)		; did we exceed the maximum?
+		blo.s	Sonic_Spindash_ResetScr			; if not, branch
+		move.w	#$800,spindash_count(a0)		; cap charge counter at maximum
+
+Sonic_Spindash_ResetScr:
+		addq.l	#4,sp					; skip previous stack entry (i.e. don't do anything else in Sonic_MdNormal)
+		cmpi.w	#(224/2)-16,(v_lookshift).w		; is vertical camera offset at base level?
+		beq.s	.resetscr_end				; if yes, branch
+		bhs.s	.pull_cam_up				; if not and the camera is offset downwards, branch
+		addq.w	#2,(v_lookshift).w			; move camera down
+		bra.s	.resetscr_end				; skip over
+.pull_cam_up:	subq.w	#2,(v_lookshift).w			; move camera up
+
+.resetscr_end:
+		bsr.w	Sonic_LevelBound			; because we skipped the stack pointer...
+		bsr.w	Sonic_AnglePos				; ...we need to manually run some Sonic stuff
+		rts
+; End of function Sonic_SpinDash
