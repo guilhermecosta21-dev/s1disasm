@@ -2239,6 +2239,10 @@ Sonic_Animate:
 
 ; loc_13A9C:
 .nomodspeed:
+		lea	(SonAni_Figure8).l,a1		; use figure-8 running animation
+		cmpi.w	#$A00,d2				; is Sonic at running REALLY fast?
+		bhs.s	.running				; if yes, branch
+
 		lea	(SonAni_Run).l,a1			; use running animation
 		cmpi.w	#$600,d2				; is Sonic at running speed?
 		bhs.s	.running				; if yes, branch

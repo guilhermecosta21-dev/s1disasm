@@ -1,4 +1,4 @@
-Map_7539: mappingsTable
+Map_f22d: mappingsTable
 	mappingsTableEntry.w	MS_Null
 	mappingsTableEntry.w	MS_Stand
 	mappingsTableEntry.w	MS_Wait1
@@ -101,6 +101,22 @@ Map_7539: mappingsTable
 	mappingsTableEntry.w	Map_7539_99
 	mappingsTableEntry.w	Map_7539_100
 	mappingsTableEntry.w	Map_7539_101
+	mappingsTableEntry.w	Map_f22d_102
+	mappingsTableEntry.w	Map_f22d_103
+	mappingsTableEntry.w	Map_f22d_104
+	mappingsTableEntry.w	Map_f22d_105
+	mappingsTableEntry.w	Map_f22d_106
+	mappingsTableEntry.w	Map_f22d_107
+	mappingsTableEntry.w	Map_f22d_108
+	mappingsTableEntry.w	Map_f22d_109
+	mappingsTableEntry.w	Map_f22d_110
+	mappingsTableEntry.w	Map_f22d_111
+	mappingsTableEntry.w	Map_f22d_112
+	mappingsTableEntry.w	Map_f22d_113
+	mappingsTableEntry.w	Map_f22d_114
+	mappingsTableEntry.w	Map_f22d_115
+	mappingsTableEntry.w	Map_f22d_116
+	mappingsTableEntry.w	Map_f22d_117
 
 MS_Null:	spriteHeader
 MS_Null_End
@@ -698,5 +714,97 @@ Map_7539_101:	spriteHeader
  spritePiece -$B, -7, 4, 3, 0, 0, 0, 0, 0
  spritePiece -$B, $11, 3, 1, $C, 0, 0, 0, 0
 Map_7539_101_End
+
+Map_f22d_102:	spriteHeader
+ spritePiece -$D, -$B, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$15, -3, 1, 3, $10, 0, 0, 0, 0
+Map_f22d_102_End
+
+Map_f22d_103:	spriteHeader
+ spritePiece -$D, -$C, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$15, -4, 1, 3, $10, 0, 0, 0, 0
+Map_f22d_103_End
+
+Map_f22d_104:	spriteHeader
+ spritePiece -$D, -$B, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$15, -3, 1, 3, $10, 0, 0, 0, 0
+Map_f22d_104_End
+
+Map_f22d_105:	spriteHeader
+ spritePiece -$C, -$C, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$14, -4, 1, 2, $10, 0, 0, 0, 0
+Map_f22d_105_End
+
+Map_f22d_106:	spriteHeader
+ spritePiece -7, -$14, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -7, $C, 3, 1, $10, 0, 0, 0, 0
+ spritePiece 9, -$1C, 1, 1, $13, 0, 0, 0, 0
+ spritePiece $19, -$C, 1, 3, $14, 0, 0, 0, 0
+Map_f22d_106_End
+
+Map_f22d_107:	spriteHeader
+ spritePiece -5, -$16, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$D, 2, 1, 1, $10, 0, 0, 0, 0
+ spritePiece -5, $A, 4, 1, $11, 0, 0, 0, 0
+Map_f22d_107_End
+
+Map_f22d_108:	spriteHeader
+ spritePiece -7, -$13, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -7, $D, 3, 1, $10, 0, 0, 0, 0
+ spritePiece 9, -$1B, 1, 1, $13, 0, 0, 0, 0
+ spritePiece $19, -$B, 1, 3, $14, 0, 0, 0, 0
+Map_f22d_108_End
+
+Map_f22d_109:	spriteHeader
+ spritePiece -7, -$F, 4, 4, 0, 0, 0, 0, 0
+ spritePiece 1, -$17, 3, 1, $10, 0, 0, 0, 0
+ spritePiece $19, -7, 1, 2, $13, 0, 0, 0, 0
+Map_f22d_109_End
+
+Map_f22d_110:	spriteHeader
+ spritePiece -9, -$14, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -1, $C, 3, 1, $10, 0, 0, 0, 0
+Map_f22d_110_End
+
+Map_f22d_111:	spriteHeader
+ spritePiece -$A, -$14, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -2, $C, 3, 1, $10, 0, 0, 0, 0
+Map_f22d_111_End
+
+Map_f22d_112:	spriteHeader
+ spritePiece -9, -$14, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -1, $C, 3, 1, $10, 0, 0, 0, 0
+Map_f22d_112_End
+
+Map_f22d_113:	spriteHeader
+ spritePiece -$A, -$14, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -2, $C, 2, 1, $10, 0, 0, 0, 0
+Map_f22d_113_End
+
+Map_f22d_114:	spriteHeader
+ spritePiece -$16, -$19, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$1E, -9, 1, 1, $10, 0, 0, 0, 0
+ spritePiece $A, -9, 1, 3, $11, 0, 0, 0, 0
+ spritePiece -$E, 7, 3, 1, $14, 0, 0, 0, 0
+Map_f22d_114_End
+
+Map_f22d_115:	spriteHeader
+ spritePiece -$17, -$16, 4, 4, 0, 0, 0, 0, 0
+ spritePiece 1, $A, 1, 1, $10, 0, 0, 0, 0
+ spritePiece 9, -$16, 1, 4, $11, 0, 0, 0, 0
+Map_f22d_115_End
+
+Map_f22d_116:	spriteHeader
+ spritePiece -$14, -$19, 4, 4, 0, 0, 0, 0, 0
+ spritePiece -$1C, -$11, 1, 2, $10, 0, 0, 0, 0
+ spritePiece $C, -9, 1, 2, $12, 0, 0, 0, 0
+ spritePiece -$C, 7, 3, 1, $14, 0, 0, 0, 0
+Map_f22d_116_End
+
+Map_f22d_117:	spriteHeader
+ spritePiece -$17, -$17, 4, 4, 0, 0, 0, 0, 0
+ spritePiece 1, 9, 2, 1, $10, 0, 0, 0, 0
+ spritePiece 9, -$F, 1, 3, $12, 0, 0, 0, 0
+Map_f22d_117_End
 
 	even

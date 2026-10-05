@@ -1,4 +1,4 @@
-DPLC_3995: mappingsTable
+DPLC_2dee: mappingsTable
 	mappingsTableEntry.w	SonPLC_Null
 	mappingsTableEntry.w	SonPLC_Stand
 	mappingsTableEntry.w	SonPLC_Wait1
@@ -101,6 +101,22 @@ DPLC_3995: mappingsTable
 	mappingsTableEntry.w	DPLC_3995_99
 	mappingsTableEntry.w	DPLC_3995_100
 	mappingsTableEntry.w	DPLC_3995_101
+	mappingsTableEntry.w	DPLC_2dee_102
+	mappingsTableEntry.w	DPLC_2dee_103
+	mappingsTableEntry.w	DPLC_2dee_104
+	mappingsTableEntry.w	DPLC_2dee_105
+	mappingsTableEntry.w	DPLC_2dee_106
+	mappingsTableEntry.w	DPLC_2dee_107
+	mappingsTableEntry.w	DPLC_2dee_108
+	mappingsTableEntry.w	DPLC_2dee_109
+	mappingsTableEntry.w	DPLC_2dee_110
+	mappingsTableEntry.w	DPLC_2dee_111
+	mappingsTableEntry.w	DPLC_2dee_112
+	mappingsTableEntry.w	DPLC_2dee_113
+	mappingsTableEntry.w	DPLC_2dee_114
+	mappingsTableEntry.w	DPLC_2dee_115
+	mappingsTableEntry.w	DPLC_2dee_116
+	mappingsTableEntry.w	DPLC_2dee_117
 
 SonPLC_Null:	dplcHeader
 SonPLC_Null_End
@@ -682,5 +698,85 @@ DPLC_3995_100_End
 DPLC_3995_101:	dplcHeader
  dplcEntry $F, $5E8
 DPLC_3995_101_End
+
+DPLC_2dee_102:	dplcHeader
+ dplcEntry $10, $5F7
+ dplcEntry 3, $607
+DPLC_2dee_102_End
+
+DPLC_2dee_103:	dplcHeader
+ dplcEntry $10, $60A
+ dplcEntry 3, $61A
+DPLC_2dee_103_End
+
+DPLC_2dee_104:	dplcHeader
+ dplcEntry $10, $61D
+ dplcEntry 3, $62D
+DPLC_2dee_104_End
+
+DPLC_2dee_105:	dplcHeader
+ dplcEntry $10, $630
+ dplcEntry 2, $640
+DPLC_2dee_105_End
+
+DPLC_2dee_106:	dplcHeader
+ dplcEntry $10, $642
+ dplcEntry 7, $652
+DPLC_2dee_106_End
+
+DPLC_2dee_107:	dplcHeader
+ dplcEntry $10, $659
+ dplcEntry 5, $669
+DPLC_2dee_107_End
+
+DPLC_2dee_108:	dplcHeader
+ dplcEntry $10, $66E
+ dplcEntry 7, $67E
+DPLC_2dee_108_End
+
+DPLC_2dee_109:	dplcHeader
+ dplcEntry $10, $685
+ dplcEntry 5, $695
+DPLC_2dee_109_End
+
+DPLC_2dee_110:	dplcHeader
+ dplcEntry $10, $69A
+ dplcEntry 3, $6AA
+DPLC_2dee_110_End
+
+DPLC_2dee_111:	dplcHeader
+ dplcEntry $10, $6AD
+ dplcEntry 3, $6BD
+DPLC_2dee_111_End
+
+DPLC_2dee_112:	dplcHeader
+ dplcEntry $10, $6C0
+ dplcEntry 3, $6D0
+DPLC_2dee_112_End
+
+DPLC_2dee_113:	dplcHeader
+ dplcEntry $10, $6D3
+ dplcEntry 2, $6E3
+DPLC_2dee_113_End
+
+DPLC_2dee_114:	dplcHeader
+ dplcEntry $10, $6E5
+ dplcEntry 7, $6F5
+DPLC_2dee_114_End
+
+DPLC_2dee_115:	dplcHeader
+ dplcEntry $10, $6FC
+ dplcEntry 5, $70C
+DPLC_2dee_115_End
+
+DPLC_2dee_116:	dplcHeader
+ dplcEntry $10, $711
+ dplcEntry 7, $721
+DPLC_2dee_116_End
+
+DPLC_2dee_117:	dplcHeader
+ dplcEntry $10, $728
+ dplcEntry 5, $738
+DPLC_2dee_117_End
 
 	even
