@@ -52,6 +52,7 @@ Sonic_Main:	; Routine 0
 
 ; Obj01_Control:
 Sonic_Control:	; Routine 2
+        bsr.w	Sonic_PanCamera		; Run extended camera panning calculations
 		tst.w	(f_debugmode).w				; is debug cheat enabled?
 		beq.s	.nodebug				; if not, branch
 		btst	#bitB,(v_jpadpress1).w			; is button B pressed?
@@ -2535,3 +2536,60 @@ Sonic_Spindash_ResetScr:
 		bsr.w	Sonic_AnglePos				; ...we need to manually run some Sonic stuff
 		rts
 ; End of function Sonic_SpinDash
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Subroutine to horizontally pan the camera view ahead of the player.
+; (Ported from the US version of Sonic CD's "R11A__.MMD" by Nat The Porcupine)
+; ---------------------------------------------------------------------------
+
+Sonic_PanCamera:
+		move.w	(v_camera_pan).w,d1	; Get camera X center position
+		tst.b	spindash_flag(a0)	; Is Sonic charging up a spin dash or peelout?
+		beq.s	.NoSpindash		; If not, branch
+		btst	#0,obStatus(a0)		; Check the direction that Sonic is facing
+		beq.s	.MovingRight		; If he's facing right, pan the camera to the right
+		bra.s	.MovingLeft		; Otherwise, pan the camera to the left
+.NoSpindash:
+
+		move.w	obInertia(a0),d0	; Get how fast we are moving
+		bpl.s	.PosInertia		; If it's positive, branch
+		neg.w	d0			; Negate speed
+.PosInertia:
+		cmpi.w	#$500,d0		; Are we going at max regular speed?
+		blo.s	.ResetPan		; If not, branch
+
+		tst.w	obInertia(a0)		; Are we moving right?
+		bpl.s	.MovingRight		; If so, branch
+
+.MovingLeft:
+		addq.w	#2,d1			; Pan the camera to the right
+		cmpi.w	#(320/2)+64,d1		; Has it panned far enough?
+		blo.s	.SetPanVal		; If not, branch
+		move.w	#(320/2)+64,d1		; Cap the camera's position
+		bra.s	.SetPanVal
+
+.MovingRight:
+		subq.w	#2,d1			; Pan the camera to the left
+		cmpi.w	#(320/2)-64,d1		; Has it panned far enough
+		bhs.s	.SetPanVal		; If not, branch
+		move.w	#(320/2)-64,d1		; Cap the camera's position
+		bra.s	.SetPanVal
+
+.ResetPan:
+		cmpi.w	#320/2,d1		; Has the camera panned back to the middle?
+		beq.s	.SetPanVal		; If so, branch
+		bhs.s	.ResetLeft		; If it's panning back left
+
+.ResetRight:
+		addq.w	#2,d1			; Pan back to the right
+		bra.s	.SetPanVal		; Skip
+
+.ResetLeft:
+		subq.w	#2,d1			; Pan back to the left
+
+.SetPanVal:
+		move.w	d1,(v_camera_pan).w	; Update camera X center position
+		rts
+; End of function Sonic_PanCamera
