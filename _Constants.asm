@@ -457,6 +457,9 @@ spec__Last:		equ ((ptr_specend-SpecSoundIndex-4)/4)+spec__First
 ; Extra sound effects
 ext__First:		equ $D1
 sfx_SpinDash:		equ ((ptr_sndD1-ExtSoundIndex)/4)+ext__First
+sfx_PeelCharge:		equ ((ptr_sndD2-ExtSoundIndex)/4)+ext__First
+sfx_PeelRelease:	equ ((ptr_sndD3-ExtSoundIndex)/4)+ext__First
+sfx_PeelStop:		equ ((ptr_sndD4-ExtSoundIndex)/4)+ext__First
 ext__Last:		equ ((ptr_extend-ExtSoundIndex-4)/4)+ext__First
 
 ; Sound commands

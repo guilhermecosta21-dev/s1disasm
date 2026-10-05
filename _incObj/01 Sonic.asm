@@ -322,6 +322,7 @@ Sonic_Water:
 
 ; Obj01_MdNormal:
 Sonic_MdNormal:	; While Sonic is on the ground and not rolling
+		bsr.w	Sonic_Peelout
 		bsr.w	Sonic_SpinDash
 		bsr.w	Sonic_Jump				; check if we need to jump
 		bsr.w	Sonic_SlopeResistWalk			; handle resistance from running up slopes
@@ -336,6 +337,7 @@ Sonic_MdNormal:	; While Sonic is on the ground and not rolling
 
 ; Obj01_MdJump:
 Sonic_MdJump:	; While Sonic is in the air but not rolling
+		bclr	#1,spindash_flag(a0)
 		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
@@ -366,6 +368,7 @@ Sonic_MdRoll:	; While Sonic is on the ground and rolling
 
 ; Obj01_MdJump2:
 Sonic_MdJump2:	; While Sonic is in the air and rolling (usually, but not limited to, jumping)
+		bclr	#1,spindash_flag(a0)
 		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
@@ -2349,6 +2352,74 @@ Sonic_LoadGfx:
 		rts						; return
 ; End of function Sonic_LoadGfx
 ; ===========================================================================
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Subroutine to charge and release a Super Peel-Out
+; ---------------------------------------------------------------------------
+
+Sonic_Peelout:
+		btst	#1,spindash_flag(a0)			; is Peel-Out currently being charged up?
+		bne.s	.charge_peelout				; if yes, branch to a different code section
+
+		; Peel-Out init check
+		btst	#bitUp,(v_jpadhold2).w			; is the Up button held?
+		beq.s	.nopeel					; if not, branch
+		moveq	#btnABC,d0				; are buttons ABC...
+		and.b	(v_jpadpress2).w,d0			; ...pressed?
+		beq.s	.nopeel					; if not, branch
+		cmpi.b	#id_LookUp,obAnim(a0)			; is Sonic in his looking-up animation?
+		bne.s	.nopeel					; if not, branch
+		bset	#1,spindash_flag(a0)			; set Peel-Out flag
+		clr.b	obAnim(a0)				; reset Sonic's animation
+		bclr	#5,obStatus(a0)				; clear pushing flag
+		addq.l	#4,sp					; skip rest in MdNormal
+		move.w	#sfx_PeelCharge,d0			; play Peel-Out charge sound
+		jmp	(QueueSound2).l				; play sound
+.nopeel:
+		rts
+; ===========================================================================
+
+.charge_peelout:
+		btst	#bitUp,(v_jpadhold2).w			; is the Up button STILL held?
+		beq.s	.release_peelout			; if not, release Peel-Out
+
+		addi.w	#100,obInertia(a0)			; add 100 charge to Peel-Out speed per frame
+		move.w	(v_sonspeedmax).w,d0			; get Sonic's current max speed
+		add.w	d0,d0					; double it
+		cmpi.w	#$1000,d0				; did it exceed $1000? (can only happen with shoes)
+		ble.s	.nosafety				; if not, branch
+		move.w	#$1000,d0				; make sure speed never exceeds $1000 for safety
+.nosafety:
+		cmp.w	obInertia(a0),d0			; did charge speed exceed maximum?
+		bge.s	.nocap					; if not, branch
+		move.w	d0,obInertia(a0)			; cap max speed
+.nocap: 
+		bsr.w	Sonic_LevelBound			; keep checking for level boundaries
+		bsr.w	Sonic_AnglePos				; make sure Sonic uses the correct angled sprites on a slope
+		move.w	#$60,(v_lookshift).w			; reset looking up/down
+		bclr	#5,obStatus(a0)				; keep pushing flag cleared
+		addq.l	#4,sp					; skip rest in MdNormal
+		rts						; don't do anything else
+; ===========================================================================
+
+.release_peelout:
+		cmpi.w	#$600,obInertia(a0)			; was minimum speed reached?
+		bge.s	.speedok				; if yes, branch
+		clr.w	obInertia(a0)				; kill whatever little speed we've built up
+		bclr	#1,spindash_flag(a0)			; reset Peel-Out flag
+		move.w	#sfx_PeelStop,d0			; cancel the Peel-Out charge sound
+		jmp	(QueueSound2).l
+.speedok:
+		btst	#0,obStatus(a0)				; is Sonic looking to the left?
+		beq.s	.notleft				; if not, branch
+		neg.w	obInertia(a0)				; negate final speed
+.notleft:
+		bclr	#1,spindash_flag(a0)			; reset Peel-Out flag
+		move.w	#sfx_PeelRelease,d0			; play Peel-Out release sound
+		jmp	(QueueSound2).l				; play it
+; End of function Sonic_Peelout
 
 
 ; ===========================================================================
