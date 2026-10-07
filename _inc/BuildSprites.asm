@@ -68,7 +68,7 @@ BuildSprites:
 		move.w	d3,d1
 		sub.w	d0,d1					; d1 = obX - cameraX - obActWid
 		cmpi.w	#320,d1					; is result greater than screen width?
-		bge.s	.skipObject				; if yes, right edge is out of bounds
+		bge.w	.skipObject				; if yes, right edge is out of bounds
 		addi.w	#$80,d3					; add VDP sprite start
 
 	; --- Screen bounds check for Y-position ---
@@ -117,8 +117,9 @@ BuildSprites:
 		bne.s	.drawFrame				; if yes, branch (assume mappings point to a single sprite piece)
 
 		move.b	obFrame(a0),d1
-		add.b	d1,d1
+		add.w	d1,d1			; MJ: changed from byte to word (we want more than 7F sprites)
 		adda.w	(a1,d1.w),a1				; get mappings frame address
+		moveq	#0,d1			; MJ: clear d1 (because of our byte to word change)
 		move.b	(a1)+,d1				; get number of sprite pieces in frame
 		subq.b	#1,d1					; subtract 1 for dbf
 		bmi.s	.setVisible				; skip rendering if mapping was blank

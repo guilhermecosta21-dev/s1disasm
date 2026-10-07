@@ -2157,7 +2157,8 @@ Sonic_Animate:
 		moveq	#0,d1					; clear d1
 		move.b	obAniFrame(a0),d1			; load current frame number
 		move.b	1(a1,d1.w),d0				; read sprite number from script
-		bmi.s	.end_FF					; if animation is complete, branch
+		cmpi.b	#afChange,d0		; MJ: is it a flag from FD to FF?
+		bhs.s	.end_FF			; MJ: if so, branch to flag routines
 
 ; SAnim_Next:
 .next:
