@@ -15,6 +15,11 @@ ResumeMusic:
 	.notSBZ:
 
 	if Revision<>0
+		tst.b	(v_supersonic).w	; is Sonic Super?		<-- add
+		beq.s	.notsuper		; if not, branch		<-- add
+		move.w	#bgm_SuperSonic,d0	; play Super Sonic music	<-- add
+		bra.s	.playselected		;	<-- add
+.notsuper:					;	<-- add
 		tst.b	(v_invinc).w				; is Sonic invincible?
 		beq.s	.notInvincible				; if not, branch
 		move.w	#bgm_Invincible,d0			; play invincibility music instead

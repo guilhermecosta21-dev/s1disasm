@@ -1,4 +1,4 @@
-DPLC_2dee: mappingsTable
+DPLC_4210: mappingsTable
 	mappingsTableEntry.w	SonPLC_Null
 	mappingsTableEntry.w	SonPLC_Stand
 	mappingsTableEntry.w	SonPLC_Wait1
@@ -117,6 +117,57 @@ DPLC_2dee: mappingsTable
 	mappingsTableEntry.w	DPLC_2dee_115
 	mappingsTableEntry.w	DPLC_2dee_116
 	mappingsTableEntry.w	DPLC_2dee_117
+	mappingsTableEntry.w	DPLC_4210_118
+	mappingsTableEntry.w	DPLC_4210_119
+	mappingsTableEntry.w	DPLC_4210_120
+	mappingsTableEntry.w	DPLC_4210_121
+	mappingsTableEntry.w	DPLC_4210_122
+	mappingsTableEntry.w	DPLC_4210_123
+	mappingsTableEntry.w	DPLC_4210_124
+	mappingsTableEntry.w	DPLC_4210_125
+	mappingsTableEntry.w	DPLC_4210_126
+	mappingsTableEntry.w	DPLC_4210_127
+	mappingsTableEntry.w	DPLC_4210_128
+	mappingsTableEntry.w	DPLC_4210_129
+	mappingsTableEntry.w	DPLC_4210_130
+	mappingsTableEntry.w	DPLC_4210_131
+	mappingsTableEntry.w	DPLC_4210_132
+	mappingsTableEntry.w	DPLC_4210_133
+	mappingsTableEntry.w	DPLC_4210_134
+	mappingsTableEntry.w	DPLC_4210_135
+	mappingsTableEntry.w	DPLC_4210_136
+	mappingsTableEntry.w	DPLC_4210_137
+	mappingsTableEntry.w	DPLC_4210_138
+	mappingsTableEntry.w	DPLC_4210_139
+	mappingsTableEntry.w	DPLC_4210_140
+	mappingsTableEntry.w	DPLC_4210_141
+	mappingsTableEntry.w	DPLC_4210_142
+	mappingsTableEntry.w	DPLC_4210_143
+	mappingsTableEntry.w	DPLC_4210_144
+	mappingsTableEntry.w	DPLC_4210_145
+	mappingsTableEntry.w	DPLC_4210_146
+	mappingsTableEntry.w	DPLC_4210_147
+	mappingsTableEntry.w	DPLC_4210_148
+	mappingsTableEntry.w	DPLC_4210_149
+	mappingsTableEntry.w	DPLC_4210_150
+	mappingsTableEntry.w	DPLC_4210_151
+	mappingsTableEntry.w	DPLC_4210_152
+	mappingsTableEntry.w	DPLC_4210_153
+	mappingsTableEntry.w	DPLC_4210_154
+	mappingsTableEntry.w	DPLC_4210_155
+	mappingsTableEntry.w	DPLC_4210_156
+	mappingsTableEntry.w	DPLC_4210_157
+	mappingsTableEntry.w	DPLC_4210_158
+	mappingsTableEntry.w	DPLC_4210_159
+	mappingsTableEntry.w	DPLC_4210_160
+	mappingsTableEntry.w	DPLC_4210_161
+	mappingsTableEntry.w	DPLC_4210_162
+	mappingsTableEntry.w	DPLC_4210_163
+	mappingsTableEntry.w	DPLC_4210_164
+	mappingsTableEntry.w	DPLC_4210_165
+	mappingsTableEntry.w	DPLC_4210_166
+	mappingsTableEntry.w	DPLC_4210_167
+	mappingsTableEntry.w	DPLC_4210_168
 
 SonPLC_Null:	dplcHeader
 SonPLC_Null_End
@@ -778,5 +829,256 @@ DPLC_2dee_117:	dplcHeader
  dplcEntry $10, $728
  dplcEntry 5, $738
 DPLC_2dee_117_End
+
+DPLC_4210_118:	dplcHeader
+ dplcEntry $C, $73D
+DPLC_4210_118_End
+
+DPLC_4210_119:	dplcHeader
+ dplcEntry $10, $749
+ dplcEntry 5, $759
+DPLC_4210_119_End
+
+DPLC_4210_120:	dplcHeader
+ dplcEntry $10, $75E
+ dplcEntry 6, $76E
+DPLC_4210_120_End
+
+DPLC_4210_121:	dplcHeader
+ dplcEntry $10, $774
+ dplcEntry 6, $784
+DPLC_4210_121_End
+
+DPLC_4210_122:	dplcHeader
+ dplcEntry $10, $78A
+ dplcEntry 8, $79A
+DPLC_4210_122_End
+
+DPLC_4210_123:	dplcHeader
+ dplcEntry $10, $7A2
+ dplcEntry 5, $7B2
+DPLC_4210_123_End
+
+DPLC_4210_124:	dplcHeader
+ dplcEntry $10, $7B7
+ dplcEntry 5, $7C7
+DPLC_4210_124_End
+
+DPLC_4210_125:	dplcHeader
+ dplcEntry $10, $7CC
+ dplcEntry 5, $7DC
+DPLC_4210_125_End
+
+DPLC_4210_126:	dplcHeader
+ dplcEntry $10, $7E1
+ dplcEntry 7, $7F1
+DPLC_4210_126_End
+
+DPLC_4210_127:	dplcHeader
+ dplcEntry $10, $7F8
+ dplcEntry 6, $808
+DPLC_4210_127_End
+
+DPLC_4210_128:	dplcHeader
+ dplcEntry $10, $80E
+ dplcEntry 2, $81E
+DPLC_4210_128_End
+
+DPLC_4210_129:	dplcHeader
+ dplcEntry $10, $820
+ dplcEntry 9, $830
+DPLC_4210_129_End
+
+DPLC_4210_130:	dplcHeader
+ dplcEntry $10, $839
+ dplcEntry 5, $849
+DPLC_4210_130_End
+
+DPLC_4210_131:	dplcHeader
+ dplcEntry $10, $84E
+ dplcEntry 8, $85E
+DPLC_4210_131_End
+
+DPLC_4210_132:	dplcHeader
+ dplcEntry $10, $866
+ dplcEntry 5, $876
+DPLC_4210_132_End
+
+DPLC_4210_133:	dplcHeader
+ dplcEntry $10, $87B
+ dplcEntry 4, $88B
+DPLC_4210_133_End
+
+DPLC_4210_134:	dplcHeader
+ dplcEntry $10, $88F
+ dplcEntry 3, $89F
+DPLC_4210_134_End
+
+DPLC_4210_135:	dplcHeader
+ dplcEntry $10, $8A2
+ dplcEntry 5, $8B2
+DPLC_4210_135_End
+
+DPLC_4210_136:	dplcHeader
+ dplcEntry $10, $8B7
+ dplcEntry 7, $8C7
+DPLC_4210_136_End
+
+DPLC_4210_137:	dplcHeader
+ dplcEntry $10, $8CE
+ dplcEntry 4, $8DE
+DPLC_4210_137_End
+
+DPLC_4210_138:	dplcHeader
+ dplcEntry $10, $8E2
+ dplcEntry 7, $8F2
+DPLC_4210_138_End
+
+DPLC_4210_139:	dplcHeader
+ dplcEntry $10, $8F9
+ dplcEntry 6, $909
+DPLC_4210_139_End
+
+DPLC_4210_140:	dplcHeader
+ dplcEntry $10, $927
+ dplcEntry 2, $937
+DPLC_4210_140_End
+
+DPLC_4210_141:	dplcHeader
+ dplcEntry $10, $939
+ dplcEntry 9, $949
+DPLC_4210_141_End
+
+DPLC_4210_142:	dplcHeader
+ dplcEntry $10, $952
+ dplcEntry 8, $962
+DPLC_4210_142_End
+
+DPLC_4210_143:	dplcHeader
+ dplcEntry $10, $90F
+ dplcEntry 8, $91F
+DPLC_4210_143_End
+
+DPLC_4210_144:	dplcHeader
+ dplcEntry $10, $96A
+ dplcEntry 5, $97A
+DPLC_4210_144_End
+
+DPLC_4210_145:	dplcHeader
+ dplcEntry $10, $97F
+ dplcEntry 4, $98F
+DPLC_4210_145_End
+
+DPLC_4210_146:	dplcHeader
+ dplcEntry $10, $993
+ dplcEntry 3, $9A3
+DPLC_4210_146_End
+
+DPLC_4210_147:	dplcHeader
+ dplcEntry $10, $9A6
+ dplcEntry 5, $9B6
+DPLC_4210_147_End
+
+DPLC_4210_148:	dplcHeader
+ dplcEntry $10, $9BB
+ dplcEntry 5, $9CB
+DPLC_4210_148_End
+
+DPLC_4210_149:	dplcHeader
+ dplcEntry $10, $9D0
+ dplcEntry 4, $9E0
+DPLC_4210_149_End
+
+DPLC_4210_150:	dplcHeader
+ dplcEntry $E, $9E4
+DPLC_4210_150_End
+
+DPLC_4210_151:	dplcHeader
+ dplcEntry $10, $9F2
+ dplcEntry 1, $A02
+DPLC_4210_151_End
+
+DPLC_4210_152:	dplcHeader
+ dplcEntry $10, $A03
+ dplcEntry 3, $A13
+DPLC_4210_152_End
+
+DPLC_4210_153:	dplcHeader
+ dplcEntry $10, $A16
+ dplcEntry 3, $A26
+DPLC_4210_153_End
+
+DPLC_4210_154:	dplcHeader
+ dplcEntry $10, $A29
+ dplcEntry 3, $A39
+DPLC_4210_154_End
+
+DPLC_4210_155:	dplcHeader
+ dplcEntry $E, $A3C
+DPLC_4210_155_End
+
+DPLC_4210_156:	dplcHeader
+ dplcEntry $10, $A4A
+ dplcEntry 3, $A5A
+DPLC_4210_156_End
+
+DPLC_4210_157:	dplcHeader
+ dplcEntry $10, $A5D
+ dplcEntry 3, $A6D
+DPLC_4210_157_End
+
+DPLC_4210_158:	dplcHeader
+ dplcEntry $10, $A70
+ dplcEntry 7, $A80
+DPLC_4210_158_End
+
+DPLC_4210_159:	dplcHeader
+ dplcEntry $10, $A87
+ dplcEntry 6, $A97
+DPLC_4210_159_End
+
+DPLC_4210_160:	dplcHeader
+ dplcEntry $10, $A9D
+ dplcEntry 7, $AAD
+DPLC_4210_160_End
+
+DPLC_4210_161:	dplcHeader
+ dplcEntry $10, $AB4
+ dplcEntry 6, $AC4
+DPLC_4210_161_End
+
+DPLC_4210_162:	dplcHeader
+ dplcEntry $F, $ACA
+DPLC_4210_162_End
+
+DPLC_4210_163:	dplcHeader
+ dplcEntry $10, $AD9
+ dplcEntry 2, $AE9
+DPLC_4210_163_End
+
+DPLC_4210_164:	dplcHeader
+ dplcEntry $10, $AEB
+ dplcEntry 2, $AFB
+DPLC_4210_164_End
+
+DPLC_4210_165:	dplcHeader
+ dplcEntry $10, $AFD
+ dplcEntry 2, $B0D
+DPLC_4210_165_End
+
+DPLC_4210_166:	dplcHeader
+ dplcEntry $10, $B0F
+ dplcEntry 2, $B1F
+DPLC_4210_166_End
+
+DPLC_4210_167:	dplcHeader
+ dplcEntry $10, $B21
+ dplcEntry 2, $B31
+DPLC_4210_167_End
+
+DPLC_4210_168:	dplcHeader
+ dplcEntry $10, $B33
+ dplcEntry 2, $B43
+DPLC_4210_168_End
 
 	even

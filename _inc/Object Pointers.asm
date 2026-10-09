@@ -19,7 +19,7 @@ id_InvStarsItem:	objptr	InvStarsItem		; 02
 id_PathSwapper:		objptr	PathSwapper		; 03
 id_Obj04:		objptr	NullObject		; 04
 id_SpinDust:		objptr	SpinDust		; 05
-id_Obj06:		objptr	NullObject		; 06
+id_SuperSonicStar:	objptr	SuperSonicStar		; 06
 id_Obj07:		objptr	NullObject		; 07
 id_Splash:		objptr	Splash			; 08
 id_SonicSpecial:	objptr	SonicSpecial		; 09

@@ -2804,7 +2804,8 @@ Level_SkipClr:
 		move.b	d0,(v_shield).w				; clear shield
 		move.b	d0,(v_invinc).w				; clear invincibility
 		move.b	d0,(v_shoes).w				; clear speed shoes
-		move.b	d0,(v_unused1).w			; clear unused flag (goggles?)
+		move.b	d0,(v_supersonic).w		; <-- add this
+		move.b	d0,(v_ssframe).w		; <-- add this
 		move.w	d0,(v_debuguse).w			; exit debug mode if necessary
 		move.w	d0,(f_restart).w			; clear level restart flag
 		move.w	d0,(v_framecount).w			; reset frames since level start to 0
@@ -3604,7 +3605,6 @@ End_LoadSonic:
 		move.b	d0,(v_shield).w				; clear shield
 		move.b	d0,(v_invinc).w				; clear invincibility
 		move.b	d0,(v_shoes).w				; clear speed shoes
-		move.b	d0,(v_unused1).w			; clear unused flag (goggles?)
 		move.w	d0,(v_debuguse).w			; exit debug mode if necessary
 		move.w	d0,(f_restart).w			; clear level restart flag
 		move.w	d0,(v_framecount).w			; reset frames since level start to 0
@@ -4204,6 +4204,8 @@ Map_Splats:	include	"_maps/Splats.asm"
 ; ===========================================================================
 ; >>> Various unique objects
 		include	"_incObj/0A LZ Drowning Countdown.asm" ; includes ResumeMusic
+		include	"_incObj/06 Super Sonic's star.asm"
+Map_SuperSonicStar:	include	"_maps/Super Sonic's star.asm"
 		include	"_incObj/38 Shield.asm"
 		include	"_incObj/02 Invincibility Stars.asm"
 		include	"_incObj/4A Unused - Special Stage Entry.asm"
@@ -4388,6 +4390,8 @@ KosPM_SyzSparkle:	binclude	"artkospm/Unused - SYZ Sparkles.kospm"
 		even
 	endif
 
+Art_SuperSonicStar:	binclude	"artunc/Super Sonic stars.unc"
+Art_SuperSonicStarend:		even
 Art_Shield:	binclude	"artunc/Shield.unc"
 		even
 Art_Stars:	binclude	"artunc/Invincibility Stars.unc"

@@ -273,6 +273,9 @@ Pow_ChkShoes:
 		cmpi.b	#3,d0					; does monitor contain speed shoes?
 		bne.s	Pow_ChkShield				; if not, branch
 
+        tst.b	(v_supersonic).w	; is Sonic Super? (add this)
+		bne.w	Pow_NoMusic		; if yes, skip (add this)
+
 		move.b	#1,(v_shoes).w				; set speed shoes flag (used for reverting when time ran out)
 		move.w	#20*60,(v_player+shoetime).w		; set time limit for speed shoes to 20 seconds
 
@@ -312,6 +315,9 @@ Pow_ChkShield:
 Pow_ChkInvinc:
 		cmpi.b	#5,d0					; does monitor contain invincibility?
 		bne.s	Pow_ChkRings				; if not, branch
+
+        tst.b	(v_supersonic).w	; is Sonic Super? (add this)
+		bne.s	Pow_NoMusic		; if yes, skip (add this)
 
 		move.b	#1,(v_invinc).w				; make Sonic invincible
 		move.w	#20*60,(v_player+invtime).w		; set time limit for invincibility to 20 seconds

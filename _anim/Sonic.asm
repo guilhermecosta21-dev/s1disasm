@@ -123,6 +123,34 @@ fr_Figure8_41:	equ fr_Figure8_34+1
 fr_Figure8_42:	equ fr_Figure8_41+1
 fr_Figure8_43:	equ fr_Figure8_42+1
 fr_Figure8_44:	equ fr_Figure8_43+1
+; Super Sonic frame IDs
+fr_Transform1:		equ fr_Figure8_44+1
+fr_Transform2:		equ fr_Transform1+1
+fr_Transform3:		equ fr_Transform2+1
+fr_Transform4:		equ fr_Transform3+1
+fr_Transform5:		equ fr_Transform4+1
+fr_SuperStand1:		equ fr_Transform5+1
+fr_SuperStand2:		equ fr_SuperStand1+1
+fr_SuperStand3:		equ fr_SuperStand2+1
+fr_SuperWalk11:		equ fr_SuperStand3+1
+fr_SuperWalk12:		equ fr_SuperWalk11+1
+fr_SuperWalk13:		equ fr_SuperWalk12+1
+fr_SuperWalk14:		equ fr_SuperWalk13+1
+fr_SuperWalk15:		equ fr_SuperWalk14+1
+fr_SuperWalk16:		equ fr_SuperWalk15+1
+fr_SuperRun11:		equ fr_SuperWalk11+(4*6)
+fr_SuperRun12:		equ fr_SuperRun11+1
+fr_SuperPush1:		equ fr_SuperRun11+(4*2)
+fr_SuperPush2:		equ fr_SuperPush1+1
+fr_SuperPush3:		equ fr_SuperPush2+1
+fr_SuperPush4:		equ fr_SuperPush3+1
+fr_SuperDuck:		equ fr_SuperPush4+1
+fr_SuperBalance1:	equ fr_SuperDuck+1
+fr_SuperBalance2:	equ fr_SuperBalance1+1
+fr_SuperBalance3:	equ fr_SuperBalance2+1
+fr_SuperBalance4:	equ fr_SuperBalance3+1
+fr_SuperBalance5:	equ fr_SuperBalance4+1
+fr_SuperBalance6:	equ fr_SuperBalance5+1
 
 
 ; ---------------------------------------------------------------------------
@@ -173,6 +201,7 @@ id_Victory:	sonani	SonAni_Victory	; $1F
 id_Fall:    sonani  SonAni_Fall	; $20
 id_SpinDash:	sonani	SonAni_SpinDash	; $21
 id_Figure8:	sonani	SonAni_Figure8	; $22
+id_Transform:	sonani	SonAni_Transform	; $23	<-- add this
 
 ; ---------------------------------------------------------------------------
 ; --- Special animations (walk/run/roll/push) ---
@@ -373,4 +402,7 @@ SonAni_SpinDash:
 SonAni_Figure8:	dc.b $FF
 		dc.b fr_Figure8_11, fr_Figure8_12, fr_Figure8_13, fr_Figure8_14, afEnd, afEnd
 		dc.b afEnd
+		even
+
+SonAni_Transform: dc.b   2, fr_Transform1, fr_Transform1, fr_Transform2, fr_Transform2, fr_Transform3, fr_Transform4, fr_Transform5, fr_Transform4, fr_Transform5, fr_Transform4, fr_Transform5, fr_Transform4, fr_Transform5, afChange, id_Walk
 		even

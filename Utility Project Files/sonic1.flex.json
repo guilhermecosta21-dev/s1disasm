@@ -661,7 +661,7 @@
                 }
             ],
             "isDirectory": true,
-            "expanded": false,
+            "expanded": true,
             "config": {}
         },
         {

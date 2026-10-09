@@ -455,6 +455,12 @@ KillSonic:
 		tst.w	(v_debuguse).w				; is debug mode active?
 		bne.w	.return					; if yes, branch
 
+        clr.b	(v_supersonic).w
+		clr.b	(v_invinc).w
+		move.w	#son_maxspeed,(v_sonspeedmax).w
+		move.w	#son_acceleration,(v_sonspeedacc).w
+		move.w	#son_deceleration,(v_sonspeeddec).w
+
 		move.b	#0,(v_invinc).w				; remove invincibility
 		move.b	#6,obRoutine(a0)			; set Sonic to "Sonic_Death" routine
 		jsr	    (Sonic_ResetOnFloor).l		; reset airborne state

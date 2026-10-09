@@ -4,6 +4,7 @@
 ; ---------------------------------------------------------------------------
 
 PaletteCycle:
+        bsr.w	PalCycle_SuperSonic	; <-- add this
 	if FixBugs
 		; Fix palettes getting corrupted during level transitions between different zones
 		tst.w	(f_restart).w				; is level set to restart?
@@ -316,6 +317,107 @@ PalCycle_SBZ:
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
+; Super Sonic palette cycling routine
+; ---------------------------------------------------------------------------
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+PalCycle_SuperSonic:
+		move.b	(v_supersonic_palstate).w,d0
+		beq.s	.return
+		bmi.w	.normal
+		subq.b	#1,d0
+		bne.s	.revert
+
+		subq.b	#1,(v_supersonic_paltimer).w
+		bpl.s	.return
+		move.b	#3,(v_supersonic_paltimer).w
+
+		move.b	(v_supersonic_palframe).w,d0
+		addq.b	#2*4,(v_supersonic_palframe).w
+		cmpi.b	#6*2*4,(v_supersonic_palframe).w
+		blo.s	.updatepalette
+		move.b	#-1,(v_supersonic_palstate).w
+		move.b	#0,(f_playerctrl).w
+
+.updatepalette:
+		lea	(Pal_SuperSonicCyc).l,a0
+		lea	(v_palette+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		cmpi.b	#id_LZ,(v_zone).w
+		bne.s	.return
+		lea	(Pal_SuperSonicCyc_LZ).l,a0
+		cmpi.b	#3,(v_act).w
+		bne.s	.notsbz3
+		lea	(Pal_SuperSonicCyc_SBZ3).l,a0
+.notsbz3:
+		lea	(v_palette_water+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+.return:
+		rts
+; ===========================================================================
+
+.revert:
+		subq.b	#1,(v_supersonic_paltimer).w
+		bpl.s	.return
+		move.b	#3,(v_supersonic_paltimer).w
+
+		move.b	(v_supersonic_palframe).w,d0
+		subq.b	#2*4,(v_supersonic_palframe).w
+		bcc.s	.revert_update
+		move.b	#0,(v_supersonic_palframe).w
+		move.b	#0,(v_supersonic_palstate).w
+.revert_update:
+		lea	(Pal_SuperSonicCyc).l,a0
+		lea	(v_palette+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		cmpi.b	#id_LZ,(v_zone).w
+		bne.s	.return
+		lea	(Pal_SuperSonicCyc_LZ).l,a0
+		cmpi.b	#3,(v_act).w
+		bne.s	.revert_notsbz3
+		lea	(Pal_SuperSonicCyc_SBZ3).l,a0
+.revert_notsbz3:
+		lea	(v_palette_water+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		rts
+; ===========================================================================
+
+.normal:
+		subq.b	#1,(v_supersonic_paltimer).w
+		bpl.s	.return
+		move.b	#7,(v_supersonic_paltimer).w
+
+		move.b	(v_supersonic_palframe).w,d0
+		addq.b	#2*4,(v_supersonic_palframe).w
+		cmpi.b	#15*(2*4),(v_supersonic_palframe).w
+		bls.s	.normal_update
+		move.b	#6*(2*4),(v_supersonic_palframe).w
+.normal_update:
+		lea	(Pal_SuperSonicCyc).l,a0
+		lea	(v_palette+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		cmpi.b	#id_LZ,(v_zone).w
+		bne.w	.return
+		lea	(Pal_SuperSonicCyc_LZ).l,a0
+		cmpi.b	#3,(v_act).w
+		bne.s	.normal_notsbz3
+		lea	(Pal_SuperSonicCyc_SBZ3).l,a0
+.normal_notsbz3:
+		lea	(v_palette_water+4).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		rts
+; End of function PalCycle_SuperSonic
+
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
 ; Palette cycle data bincludes
 ; ---------------------------------------------------------------------------
 
@@ -386,3 +488,6 @@ Pal_SBZCyc7:		binclude	"palette/Cycle - SBZ 7.bin"	; BG very slow yellow/cyan pu
 Pal_SBZCyc8:		binclude	"palette/Cycle - SBZ 8.bin"	; electrocutor pink/purple & act 2 BG pink square
 Pal_SBZCyc9:		binclude	"palette/Cycle - SBZ 9.bin"	; BG multi-colored small blinking lights (act 2 only)
 Pal_SBZCyc_ConveyAct2:	binclude	"palette/Cycle - SBZ 10.bin"	; conveyor belts in act 2 / FZ
+Pal_SuperSonicCyc:		binclude	"palette/Cycle - Super Sonic.bin"
+Pal_SuperSonicCyc_LZ:	binclude	"palette/Cycle - Super Sonic (Labyrinth Underwater).bin"
+Pal_SuperSonicCyc_SBZ3:	binclude	"palette/Cycle - Super Sonic (Scrap Brain 3 Underwater).bin"

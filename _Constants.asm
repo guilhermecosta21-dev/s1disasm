@@ -395,6 +395,7 @@ bgm_Continue:		equ ((ptr_mus90-MusicIndex)/4)+bgm__First
 bgm_Credits:		equ ((ptr_mus91-MusicIndex)/4)+bgm__First
 bgm_Drowning:		equ ((ptr_mus92-MusicIndex)/4)+bgm__First
 bgm_Emerald:		equ ((ptr_mus93-MusicIndex)/4)+bgm__First
+bgm_SuperSonic:	    equ ((ptr_mus94-MusicIndex)/4)+bgm__First
 bgm__Last:		equ ((ptr_musend-MusicIndex-4)/4)+bgm__First
 
 ; Sound effects
@@ -460,6 +461,7 @@ sfx_SpinDash:		equ ((ptr_sndD1-ExtSoundIndex)/4)+ext__First
 sfx_PeelCharge:		equ ((ptr_sndD2-ExtSoundIndex)/4)+ext__First
 sfx_PeelRelease:	equ ((ptr_sndD3-ExtSoundIndex)/4)+ext__First
 sfx_PeelStop:		equ ((ptr_sndD4-ExtSoundIndex)/4)+ext__First
+sfx_Transform:	    equ ((ptr_sndD5-ExtSoundIndex)/4)+ext__First	; <-- add this
 ext__Last:		equ ((ptr_extend-ExtSoundIndex-4)/4)+ext__First
 
 ; Sound commands
@@ -624,6 +626,7 @@ ArtTile_Spikes:			equ $51B
 ArtTile_Spring_Horizontal:	equ $523
 ArtTile_Spring_Vertical:	equ $533
 ArtTile_Shield:			equ $541
+ArtTile_SuperSonicStar:		equ ArtTile_Invincibility
 ArtTile_Invincibility:		equ ArtTile_Shield
 ArtTile_Game_Over:		equ $55E
 ArtTile_Title_Card:		equ $580

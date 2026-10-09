@@ -104,6 +104,8 @@ Inv_Main:	; Routine 2
 ; ===========================================================================
 
 Inv_Second:
+        tst.b	(v_supersonic).w	; is Sonic super?
+		bne.w	Inv_Del		; if so, branch
 		tst.b	(v_invinc).w
 		beq.w	Inv_Del
 		lea	(v_player).w,a1

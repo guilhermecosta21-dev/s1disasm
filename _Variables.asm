@@ -242,7 +242,9 @@ v_bg1_scroll_flags:	ds.w	1				; screen redraw flags for background 1
 v_bg2_scroll_flags:	ds.w	1				; screen redraw flags for background 2
 v_bg3_scroll_flags:	ds.w	1				; screen redraw flags for background 3
 f_bgscrollvert:		ds.b	1				; flag for vertical background scrolling
-			ds.b	3				; unused
+v_supersonic_palstate:	ds.b	1			; Super Sonic palette state (0 = off; 1 = fading in; -1 = Super; 2 = fading out)
+v_supersonic_paltimer:	ds.b	1			; Super Sonic palette frame timer
+v_supersonic_palframe:	ds.b	1			; Super Sonic palette cycle frame index
 v_sonspeedmax:		ds.w	1				; Sonic's maximum speed
 v_sonspeedacc:		ds.w	1				; Sonic's acceleration
 v_sonspeeddec:		ds.w	1				; Sonic's deceleration
@@ -398,11 +400,11 @@ v_timemin:		equ	v_time+1			; time - minutes
 v_timesec:		equ	v_time+2			; time - seconds
 v_timecent:		equ	v_time+3			; time - centiseconds
 v_score:		ds.l	1				; score
-			ds.b	2				; unused
+v_ssframe:	    ds.w    1		        ; Super Sonic ring-drain frame counter
 v_shield:		ds.b	1				; shield status (00 = no; 01 = yes)
 v_invinc:		ds.b	1				; invincibility status (00 = no; 01 = yes)
 v_shoes:		ds.b	1				; speed shoes status (00 = no; 01 = yes)
-v_unused1:		ds.b	1				; an unused fourth player status (Goggles?)
+v_supersonic:	ds.b    1		        ; Super Sonic status (00 = normal; 01 = super)
 v_lastlamp:		ds.b	2				; number of the last lamppost you hit
 v_lamp_xpos:		ds.w	1				; x-axis for Sonic to respawn at lamppost
 v_lamp_ypos:		ds.w	1				; y-axis for Sonic to respawn at lamppost

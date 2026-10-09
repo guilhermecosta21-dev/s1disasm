@@ -117,6 +117,7 @@ ptr_mus90:	dc.l Music90
 ptr_mus91:	dc.l Music91
 ptr_mus92:	dc.l Music92
 ptr_mus93:	dc.l Music93
+ptr_mus94:	dc.l Music94	; <-- add this
 ptr_musend
 
 ; ===========================================================================
@@ -2729,6 +2730,8 @@ Music92:	include "sound/music/Mus92 - Drowning.asm"
 		even
 Music93:	include "sound/music/Mus93 - Get Emerald.asm"
 		even
+Music94:	include "sound/music/Mus94 - Super Sonic.asm"	; <-- add this
+		even
 
 ; ---------------------------------------------------------------------------
 ; Sound effect pointers
@@ -2795,10 +2798,11 @@ ptr_specend
 ; Extra sound effect pointers
 ; ---------------------------------------------------------------------------
 ExtSoundIndex:
-ptr_sndD1:	dc.l SoundD1
+ptr_sndD1:	dc.l SoundD1    ; Spin Dash
 ptr_sndD2:	dc.l SoundD2
 ptr_sndD3:	dc.l SoundD3
 ptr_sndD4:	dc.l SoundD4
+ptr_sndD5:	dc.l SoundD5	; <-- add this
 ptr_extend
 
 ; ---------------------------------------------------------------------------
@@ -2917,6 +2921,8 @@ SoundD2:	include "sound/sfx/SndD2 - Peelout Charge.asm"
 SoundD3:	include "sound/sfx/SndD3 - Peelout Release.asm"
 		even
 SoundD4:	include "sound/sfx/SndD4 - Peelout Stop.asm"
+		even
+SoundD5:	include "sound/sfx/SndD5 - Super Transform.asm"	; <-- add this
 		even
 
 ; ---------------------------------------------------------------------------
