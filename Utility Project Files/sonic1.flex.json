@@ -44,8 +44,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Signpost.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Signpost.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -64,7 +64,7 @@
                     }
                 },
                 {
-                    "name": "Ring",
+                    "name": "Ring (REV00)",
                     "format": "Sonic 1.js",
                     "palettes": [
                         {
@@ -73,13 +73,13 @@
                         }
                     ],
                     "art": {
-                        "path": "../artunc/Rings.unc",
-                        "compression": "Uncompressed",
+                        "path": "../artnem/Rings.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
                     "mappings": {
-                        "path": "../_maps/Rings.asm",
+                        "path": "../_maps/Rings (REV00).asm",
                         "label": ""
                     },
                     "dplcs": {
@@ -93,7 +93,7 @@
                     }
                 },
                 {
-                    "name": "Ring (Sparkles)",
+                    "name": "Ring (REV01)",
                     "format": "Sonic 1.js",
                     "palettes": [
                         {
@@ -102,13 +102,13 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Ring Sparkles.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Rings.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
                     "mappings": {
-                        "path": "../_maps/Rings.asm",
+                        "path": "../_maps/Rings (REV01).asm",
                         "label": ""
                     },
                     "dplcs": {
@@ -131,8 +131,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Monitors.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Monitors.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -160,8 +160,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Spikes.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Spikes.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -189,8 +189,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Prison Capsule.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Prison Capsule.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -238,35 +238,6 @@
                     }
                 },
                 {
-                    "name": "Giant Ring Flash",
-                    "palettes": [
-                        {
-                            "path": "../palette/Sonic.bin",
-                            "length": 1
-                        }
-                    ],
-                    "format": "Sonic 1.js",
-                    "art": {
-                        "path": "../artunc/Giant Ring Flash.unc",
-                        "compression": "Uncompressed",
-                        "offset": 0,
-                        "extra": []
-                    },
-                    "mappings": {
-                        "path": "../_maps/Giant Ring.asm",
-                        "label": ""
-                    },
-                    "dplcs": {
-                        "enabled": false,
-                        "path": "../",
-                        "label": ""
-                    },
-                    "expanded": true,
-                    "config": {
-                        "mapMacros": true
-                    }
-                },
-                {
                     "name": "Invisible Solid Barrier",
                     "format": "Sonic 1.js",
                     "palettes": [
@@ -276,8 +247,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Monitors.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Monitors.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -305,8 +276,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Lamppost.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Lamppost.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -334,8 +305,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Hidden Bonuses.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Hidden Bonuses.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -346,34 +317,6 @@
                     "dplcs": {
                         "enabled": false,
                         "path": "../",
-                        "label": ""
-                    },
-                    "expanded": true,
-                    "config": {
-                        "mapMacros": true
-                    }
-                },
-                {
-                    "name": "Points",
-                    "format": "Sonic 1.js",
-                    "palettes": [
-                        {
-                            "path": "../palette/Sonic.bin",
-                            "length": 1
-                        }
-                    ],
-                    "art": {
-                        "path": "../artunc/Points.unc",
-                        "compression": "Uncompressed",
-                        "offset": 0
-                    },
-                    "mappings": {
-                        "path": "../_maps/Points.asm",
-                        "label": ""
-                    },
-                    "dplcs": {
-                        "enabled": true,
-                        "path": "../_maps/Points - DPLC.asm",
                         "label": ""
                     },
                     "expanded": true,
@@ -394,8 +337,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artunc/Shield.unc",
-                                "compression": "Uncompressed",
+                                "path": "../artnem/Shield.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -404,8 +347,8 @@
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": true,
-                                "path": "../_maps/Shield and Invincibility - Dynamic Gfx Script.asm",
+                                "enabled": false,
+                                "path": "",
                                 "label": ""
                             },
                             "config": {
@@ -422,8 +365,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artunc/Invincibility Stars.unc",
-                                "compression": "Uncompressed",
+                                "path": "../artnem/Invincibility Stars.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -432,8 +375,8 @@
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": true,
-                                "path": "../_maps/Shield and Invincibility - Dynamic Gfx Script.asm",
+                                "enabled": false,
+                                "path": "",
                                 "label": ""
                             },
                             "config": {
@@ -458,8 +401,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Spring Horizontal.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Spring Horizontal.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -487,8 +430,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Spring Vertical.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Spring Vertical.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -524,8 +467,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Chicken.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Chicken.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -552,8 +495,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Flicky.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Flicky.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -581,8 +524,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Penguin.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Penguin.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -609,8 +552,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Pig.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Pig.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -637,8 +580,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Rabbit.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Rabbit.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -665,8 +608,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Squirrel.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Squirrel.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -693,8 +636,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Animal Seal.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Animal Seal.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -729,8 +672,8 @@
                     "name": "Ball",
                     "palettes": [],
                     "art": {
-                        "path": "../artkospm/GHZ Giant Ball.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Giant Ball.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -762,8 +705,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/GHZ Bridge.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Bridge.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -795,8 +738,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/GHZ Swinging Platform.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Swinging Platform.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -827,8 +770,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/GHZ Spiked Log.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Spiked Log.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -860,8 +803,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - GHZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - GHZ1.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -893,8 +836,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - GHZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - GHZ1.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -926,8 +869,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/GHZ Bridge.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Bridge.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -959,8 +902,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/GHZ Purple Rock.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Purple Rock.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -992,8 +935,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/GHZ Breakable Wall.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Breakable Wall.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1025,8 +968,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/GHZ Edge Wall.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/GHZ Edge Wall.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1057,8 +1000,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Buzz Bomber.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Buzz Bomber.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1090,8 +1033,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Chopper.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Chopper.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1122,8 +1065,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Crabmeat.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Crabmeat.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1155,8 +1098,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Motobug.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Motobug.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1188,8 +1131,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Newtron.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Newtron.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1229,8 +1172,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Fireballs.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Fireballs.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1262,8 +1205,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - MZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - MZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1294,8 +1237,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/MZ Green Glass Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Green Glass Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1327,8 +1270,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/MZ Switch.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Switch.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1360,8 +1303,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/MZ Green Pushable Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Green Pushable Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1393,8 +1336,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/MZ Metal Blocks.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Metal Blocks.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1426,8 +1369,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - MZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - MZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1459,8 +1402,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/MZ Lava.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Lava.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1492,8 +1435,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/MZ Green Pushable Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Green Pushable Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1525,8 +1468,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/MZ Green Pushable Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Green Pushable Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1558,8 +1501,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/MZ Green Pushable Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/MZ Green Pushable Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1591,8 +1534,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Basaran.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Basaran.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1624,8 +1567,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Buzz Bomber.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Buzz Bomber.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1657,8 +1600,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Caterkiller.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Caterkiller.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1690,8 +1633,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Yadrin.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Yadrin.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1731,8 +1674,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/8x8 - SYZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SYZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1764,8 +1707,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SYZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SYZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1796,8 +1739,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Switch.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Switch.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1828,8 +1771,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SYZ Bumper.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SYZ Bumper.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1860,8 +1803,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SYZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SYZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1892,8 +1835,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SYZ Small Spikeball.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SYZ Small Spikeball.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1924,8 +1867,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SYZ Large Spikeball.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SYZ Large Spikeball.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1957,8 +1900,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Buzz Bomber.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Buzz Bomber.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -1989,8 +1932,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Crabmeat.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Crabmeat.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2021,8 +1964,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Roller.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Roller.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2053,8 +1996,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Yadrin.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Yadrin.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2093,8 +2036,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Breakable Pole.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Breakable Pole.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2125,8 +2068,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Flapping Door.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Flapping Door.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2157,8 +2100,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Harpoon.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Harpoon.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2190,8 +2133,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Switch.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Switch.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2222,8 +2165,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ 32x16 Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ 32x16 Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2254,8 +2197,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Vertical Door.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Vertical Door.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2286,8 +2229,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Spiked Ball & Chain.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Spiked Ball & Chain.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2318,8 +2261,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/LZ Gargoyle & Fireball.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Gargoyle & Fireball.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2351,8 +2294,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Wheel.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Wheel.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2384,8 +2327,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Bubbles & Countdown.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Bubbles & Countdown.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2417,8 +2360,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Horizontal Door.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Horizontal Door.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2450,8 +2393,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/LZ Water & Splashes.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/LZ Water & Splashes.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2483,8 +2426,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Burrobot.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Burrobot.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2516,8 +2459,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Jaws.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Jaws.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2549,8 +2492,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Orbinaut.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Orbinaut.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2590,8 +2533,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Fireballs.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Fireballs.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2622,8 +2565,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SLZ Swinging Platform.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ Swinging Platform.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2654,8 +2597,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SLZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SLZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2686,8 +2629,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SLZ Cannon.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ Cannon.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2719,8 +2662,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SLZ Breakable Wall.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ Breakable Wall.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2752,8 +2695,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SLZ 32x32 Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ 32x32 Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2785,8 +2728,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SLZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SLZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2818,8 +2761,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SLZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SLZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2851,8 +2794,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/8x8 - SLZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/8x8 - SLZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2884,8 +2827,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SLZ Fan.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ Fan.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2917,8 +2860,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SLZ Seesaw.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SLZ Seesaw.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2950,8 +2893,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Orbinaut.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Orbinaut.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -2983,8 +2926,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Bomb.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Bomb.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3024,8 +2967,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SYZ Large Spikeball.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SYZ Large Spikeball.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3057,8 +3000,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SBZ Small Vertical Door.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Small Vertical Door.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3089,8 +3032,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Switch.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Switch.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3121,8 +3064,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SBZ Sliding Floor Trap.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Sliding Floor Trap.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3153,8 +3096,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SBZ Collapsing Floor.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Collapsing Floor.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3185,8 +3128,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SBZ Junction Wheel.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Junction Wheel.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3217,8 +3160,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SBZ Spinning Platform.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Spinning Platform.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3249,8 +3192,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SBZ Vanishing Block.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Vanishing Block.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3282,8 +3225,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/SBZ Flaming Pipe.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Flaming Pipe.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3314,8 +3257,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SBZ Electrocuter.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Electrocuter.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3346,8 +3289,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/SBZ Crushing Girder.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/SBZ Crushing Girder.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3379,8 +3322,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Ball Hog.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Ball Hog.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3412,8 +3355,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Caterkiller.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Caterkiller.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3445,8 +3388,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Enemy Orbinaut.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Orbinaut.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3477,8 +3420,8 @@
                     ],
                     "format": "Sonic 1.js",
                     "art": {
-                        "path": "../artkospm/Enemy Bomb.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Enemy Bomb.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3514,8 +3457,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Ending - Sonic.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Ending - Sonic.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3543,8 +3486,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Ending - StH Logo.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Ending - StH Logo.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3572,8 +3515,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Ending - Emeralds.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Ending - Emeralds.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3601,8 +3544,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Ending - Try Again.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Ending - Try Again.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3638,8 +3581,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Title Screen Sonic.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Title Screen Sonic.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3667,8 +3610,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Title Screen Foreground.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Title Screen Foreground.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3696,8 +3639,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Title Screen TM.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Title Screen TM.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3733,8 +3676,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Continue Screen Sonic.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Continue Screen Sonic.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3762,8 +3705,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Continue Screen Stuff.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Continue Screen Stuff.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3803,8 +3746,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/HUD.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/HUD.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -3835,8 +3778,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/HUD - Life Counter Icon.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/HUD - Life Counter Icon.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -3968,8 +3911,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Boss - Main.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Boss - Main.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -4001,8 +3944,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Boss - Weapons.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Boss - Weapons.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -4034,8 +3977,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Boss - Eggman in SBZ2 & FZ.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Boss - Eggman in SBZ2 & FZ.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -4067,8 +4010,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Boss - Eggman after FZ Fight.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Boss - Eggman after FZ Fight.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -4100,8 +4043,8 @@
                         }
                     ],
                     "art": {
-                        "path": "../artkospm/Boss - Eggman after FZ Fight.kospm",
-                        "compression": "KosinskiPlus-M",
+                        "path": "../artnem/Boss - Eggman after FZ Fight.nem",
+                        "compression": "Nemesis",
                         "offset": 0,
                         "extra": []
                     },
@@ -4140,8 +4083,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Title Cards.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Title Cards.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4181,8 +4124,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Boss - Exhaust Flame.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Boss - Exhaust Flame.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4218,8 +4161,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artunc/Special Walls.unc",
-                                "compression": "Uncompressed",
+                                "path": "../artnem/Special Walls.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4247,8 +4190,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Red-White.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Red-White.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4276,8 +4219,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special R.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special R.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4305,8 +4248,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special UP-DOWN.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special UP-DOWN.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4334,8 +4277,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Ghost.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Ghost.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4363,8 +4306,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Glass.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Glass.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4392,8 +4335,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special GOAL.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special GOAL.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4421,8 +4364,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Emeralds.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Emeralds.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4450,8 +4393,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Result Emeralds.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Result Emeralds.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4479,8 +4422,8 @@
                                 }
                             ],
                             "art": {
-                                "path": "../artkospm/Special Emerald Twinkle.kospm",
-                                "compression": "KosinskiPlus-M",
+                                "path": "../artnem/Special Emerald Twinkle.nem",
+                                "compression": "Nemesis",
                                 "offset": 0,
                                 "extra": []
                             },
@@ -4511,8 +4454,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special 1UP.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special 1UP.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4540,8 +4483,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special W.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special W.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4568,8 +4511,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE1.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE1.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4596,8 +4539,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE2.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE2.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4624,8 +4567,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE3.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE3.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4652,8 +4595,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE4.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE4.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4680,8 +4623,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE5.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE5.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
@@ -4708,8 +4651,8 @@
                                         }
                                     ],
                                     "art": {
-                                        "path": "../artkospm/Special ZONE6.kospm",
-                                        "compression": "KosinskiPlus-M",
+                                        "path": "../artnem/Special ZONE6.nem",
+                                        "compression": "Nemesis",
                                         "offset": 0,
                                         "extra": []
                                     },
