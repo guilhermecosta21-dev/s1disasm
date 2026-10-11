@@ -331,12 +331,12 @@
                                 "offset": 0
                             },
                             "mappings": {
-                                "path": "../_maps/Shield and Invincibility.asm",
+                                "path": "../_maps/Shield.asm",
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": false,
-                                "path": "",
+                                "enabled": true,
+                                "path": "../_maps/Shield - Dynamic Gfx Script.asm",
                                 "label": ""
                             },
                             "config": {
@@ -358,12 +358,12 @@
                                 "offset": 0
                             },
                             "mappings": {
-                                "path": "../_maps/Shield and Invincibility.asm",
+                                "path": "../_maps/Invincibility Stars.asm",
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": false,
-                                "path": "",
+                                "enabled": true,
+                                "path": "../_maps/Shield - Dynamic Gfx Script.asm",
                                 "label": ""
                             },
                             "config": {
