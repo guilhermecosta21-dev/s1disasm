@@ -17,8 +17,7 @@
                     "art": {
                         "path": "../artunc/Sonic.unc",
                         "compression": "Uncompressed",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Sonic.asm",
@@ -46,8 +45,7 @@
                     "art": {
                         "path": "../artnem/Signpost.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Signpost.asm",
@@ -75,8 +73,7 @@
                     "art": {
                         "path": "../artnem/Rings.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Rings (REV00).asm",
@@ -104,8 +101,7 @@
                     "art": {
                         "path": "../artnem/Rings.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Rings (REV01).asm",
@@ -133,8 +129,7 @@
                     "art": {
                         "path": "../artnem/Monitors.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Monitor.asm",
@@ -162,8 +157,7 @@
                     "art": {
                         "path": "../artnem/Spikes.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Spikes.asm",
@@ -191,8 +185,7 @@
                     "art": {
                         "path": "../artnem/Prison Capsule.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Prison Capsule.asm",
@@ -220,8 +213,7 @@
                     "art": {
                         "path": "../artunc/Giant Ring.unc",
                         "compression": "Uncompressed",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Giant Ring.asm",
@@ -249,8 +241,7 @@
                     "art": {
                         "path": "../artnem/Monitors.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Invisible Barriers.asm",
@@ -278,8 +269,7 @@
                     "art": {
                         "path": "../artnem/Lamppost.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Lamppost.asm",
@@ -307,8 +297,7 @@
                     "art": {
                         "path": "../artnem/Hidden Bonuses.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Hidden Bonuses.asm",
@@ -339,16 +328,15 @@
                             "art": {
                                 "path": "../artnem/Shield.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
-                                "path": "../_maps/Shield and Invincibility.asm",
+                                "path": "../_maps/Shield.asm",
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": false,
-                                "path": "",
+                                "enabled": true,
+                                "path": "../_maps/Shield - Dynamic Gfx Script.asm",
                                 "label": ""
                             },
                             "config": {
@@ -367,16 +355,15 @@
                             "art": {
                                 "path": "../artnem/Invincibility Stars.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
-                                "path": "../_maps/Shield and Invincibility.asm",
+                                "path": "../_maps/Invincibility Stars.asm",
                                 "label": ""
                             },
                             "dplcs": {
-                                "enabled": false,
-                                "path": "",
+                                "enabled": true,
+                                "path": "../_maps/Shield - Dynamic Gfx Script.asm",
                                 "label": ""
                             },
                             "config": {
@@ -403,8 +390,7 @@
                             "art": {
                                 "path": "../artnem/Spring Horizontal.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Springs.asm",
@@ -432,8 +418,7 @@
                             "art": {
                                 "path": "../artnem/Spring Vertical.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Springs.asm",
@@ -469,8 +454,7 @@
                             "art": {
                                 "path": "../artnem/Animal Chicken.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 2.asm",
@@ -497,8 +481,7 @@
                             "art": {
                                 "path": "../artnem/Animal Flicky.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 2.asm",
@@ -526,8 +509,7 @@
                             "art": {
                                 "path": "../artnem/Animal Penguin.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 1.asm",
@@ -554,8 +536,7 @@
                             "art": {
                                 "path": "../artnem/Animal Pig.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 3.asm",
@@ -582,8 +563,7 @@
                             "art": {
                                 "path": "../artnem/Animal Rabbit.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 1.asm",
@@ -610,8 +590,7 @@
                             "art": {
                                 "path": "../artnem/Animal Squirrel.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 3.asm",
@@ -638,8 +617,7 @@
                             "art": {
                                 "path": "../artnem/Animal Seal.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "../_maps/Animals 2.asm",
@@ -661,7 +639,7 @@
                 }
             ],
             "isDirectory": true,
-            "expanded": true,
+            "expanded": false,
             "config": {}
         },
         {
@@ -674,8 +652,7 @@
                     "art": {
                         "path": "../artnem/GHZ Giant Ball.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/GHZ Ball.asm",
@@ -707,8 +684,7 @@
                     "art": {
                         "path": "../artnem/GHZ Bridge.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bridge.asm",
@@ -740,8 +716,7 @@
                     "art": {
                         "path": "../artnem/GHZ Swinging Platform.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Swinging Platforms (GHZ).asm",
@@ -772,8 +747,7 @@
                     "art": {
                         "path": "../artnem/GHZ Spiked Log.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Spiked Pole Helix.asm",
@@ -805,8 +779,7 @@
                     "art": {
                         "path": "../artnem/8x8 - GHZ1.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Platforms (GHZ).asm",
@@ -838,8 +811,7 @@
                     "art": {
                         "path": "../artnem/8x8 - GHZ1.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Collapsing Ledge.asm",
@@ -871,8 +843,7 @@
                     "art": {
                         "path": "../artnem/GHZ Bridge.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bridge.asm",
@@ -904,8 +875,7 @@
                     "art": {
                         "path": "../artnem/GHZ Purple Rock.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Purple Rock.asm",
@@ -937,8 +907,7 @@
                     "art": {
                         "path": "../artnem/GHZ Breakable Wall.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Smashable Walls.asm",
@@ -970,8 +939,7 @@
                     "art": {
                         "path": "../artnem/GHZ Edge Wall.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/GHZ Edge Walls.asm",
@@ -1002,8 +970,7 @@
                     "art": {
                         "path": "../artnem/Enemy Buzz Bomber.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Buzz Bomber.asm",
@@ -1035,8 +1002,7 @@
                     "art": {
                         "path": "../artnem/Enemy Chopper.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Chopper.asm",
@@ -1067,8 +1033,7 @@
                     "art": {
                         "path": "../artnem/Enemy Crabmeat.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Crabmeat.asm",
@@ -1100,8 +1065,7 @@
                     "art": {
                         "path": "../artnem/Enemy Motobug.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Moto Bug.asm",
@@ -1133,8 +1097,7 @@
                     "art": {
                         "path": "../artnem/Enemy Newtron.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Newtron.asm",
@@ -1174,8 +1137,7 @@
                     "art": {
                         "path": "../artnem/Fireballs.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Fireballs.asm",
@@ -1207,8 +1169,7 @@
                     "art": {
                         "path": "../artnem/8x8 - MZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/MZ Large Grassy Platforms.asm",
@@ -1239,8 +1200,7 @@
                     "art": {
                         "path": "../artnem/MZ Green Glass Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/MZ Large Green Glass Blocks.asm",
@@ -1272,8 +1232,7 @@
                     "art": {
                         "path": "../artnem/MZ Switch.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Button.asm",
@@ -1305,8 +1264,7 @@
                     "art": {
                         "path": "../artnem/MZ Green Pushable Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Pushable Blocks.asm",
@@ -1338,8 +1296,7 @@
                     "art": {
                         "path": "../artnem/MZ Metal Blocks.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Sideways Stomper.asm",
@@ -1371,8 +1328,7 @@
                     "art": {
                         "path": "../artnem/8x8 - MZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/MZ Bricks.asm",
@@ -1404,8 +1360,7 @@
                     "art": {
                         "path": "../artnem/MZ Lava.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Wall of Lava.asm",
@@ -1437,8 +1392,7 @@
                     "art": {
                         "path": "../artnem/MZ Green Pushable Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Smashable Green Block.asm",
@@ -1470,8 +1424,7 @@
                     "art": {
                         "path": "../artnem/MZ Green Pushable Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Moving Blocks (MZ and SBZ).asm",
@@ -1503,8 +1456,7 @@
                     "art": {
                         "path": "../artnem/MZ Green Pushable Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Collapsing Floors.asm",
@@ -1536,8 +1488,7 @@
                     "art": {
                         "path": "../artnem/Enemy Basaran.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Basaran.asm",
@@ -1569,8 +1520,7 @@
                     "art": {
                         "path": "../artnem/Enemy Buzz Bomber.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Buzz Bomber.asm",
@@ -1602,8 +1552,7 @@
                     "art": {
                         "path": "../artnem/Enemy Caterkiller.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Caterkiller.asm",
@@ -1635,8 +1584,7 @@
                     "art": {
                         "path": "../artnem/Enemy Yadrin.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Yadrin.asm",
@@ -1676,8 +1624,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SYZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Light.asm",
@@ -1709,8 +1656,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SYZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Platforms (SYZ).asm",
@@ -1741,8 +1687,7 @@
                     "art": {
                         "path": "../artnem/Switch.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Button.asm",
@@ -1773,8 +1718,7 @@
                     "art": {
                         "path": "../artnem/SYZ Bumper.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bumper.asm",
@@ -1805,8 +1749,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SYZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Floating Blocks and Doors.asm",
@@ -1837,8 +1780,7 @@
                     "art": {
                         "path": "../artnem/SYZ Small Spikeball.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Spiked Ball and Chain (SYZ).asm",
@@ -1869,8 +1811,7 @@
                     "art": {
                         "path": "../artnem/SYZ Large Spikeball.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Big Spiked Ball.asm",
@@ -1902,8 +1843,7 @@
                     "art": {
                         "path": "../artnem/Enemy Buzz Bomber.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Buzz Bomber.asm",
@@ -1934,8 +1874,7 @@
                     "art": {
                         "path": "../artnem/Enemy Crabmeat.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Crabmeat.asm",
@@ -1966,8 +1905,7 @@
                     "art": {
                         "path": "../artnem/Enemy Roller.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Roller.asm",
@@ -1998,8 +1936,7 @@
                     "art": {
                         "path": "../artnem/Enemy Yadrin.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Yadrin.asm",
@@ -2038,8 +1975,7 @@
                     "art": {
                         "path": "../artnem/LZ Breakable Pole.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Pole that Breaks.asm",
@@ -2070,8 +2006,7 @@
                     "art": {
                         "path": "../artnem/LZ Flapping Door.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Flapping Door.asm",
@@ -2102,8 +2037,7 @@
                     "art": {
                         "path": "../artnem/LZ Harpoon.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Harpoon.asm",
@@ -2135,8 +2069,7 @@
                     "art": {
                         "path": "../artnem/Switch.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Button.asm",
@@ -2167,8 +2100,7 @@
                     "art": {
                         "path": "../artnem/LZ 32x16 Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Moving Blocks (LZ).asm",
@@ -2199,8 +2131,7 @@
                     "art": {
                         "path": "../artnem/LZ Vertical Door.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Floating Blocks and Doors.asm",
@@ -2231,8 +2162,7 @@
                     "art": {
                         "path": "../artnem/LZ Spiked Ball & Chain.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Spiked Ball and Chain (LZ).asm",
@@ -2263,8 +2193,7 @@
                     "art": {
                         "path": "../artnem/LZ Gargoyle & Fireball.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Gargoyle.asm",
@@ -2296,8 +2225,7 @@
                     "art": {
                         "path": "../artnem/LZ Wheel.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/LZ Conveyor.asm",
@@ -2329,8 +2257,7 @@
                     "art": {
                         "path": "../artnem/LZ Bubbles & Countdown.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bubbles and Drowning Countdown.asm",
@@ -2362,8 +2289,7 @@
                     "art": {
                         "path": "../artnem/LZ Horizontal Door.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/LZ Blocks.asm",
@@ -2395,8 +2321,7 @@
                     "art": {
                         "path": "../artnem/LZ Water & Splashes.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Waterfalls.asm",
@@ -2428,8 +2353,7 @@
                     "art": {
                         "path": "../artnem/Enemy Burrobot.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Burrobot.asm",
@@ -2461,8 +2385,7 @@
                     "art": {
                         "path": "../artnem/Enemy Jaws.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Jaws.asm",
@@ -2494,8 +2417,7 @@
                     "art": {
                         "path": "../artnem/Enemy Orbinaut.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Orbinaut.asm",
@@ -2535,8 +2457,7 @@
                     "art": {
                         "path": "../artnem/Fireballs.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Fireballs.asm",
@@ -2567,8 +2488,7 @@
                     "art": {
                         "path": "../artnem/SLZ Swinging Platform.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Swinging Platforms (SLZ).asm",
@@ -2599,8 +2519,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SLZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Platforms (SLZ).asm",
@@ -2631,8 +2550,7 @@
                     "art": {
                         "path": "../artnem/SLZ Cannon.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Scenery.asm",
@@ -2664,8 +2582,7 @@
                     "art": {
                         "path": "../artnem/SLZ Breakable Wall.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Smashable Walls.asm",
@@ -2697,8 +2614,7 @@
                     "art": {
                         "path": "../artnem/SLZ 32x32 Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Collapsing Floors.asm",
@@ -2730,8 +2646,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SLZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/SLZ Elevators.asm",
@@ -2763,8 +2678,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SLZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/SLZ Circling Platform.asm",
@@ -2796,8 +2710,7 @@
                     "art": {
                         "path": "../artnem/8x8 - SLZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Staircase.asm",
@@ -2829,8 +2742,7 @@
                     "art": {
                         "path": "../artnem/SLZ Fan.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Fan.asm",
@@ -2862,8 +2774,7 @@
                     "art": {
                         "path": "../artnem/SLZ Seesaw.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Seesaw.asm",
@@ -2895,8 +2806,7 @@
                     "art": {
                         "path": "../artnem/Enemy Orbinaut.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Orbinaut.asm",
@@ -2928,8 +2838,7 @@
                     "art": {
                         "path": "../artnem/Enemy Bomb.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bomb Enemy.asm",
@@ -2969,8 +2878,7 @@
                     "art": {
                         "path": "../artnem/SYZ Large Spikeball.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Big Spiked Ball.asm",
@@ -3002,8 +2910,7 @@
                     "art": {
                         "path": "../artnem/SBZ Small Vertical Door.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/SBZ Small Door.asm",
@@ -3034,8 +2941,7 @@
                     "art": {
                         "path": "../artnem/Switch.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Button.asm",
@@ -3066,8 +2972,7 @@
                     "art": {
                         "path": "../artnem/SBZ Sliding Floor Trap.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Moving Blocks (MZ and SBZ).asm",
@@ -3098,8 +3003,7 @@
                     "art": {
                         "path": "../artnem/SBZ Collapsing Floor.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Collapsing Floors.asm",
@@ -3130,8 +3034,7 @@
                     "art": {
                         "path": "../artnem/SBZ Junction Wheel.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Rotating Junction.asm",
@@ -3162,8 +3065,7 @@
                     "art": {
                         "path": "../artnem/SBZ Spinning Platform.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/SBZ Spinning Platforms.asm",
@@ -3194,8 +3096,7 @@
                     "art": {
                         "path": "../artnem/SBZ Vanishing Block.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/SBZ Vanishing Platforms.asm",
@@ -3227,8 +3128,7 @@
                     "art": {
                         "path": "../artnem/SBZ Flaming Pipe.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Flamethrower.asm",
@@ -3259,8 +3159,7 @@
                     "art": {
                         "path": "../artnem/SBZ Electrocuter.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Electrocuter.asm",
@@ -3291,8 +3190,7 @@
                     "art": {
                         "path": "../artnem/SBZ Crushing Girder.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Girder Block.asm",
@@ -3324,8 +3222,7 @@
                     "art": {
                         "path": "../artnem/Enemy Ball Hog.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Ball Hog.asm",
@@ -3357,8 +3254,7 @@
                     "art": {
                         "path": "../artnem/Enemy Caterkiller.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Caterkiller.asm",
@@ -3390,8 +3286,7 @@
                     "art": {
                         "path": "../artnem/Enemy Orbinaut.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Orbinaut.asm",
@@ -3422,8 +3317,7 @@
                     "art": {
                         "path": "../artnem/Enemy Bomb.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Bomb Enemy.asm",
@@ -3459,8 +3353,7 @@
                     "art": {
                         "path": "../artnem/Ending - Sonic.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Ending Sequence Sonic.asm",
@@ -3488,8 +3381,7 @@
                     "art": {
                         "path": "../artnem/Ending - StH Logo.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Ending Sequence STH.asm",
@@ -3517,8 +3409,7 @@
                     "art": {
                         "path": "../artnem/Ending - Emeralds.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Ending Sequence Emeralds.asm",
@@ -3546,8 +3437,7 @@
                     "art": {
                         "path": "../artnem/Ending - Try Again.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Try Again & End Eggman.asm",
@@ -3583,8 +3473,7 @@
                     "art": {
                         "path": "../artnem/Title Screen Sonic.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Title Screen Sonic.asm",
@@ -3612,8 +3501,7 @@
                     "art": {
                         "path": "../artnem/Title Screen Foreground.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Press Start and TM.asm",
@@ -3641,8 +3529,7 @@
                     "art": {
                         "path": "../artnem/Title Screen TM.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Press Start and TM.asm",
@@ -3678,8 +3565,7 @@
                     "art": {
                         "path": "../artnem/Continue Screen Sonic.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Continue Screen.asm",
@@ -3707,8 +3593,7 @@
                     "art": {
                         "path": "../artnem/Continue Screen Stuff.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Continue Screen.asm",
@@ -3748,8 +3633,7 @@
                     "art": {
                         "path": "../artnem/HUD.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/HUD.asm",
@@ -3780,8 +3664,7 @@
                             "art": {
                                 "path": "../artnem/HUD - Life Counter Icon.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/Lives Icon.asm",
@@ -3809,8 +3692,7 @@
                             "art": {
                                 "path": "../artunc/HUD Numbers.unc",
                                 "compression": "Uncompressed",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/8x16 Hud Numbers.asm",
@@ -3838,8 +3720,7 @@
                             "art": {
                                 "path": "../artunc/Lives Counter Numbers.unc",
                                 "compression": "Uncompressed",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/8x8 Hud Numbers.asm",
@@ -3867,8 +3748,7 @@
                             "art": {
                                 "path": "../artunc/Level Select & Debug Text.unc",
                                 "compression": "Uncompressed",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/DebugSymbols.asm",
@@ -3913,8 +3793,7 @@
                     "art": {
                         "path": "../artnem/Boss - Main.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Eggman.asm",
@@ -3946,8 +3825,7 @@
                     "art": {
                         "path": "../artnem/Boss - Weapons.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Boss Items.asm",
@@ -3979,8 +3857,7 @@
                     "art": {
                         "path": "../artnem/Boss - Eggman in SBZ2 & FZ.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/Eggman - Scrap Brain 2.asm",
@@ -4012,8 +3889,7 @@
                     "art": {
                         "path": "../artnem/Boss - Eggman after FZ Fight.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/FZ Damaged Eggmobile.asm",
@@ -4045,8 +3921,7 @@
                     "art": {
                         "path": "../artnem/Boss - Eggman after FZ Fight.nem",
                         "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
+                        "offset": 0
                     },
                     "mappings": {
                         "path": "../_maps/FZ Eggmobile Legs.asm",
@@ -4085,8 +3960,7 @@
                             "art": {
                                 "path": "../artnem/Title Cards.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/TitleCardFont.asm",
@@ -4126,8 +4000,7 @@
                             "art": {
                                 "path": "../artnem/Boss - Exhaust Flame.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/Exhaust Flame.asm",
@@ -4163,8 +4036,7 @@
                             "art": {
                                 "path": "../artnem/Special Walls.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialWalls.asm",
@@ -4192,8 +4064,7 @@
                             "art": {
                                 "path": "../artnem/Special Red-White.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4221,8 +4092,7 @@
                             "art": {
                                 "path": "../artnem/Special R.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4250,8 +4120,7 @@
                             "art": {
                                 "path": "../artnem/Special UP-DOWN.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialUpAndDown.asm",
@@ -4279,8 +4148,7 @@
                             "art": {
                                 "path": "../artnem/Special Ghost.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4308,8 +4176,7 @@
                             "art": {
                                 "path": "../artnem/Special Glass.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4337,8 +4204,7 @@
                             "art": {
                                 "path": "../artnem/Special GOAL.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialGOAL.asm",
@@ -4366,8 +4232,7 @@
                             "art": {
                                 "path": "../artnem/Special Emeralds.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialChaosEmeralds.asm",
@@ -4395,8 +4260,7 @@
                             "art": {
                                 "path": "../artnem/Special Result Emeralds.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/resultsChaosEmeralds.asm",
@@ -4424,8 +4288,7 @@
                             "art": {
                                 "path": "../artnem/Special Emerald Twinkle.nem",
                                 "compression": "Nemesis",
-                                "offset": 0,
-                                "extra": []
+                                "offset": 0
                             },
                             "mappings": {
                                 "path": "Scratch Mappings (Flex2 only)/specialEmeraldTwinkle.asm",
@@ -4456,8 +4319,7 @@
                                     "art": {
                                         "path": "../artnem/Special 1UP.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4485,8 +4347,7 @@
                                     "art": {
                                         "path": "../artnem/Special W.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4513,8 +4374,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE1.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4541,8 +4401,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE2.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4569,8 +4428,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE3.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4597,8 +4455,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE4.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4625,8 +4482,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE5.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
@@ -4653,8 +4509,7 @@
                                     "art": {
                                         "path": "../artnem/Special ZONE6.nem",
                                         "compression": "Nemesis",
-                                        "offset": 0,
-                                        "extra": []
+                                        "offset": 0
                                     },
                                     "mappings": {
                                         "path": "Scratch Mappings (Flex2 only)/specialItemStandard.asm",
